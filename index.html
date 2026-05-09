@@ -63,31 +63,21 @@ tr:nth-child(even) td { background:rgba(255,255,255,0.015); }
 .xiong { color:var(--rd); font-weight:bold; }
 .ping { color:var(--dim); }
 
-/* ====== 悬停解释 ====== */
+/* ====== 悬停解释（JS 定位，position:fixed 避免父容器裁剪） ====== */
 .tip {
   position:relative; cursor:help;
   border-bottom:1px dotted var(--ac); color:var(--ac);
   display:inline-block;
 }
 .tip .tip-pop {
-  display:none; position:absolute; bottom:calc(100% + 8px); left:50%; transform:translateX(-50%);
+  display:none; position:fixed;
   background:#252535; color:#e8e8e8; font-size:0.82rem; line-height:1.6;
   padding:0.55rem 0.8rem; border-radius:6px; border:1px solid var(--ac);
-  pointer-events:none; z-index:999; width:260px;
+  pointer-events:auto; z-index:99999; max-width:260px;
   box-shadow:0 4px 20px rgba(0,0,0,0.6);
   font-weight:normal;
 }
 .tip .tip-pop b { color:var(--ac); }
-/* ====== 全局 tooltip 浮层（渲染到 body 层，避免被父容器裁剪） ====== */
-#tt-overlay {
-  display:none; position:fixed; pointer-events:auto;
-  background:#252535; color:#e8e8e8; font-size:0.82rem; line-height:1.6;
-  padding:0.55rem 0.8rem; border-radius:6px; border:1px solid var(--ac);
-  z-index:99999; max-width:260px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.6);
-  font-weight:normal;
-}
-#tt-overlay b { color:var(--ac); }
 
 /* ====== 折叠面板 ====== */
 .fold-hd {
@@ -148,7 +138,7 @@ input:focus,select:focus { border-color:var(--ac); outline:none; }
   nav.top-nav button { font-size:0.72rem; padding:0.45rem 0.5rem; }
   .qm-grid { max-width:100%; } .qm-cell { min-height:80px; font-size:0.68rem; }
   .page h1 { font-size:1.3rem; }
-  #tt-overlay { max-width:200px; font-size:0.75rem; }
+  .tip .tip-pop { max-width:200px; font-size:0.75rem; }
 }
 </style>
 </head>
@@ -1032,80 +1022,73 @@ function goPage(id){
   if(btn)btn.classList.add("active");
 }
 
-// ====== 全局 tooltip 系统（渲染到 body 层，避免被表格/卡片裁剪） ======
+// ====== tooltip 定位（position:fixed 避免被表格/卡片裁剪） ======
 (function(){
-  var ov = document.createElement('div');
-  ov.id = 'tt-overlay';
-  document.body.appendChild(ov);
-  var cur = null, timer = null;
+  var curPop = null, curTip = null, hideTimer = null;
 
-  function pos(el){
-    var r = el.getBoundingClientRect();
-    var oh = ov.offsetHeight || 60;
-    var ow = ov.offsetWidth || 260;
-    var top = r.top - oh - 8;
-    var left = r.left + r.width/2 - ow/2;
-    if(top < 8){ top = r.bottom + 8; }
-    left = Math.max(4, Math.min(left, window.innerWidth - ow - 4));
-    ov.style.top = top + 'px';
-    ov.style.left = left + 'px';
+  function findTip(el){
+    while(el && el.nodeType){
+      if(el.nodeType===1 && el.classList.contains('tip')) return el;
+      el = el.parentNode;
+    }
+    return null;
   }
 
-  function show(el){
-    var pop = el.querySelector('.tip-pop');
+  function insideTip(el, tip){
+    while(el && el.nodeType){
+      if(el === tip) return true;
+      el = el.parentNode;
+    }
+    return false;
+  }
+
+  function posAndShow(tip){
+    var pop = tip.querySelector('.tip-pop');
     if(!pop) return;
-    ov.innerHTML = pop.innerHTML;
-    ov.style.display = 'block';
-    cur = el;
-    pos(el);
-    clearTimeout(timer);
+    // 先隐藏旧的
+    if(curPop && curPop !== pop) curPop.style.display = 'none';
+    curPop = pop;
+    curTip = tip;
+    clearTimeout(hideTimer);
+    // 先显示才能拿到正确的 offsetHeight
+    pop.style.display = 'block';
+    var r = tip.getBoundingClientRect();
+    var top = r.top - pop.offsetHeight - 8;
+    if(top < 8) top = r.bottom + 8;
+    var left = r.left + r.width/2 - pop.offsetWidth/2;
+    left = Math.max(4, Math.min(left, window.innerWidth - pop.offsetWidth - 4));
+    pop.style.top = top + 'px';
+    pop.style.left = left + 'px';
   }
 
-  function hide(){
-    timer = setTimeout(function(){
-      ov.style.display = 'none';
-      cur = null;
-    }, 150);
+  function hidePop(pop){
+    pop.style.display = 'none';
+    if(curPop === pop){ curPop = null; curTip = null; }
   }
 
   document.addEventListener('mouseover', function(e){
-    var el = e.target;
-    while(el && el !== document.body){
-      if(el.nodeType===1 && el.classList.contains('tip')){
-        if(cur === el) return;
-        show(el);
-        return;
-      }
-      el = el.parentElement;
-    }
+    var tip = findTip(e.target);
+    if(!tip) return;
+    posAndShow(tip);
   });
 
   document.addEventListener('mouseout', function(e){
-    var rel = e.relatedTarget;
-    var el = e.target;
-    while(el && el !== document.body){
-      if(el.nodeType===1 && el.classList.contains('tip')){
-        // 检查鼠标是否移到了 tip 内部的子元素或浮层上
-        var p = rel;
-        while(p && p !== document.body){
-          if(p === el || p === ov) return;
-          p = p.parentElement;
-        }
-        hide();
-        return;
-      }
-      el = el.parentElement;
+    var tip = findTip(e.target);
+    if(!tip) return;
+    // 如果鼠标移到了 tip 内部（含 popup），不隐藏
+    if(e.relatedTarget && insideTip(e.relatedTarget, tip)) return;
+    // 延迟隐藏，防止快速划过时闪烁
+    var pop = tip.querySelector('.tip-pop');
+    if(pop){
+      hideTimer = setTimeout(function(){ if(curPop===pop && curTip===tip) hidePop(pop); }, 250);
     }
   });
 
-  ov.addEventListener('mouseenter', function(){ clearTimeout(timer); });
-  ov.addEventListener('mouseleave', function(){ ov.style.display = 'none'; cur = null; });
-
   window.addEventListener('scroll', function(){
-    if(cur && ov.style.display === 'block') pos(cur);
+    if(curTip && curPop && curPop.style.display==='block') posAndShow(curTip);
   }, true);
   window.addEventListener('resize', function(){
-    if(cur && ov.style.display === 'block') pos(cur);
+    if(curTip && curPop && curPop.style.display==='block') posAndShow(curTip);
   });
 })();
 
