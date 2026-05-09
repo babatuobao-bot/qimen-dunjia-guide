@@ -3,1031 +3,915 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>奇门遁甲学习指南 — 从入门到排盘</title>
+<title>奇门遁甲 · 从零开始学</title>
 <style>
-/* ===== 基础样式 ===== */
+/* ====== 基础 ====== */
 :root {
-  --bg: #0f0f14; --surface: #1a1a24; --border: #2a2a3a;
-  --text: #d0d0d8; --text-dim: #808090; --accent: #c9a44b;
-  --gold: #c9a44b; --red: #c94b4b; --blue: #4b8bc9; --green: #5b9b5b;
-  --wood: #6b9b5b; --fire: #c94b4b; --earth: #c9a44b; --metal: #c0c0c0; --water: #4b8bc9;
+  --bg:#0f0f14; --sur:#1a1a24; --bd:#2a2a3a; --tx:#d0d0d8; --dim:#808090;
+  --ac:#c9a44b; --rd:#c94b4b; --bl:#4b8bc9; --gn:#5b9b5b;
+  --wd:#6b9b5b; --fr:#c94b4b; --ea:#c9a44b; --mt:#c0c0c0; --wt:#4b8bc9;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
-body { background:var(--bg); color:var(--text); font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; line-height:1.7; }
-a { color:var(--accent); text-decoration:none; }
-h1,h2,h3 { color:#fff; }
-h1 { font-size:2rem; text-align:center; margin:2rem 0 0.5rem; }
-h2 { font-size:1.4rem; margin:2rem 0 1rem; padding-left:0.75rem; border-left:3px solid var(--accent); }
-h3 { font-size:1.1rem; margin:1.2rem 0 0.6rem; color:var(--accent); }
-p { margin:0.6rem 0; }
-ul,ol { padding-left:1.5rem; margin:0.5rem 0; }
-li { margin:0.3rem 0; }
+body { background:var(--bg); color:var(--tx); font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; line-height:1.85; }
 
-/* ===== 导航 ===== */
-nav { position:sticky; top:0; z-index:100; background:rgba(15,15,20,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); display:flex; flex-wrap:wrap; gap:0.25rem; padding:0.5rem 1rem; justify-content:center; }
-nav a { color:var(--text-dim); font-size:0.85rem; padding:0.3rem 0.7rem; border-radius:4px; transition:all 0.2s; }
-nav a:hover,nav a.active { color:var(--accent); background:rgba(201,164,75,0.1); }
+/* ====== 顶部导航标签 ====== */
+nav.page-tabs {
+  position:sticky; top:0; z-index:200;
+  background:rgba(15,15,20,0.96); backdrop-filter:blur(10px);
+  border-bottom:2px solid var(--bd);
+  display:flex; flex-wrap:wrap; gap:0; justify-content:center;
+  padding:0 0.5rem; overflow-x:auto;
+}
+nav.page-tabs button {
+  background:none; color:var(--dim); border:none;
+  padding:0.7rem 1rem; font-size:0.88rem; cursor:pointer;
+  border-bottom:2px solid transparent; margin-bottom:-2px;
+  white-space:nowrap; font-weight:normal; transition:all 0.2s;
+  font-family:inherit;
+}
+nav.page-tabs button:hover { color:var(--tx); }
+nav.page-tabs button.active { color:var(--ac); border-bottom-color:var(--ac); font-weight:bold; }
 
-/* ===== 容器 ===== */
-.container { max-width:960px; margin:0 auto; padding:0 1.5rem 3rem; }
+/* ====== 页面容器 ====== */
+.page { display:none; max-width:900px; margin:0 auto; padding:0 1.5rem 3rem; }
+.page.active { display:block; }
+.page h1 { font-size:1.8rem; text-align:center; margin:2rem 0 0.5rem; color:#fff; }
+.page h2 { font-size:1.3rem; margin:2rem 0 1rem; padding-left:0.75rem; border-left:3px solid var(--ac); color:#fff; }
+.page h3 { font-size:1.05rem; margin:1.5rem 0 0.6rem; color:var(--ac); }
+.page p { margin:0.6rem 0; }
+.page ul,.page ol { padding-left:1.5rem; margin:0.5rem 0; }
+.page li { margin:0.35rem 0; }
 
-/* ===== 卡片 ===== */
-.card { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:1.25rem; margin:1rem 0; }
-.card-header { font-weight:bold; color:var(--accent); margin-bottom:0.5rem; font-size:1.05rem; }
+/* ====== 卡片 ====== */
+.card { background:var(--sur); border:1px solid var(--bd); border-radius:8px; padding:1.25rem; margin:1rem 0; }
+.card-hd { font-weight:bold; color:var(--ac); margin-bottom:0.5rem; font-size:1rem; }
 
-/* ===== 表格 ===== */
-table { width:100%; border-collapse:collapse; margin:0.75rem 0; font-size:0.9rem; }
-th,td { border:1px solid var(--border); padding:0.5rem 0.6rem; text-align:center; }
-th { background:rgba(201,164,75,0.15); color:var(--accent); font-weight:bold; }
-tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+/* ====== 表格 ====== */
+.tbl-wrap { overflow-x:auto; margin:0.75rem 0; }
+table { width:100%; border-collapse:collapse; font-size:0.88rem; min-width:500px; }
+th,td { border:1px solid var(--bd); padding:0.45rem 0.55rem; text-align:center; }
+th { background:rgba(201,164,75,0.12); color:var(--ac); font-weight:bold; white-space:nowrap; }
+tr:nth-child(even) td { background:rgba(255,255,255,0.015); }
 
-/* ===== 五行生克图 ===== */
-.wuxing-circle { display:flex; justify-content:center; align-items:center; margin:1.5rem 0; }
-.wuxing-circle svg { max-width:320px; }
+/* ====== 标签 ====== */
+.tag { display:inline-block; padding:0.12rem 0.5rem; border-radius:10px; font-size:0.75rem; margin:0.1rem; }
+.t-ac { background:rgba(201,164,75,0.2); color:var(--ac); }
+.t-rd { background:rgba(201,75,75,0.2); color:var(--rd); }
+.t-bl { background:rgba(75,139,201,0.2); color:var(--bl); }
+.t-gn { background:rgba(91,155,91,0.2); color:var(--gn); }
+.t-gy { background:rgba(128,128,144,0.2); color:var(--dim); }
+.ji { color:var(--gn); font-weight:bold; }
+.xiong { color:var(--rd); font-weight:bold; }
+.ping { color:var(--dim); }
 
-/* ===== 九宫格 ===== */
-.jiugong { display:grid; grid-template-columns:repeat(3, 1fr); grid-template-rows:repeat(3, 1fr); gap:3px; max-width:420px; margin:1rem auto; aspect-ratio:1; }
-.jiugong .cell { background:var(--surface); border:1px solid var(--border); border-radius:4px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0.3rem; font-size:0.85rem; min-height:80px; }
-.jiugong .cell .gong-name { font-weight:bold; color:var(--accent); font-size:0.8rem; }
-.jiugong .cell .gong-num { font-size:0.75rem; color:var(--text-dim); }
-.jiugong .cell.center { background:rgba(201,164,75,0.1); }
+/* ====== 工具提示 ====== */
+.tooltip {
+  position:relative; cursor:help;
+  border-bottom:1px dotted var(--ac); color:var(--ac);
+}
+.tooltip::after {
+  content:attr(data-tip);
+  position:absolute; bottom:calc(100% + 6px); left:50%; transform:translateX(-50%);
+  background:#2a2a3a; color:#e0e0e0; font-size:0.82rem; line-height:1.5;
+  padding:0.5rem 0.75rem; border-radius:6px; border:1px solid var(--ac);
+  white-space:nowrap; pointer-events:none; opacity:0; transition:opacity 0.15s;
+  z-index:999; max-width:320px; white-space:normal;
+  box-shadow:0 4px 16px rgba(0,0,0,0.5);
+}
+.tooltip:hover::after { opacity:1; }
 
-/* 排盘九宫格 */
-.qimen-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; max-width:540px; margin:1rem auto; }
-.qimen-grid .qcell { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:0.5rem; min-height:120px; font-size:0.8rem; }
-.qimen-grid .qcell .shen { color:var(--red); font-weight:bold; font-size:0.7rem; }
-.qimen-grid .qcell .men { color:var(--accent); font-weight:bold; }
-.qimen-grid .qcell .xing { color:var(--blue); font-weight:bold; }
-.qimen-grid .qcell .yi { color:var(--text-dim); font-size:0.7rem; }
-.qimen-grid .qcell .geju { color:var(--green); font-size:0.7rem; margin-top:0.2rem; }
-.qimen-grid .qcell .gong-label { font-size:0.7rem; color:var(--text-dim); }
+/* ====== 折叠面板 ====== */
+.fold-btn { cursor:pointer; user-select:none; display:flex; align-items:center; gap:0.5rem; padding:0.5rem 0; }
+.fold-btn::before { content:"▸"; display:inline-block; transition:transform 0.2s; font-size:0.7rem; color:var(--ac); }
+.fold-btn.open::before { transform:rotate(90deg); }
+.fold-body { display:none; padding:0.5rem 0 0.5rem 1rem; }
+.fold-body.open { display:block; }
 
-/* ===== 标签 ===== */
-.tag { display:inline-block; padding:0.15rem 0.5rem; border-radius:10px; font-size:0.75rem; margin:0.1rem; }
-.tag-gold { background:rgba(201,164,75,0.2); color:var(--accent); }
-.tag-red { background:rgba(201,75,75,0.2); color:var(--red); }
-.tag-blue { background:rgba(75,139,201,0.2); color:var(--blue); }
-.tag-green { background:rgba(91,155,91,0.2); color:var(--green); }
-.tag-gray { background:rgba(128,128,144,0.2); color:var(--text-dim); }
+/* ====== 五行图 ====== */
+.wx-wrap { display:flex; justify-content:center; margin:1.5rem 0; }
+.wx-wrap svg { max-width:340px; width:100%; }
 
-/* ===== 吉凶标识 ===== */
-.ji { color:var(--green); }
-.xiong { color:var(--red); }
-.ping { color:var(--text-dim); }
+/* ====== 九宫格 ====== */
+.jg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; max-width:420px; margin:1rem auto; aspect-ratio:1; }
+.jg-grid .jg-cell {
+  background:var(--sur); border:1px solid var(--bd); border-radius:6px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:0.3rem; font-size:0.85rem; min-height:70px;
+}
+.jg-grid .jg-cell .nm { font-weight:bold; color:var(--ac); font-size:0.85rem; }
+.jg-grid .jg-cell .sub { font-size:0.72rem; color:var(--dim); }
+.jg-grid .jg-cell.ctr { background:rgba(201,164,75,0.08); }
 
-/* ===== Tooltip ===== */
-.tip { cursor:help; border-bottom:1px dotted var(--text-dim); }
-.tip:hover { color:var(--accent); }
+/* ====== 排盘九宫格 ====== */
+.qm-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; max-width:540px; margin:1rem auto; }
+.qm-grid .qm-cell {
+  background:var(--sur); border:1px solid var(--bd); border-radius:6px;
+  padding:0.5rem; min-height:115px; font-size:0.8rem;
+}
+.qm-cell .shen { color:var(--rd); font-weight:bold; font-size:0.72rem; }
+.qm-cell .men { color:var(--ac); font-weight:bold; }
+.qm-cell .xing { color:var(--bl); font-weight:bold; }
+.qm-cell .yi { color:var(--dim); font-size:0.7rem; }
+.qm-cell .geju { font-size:0.7rem; margin-top:0.2rem; }
+.qm-cell .gl { font-size:0.68rem; color:var(--dim); }
 
-/* ===== 输入区 ===== */
-input,select { background:var(--bg); color:var(--text); border:1px solid var(--border); border-radius:4px; padding:0.4rem 0.6rem; font-size:0.9rem; font-family:inherit; }
-input:focus,select:focus { border-color:var(--accent); outline:none; }
-button { background:var(--accent); color:#000; border:none; border-radius:4px; padding:0.5rem 1.2rem; font-size:0.9rem; cursor:pointer; font-weight:bold; font-family:inherit; }
-button:hover { opacity:0.85; }
+/* ====== 输入控件 ====== */
+input,select { background:var(--bg); color:var(--tx); border:1px solid var(--bd); border-radius:4px; padding:0.4rem 0.6rem; font-size:0.9rem; font-family:inherit; }
+input:focus,select:focus { border-color:var(--ac); outline:none; }
+.btn { background:var(--ac); color:#000; border:none; border-radius:4px; padding:0.5rem 1.2rem; font-size:0.9rem; cursor:pointer; font-weight:bold; font-family:inherit; }
+.btn:hover { opacity:0.85; }
 
-/* ===== 选项卡 ===== */
-.tabs { display:flex; gap:0; border-bottom:2px solid var(--border); margin-bottom:1rem; }
-.tab-btn { padding:0.5rem 1rem; background:none; color:var(--text-dim); border:none; border-bottom:2px solid transparent; margin-bottom:-2px; cursor:pointer; font-weight:normal; font-size:0.9rem; }
-.tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
-.tab-panel { display:none; }
-.tab-panel.active { display:block; }
+/* ====== 内联标签 ====== */
+.inl-tabs { display:flex; gap:0.25rem; margin-bottom:1rem; flex-wrap:wrap; }
+.inl-tab { padding:0.4rem 0.8rem; background:var(--sur); color:var(--dim); border:1px solid var(--bd); border-radius:4px; cursor:pointer; font-size:0.85rem; font-family:inherit; }
+.inl-tab.active { color:var(--ac); border-color:var(--ac); background:rgba(201,164,75,0.08); }
+.inl-panel { display:none; }
+.inl-panel.active { display:block; }
 
-/* ===== 可折叠 ===== */
-.collapse-btn { cursor:pointer; user-select:none; display:flex; align-items:center; gap:0.5rem; }
-.collapse-btn::before { content:"▸"; display:inline-block; transition:transform 0.2s; font-size:0.7rem; }
-.collapse-btn.open::before { transform:rotate(90deg); }
-.collapse-content { display:none; }
-.collapse-content.open { display:block; }
+/* ====== 步骤编号 ====== */
+.step { display:flex; gap:0.75rem; margin:0.75rem 0; align-items:flex-start; }
+.step-num { flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--ac); color:#000; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:0.85rem; }
 
-/* ===== 响应式 ===== */
+/* ====== 响应式 ====== */
 @media(max-width:600px) {
-  nav a { font-size:0.75rem; padding:0.2rem 0.5rem; }
-  .qimen-grid { max-width:100%; }
-  .qimen-grid .qcell { min-height:90px; font-size:0.7rem; }
-  h1 { font-size:1.5rem; }
+  nav.page-tabs button { font-size:0.75rem; padding:0.5rem 0.6rem; }
+  .qm-grid { max-width:100%; } .qm-cell { min-height:85px; font-size:0.7rem; }
+  .page h1 { font-size:1.4rem; }
 }
 </style>
 </head>
 <body>
 
-<nav id="topnav">
-  <a href="#concepts">核心概念</a>
-  <a href="#structure">盘结构</a>
-  <a href="#symbols">符号详解</a>
-  <a href="#jqtable">节气用局</a>
-  <a href="#paipan">排盘起局</a>
-  <a href="#practice">实战框架</a>
-  <a href="#simulator">排盘模拟器</a>
+<!-- ============ 顶部导航 ============ -->
+<nav class="page-tabs" id="topNav">
+  <button data-page="p1" class="active">一、概念入门</button>
+  <button data-page="p2">二、盘结构</button>
+  <button data-page="p3">三、符号详解</button>
+  <button data-page="p4">四、节气用局</button>
+  <button data-page="p5">五、排盘起局</button>
+  <button data-page="p6">六、实战框架</button>
+  <button data-page="p7">七、排盘模拟器</button>
 </nav>
 
-<div class="container">
-
-<!-- ====== 标题 ====== -->
-<h1>奇门遁甲 学习指南</h1>
-<p style="text-align:center;color:var(--text-dim);margin-bottom:2rem;">从基础概念到手动排盘，掌握时家奇门核心方法</p>
-
 <!-- ================================================================================== -->
-<!-- 第1章：核心概念速览 -->
+<!-- 第1页：概念入门 -->
 <!-- ================================================================================== -->
-<h2 id="concepts">一、核心概念速览</h2>
+<div class="page active" id="p1">
+<h1>一、概念入门</h1>
+<p style="text-align:center;color:var(--dim);margin-bottom:1.5rem;">奇门遁甲是古代的一种时空数理模型。在开始之前，先理解几个核心概念。</p>
 
-<h3>1.1 阴阳五行</h3>
+<h2>1.1 阴阳</h2>
 <div class="card">
-  <p><strong>阴阳</strong>是宇宙万物的两种基本属性，相互对立又相互依存。在奇门中，冬至后阳气渐长用<strong>阳遁</strong>，夏至后阴气渐长用<strong>阴遁</strong>。</p>
-  <p><strong>五行</strong>——金、木、水、火、土——不是五种物质，而是五类性质。它们之间存在着<strong>生</strong>和<strong>克</strong>两种基本关系：</p>
+  <p><span class="tooltip" data-tip="阴阳不是「好坏」之分，而是事物的一体两面。比如：白天是阳、黑夜是阴；热是阳、冷是阴；动是阳、静是阴。二者互相依存，互相转化。">阴阳</span>是古人描述万事万物两种基本状态的符号。它不是对立的两个东西，而是同一个事物的两面。</p>
+  <p>在奇门遁甲中，阴阳决定了排盘的方向：</p>
+  <ul>
+    <li><strong style="color:#c94b4b;">阳遁</strong>（冬至后）：阳气渐长 → 顺排六仪、逆排三奇</li>
+    <li><strong style="color:#4b8bc9;">阴遁</strong>（夏至后）：阴气渐长 → 顺排三奇、逆排六仪</li>
+  </ul>
+  <p style="color:var(--dim);font-size:0.85rem;">记法：冬至一阳生，从此用阳遁；夏至一阴生，从此用阴遁。这是一切排盘的基础。</p>
 </div>
 
-<div class="wuxing-circle">
-<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+<h2>1.2 五行</h2>
+<div class="card">
+  <p><span class="tooltip" data-tip="五行（金木水火土）不是五种「物质」，而是五类「性质」。比如「木」代表生长、升发的特性，不是具体的木头。">五行</span>——金、木、水、火、土——描述事物之间的五种基本关系。每种元素代表一类性质，而非具体的物质。</p>
+  <p>五行之间存在两种基本关系：</p>
+  <ul>
+    <li><strong style="color:#5b9b5b;">相生</strong>（促进、帮助）：木→火→土→金→水→木</li>
+    <li><strong style="color:#c94b4b;">相克</strong>（制约、抑制）：木→土→水→火→金→木</li>
+  </ul>
+
+  <div class="wx-wrap">
+<svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <marker id="arrow-sheng" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#5b9b5b"/></marker>
-    <marker id="arrow-ke" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#c94b4b"/></marker>
+    <marker id="as" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5 Z" fill="#5b9b5b"/></marker>
+    <marker id="ak" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><path d="M0,0 L7,2.5 L0,5 Z" fill="#c94b4b"/></marker>
   </defs>
-  <!-- 五行位置 -->
-  <text x="150" y="38" text-anchor="middle" font-size="20" fill="#c94b4b" font-weight="bold">火</text>
-  <text x="255" y="115" text-anchor="middle" font-size="20" fill="#c0c0c0" font-weight="bold">金</text>
-  <text x="255" y="215" text-anchor="middle" font-size="20" fill="#4b8bc9" font-weight="bold">水</text>
-  <text x="45" y="215" text-anchor="middle" font-size="20" fill="#6b9b5b" font-weight="bold">木</text>
-  <text x="45" y="115" text-anchor="middle" font-size="20" fill="#c9a44b" font-weight="bold">土</text>
-  <!-- 相生箭头（外圈顺时针） -->
-  <line x1="150" y1="50" x2="235" y2="105" stroke="#5b9b5b" stroke-width="2" marker-end="url(#arrow-sheng)"/>
-  <line x1="243" y1="130" x2="243" y2="200" stroke="#5b9b5b" stroke-width="2" marker-end="url(#arrow-sheng)"/>
-  <line x1="230" y1="225" x2="70" y2="225" stroke="#5b9b5b" stroke-width="2" marker-end="url(#arrow-sheng)"/>
-  <line x1="57" y1="200" x2="57" y2="130" stroke="#5b9b5b" stroke-width="2" marker-end="url(#arrow-sheng)"/>
-  <line x1="70" y1="105" x2="135" y2="55" stroke="#5b9b5b" stroke-width="2" marker-end="url(#arrow-sheng)"/>
-  <!-- 相克箭头（内圈五角星） -->
-  <line x1="143" y1="58" x2="248" y2="208" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-ke)"/>
-  <line x1="240" y1="210" x2="60" y2="210" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-ke)"/>
-  <line x1="60" y1="200" x2="240" y2="120" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-ke)"/>
-  <line x1="230" y1="115" x2="60" y2="115" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-ke)"/>
-  <line x1="70" y1="108" x2="145" y2="60" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="4,2" marker-end="url(#arrow-ke)"/>
+  <!-- 中心文字 -->
+  <text x="160" y="162" text-anchor="middle" font-size="13" fill="#c9a44b" font-weight="bold">五行</text>
+
+  <!-- 五个位置: 火在顶, 金在右, 水在右下, 木在左下, 土在左 -->
+  <!-- 火(160,35) 金(270,110) 水(270,230) 木(50,230) 土(50,110) -->
+
+  <!-- 节点圆 -->
+  <circle cx="160" cy="35" r="24" fill="#3d1a1a" stroke="#c94b4b" stroke-width="2"/>
+  <text x="160" y="41" text-anchor="middle" font-size="20" fill="#c94b4b" font-weight="bold">火</text>
+
+  <circle cx="270" cy="110" r="24" fill="#2a2a2a" stroke="#c0c0c0" stroke-width="2"/>
+  <text x="270" y="116" text-anchor="middle" font-size="20" fill="#c0c0c0" font-weight="bold">金</text>
+
+  <circle cx="270" cy="230" r="24" fill="#1a2535" stroke="#4b8bc9" stroke-width="2"/>
+  <text x="270" y="236" text-anchor="middle" font-size="20" fill="#4b8bc9" font-weight="bold">水</text>
+
+  <circle cx="50" cy="230" r="24" fill="#1a2a1a" stroke="#6b9b5b" stroke-width="2"/>
+  <text x="50" y="236" text-anchor="middle" font-size="20" fill="#6b9b5b" font-weight="bold">木</text>
+
+  <circle cx="50" cy="110" r="24" fill="#2a241a" stroke="#c9a44b" stroke-width="2"/>
+  <text x="50" y="116" text-anchor="middle" font-size="20" fill="#c9a44b" font-weight="bold">土</text>
+
+  <!-- 相生箭头（外圈顺时针）：木→火→土→金→水→木 -->
+  <!-- 木→火: bottom-left to top -->
+  <line x1="70" y1="215" x2="138" y2="55" stroke="#5b9b5b" stroke-width="2" marker-end="url(#as)"/>
+  <!-- 火→土: top to left -->
+  <line x1="140" y1="45" x2="72" y2="95" stroke="#5b9b5b" stroke-width="2" marker-end="url(#as)"/>
+  <!-- 土→金: left to right -->
+  <line x1="74" y1="115" x2="246" y2="115" stroke="#5b9b5b" stroke-width="2" marker-end="url(#as)"/>
+  <!-- 金→水: right-top to right-bottom -->
+  <line x1="270" y1="134" x2="270" y2="206" stroke="#5b9b5b" stroke-width="2" marker-end="url(#as)"/>
+  <!-- 水→木: right-bottom to left-bottom -->
+  <line x1="250" y1="235" x2="74" y2="235" stroke="#5b9b5b" stroke-width="2" marker-end="url(#as)"/>
+
+  <!-- 相克箭头（内圈）：水克火，火克金，金克木，木克土，土克水 -->
+  <!-- 水克火: right-bottom to top -->
+  <line x1="252" y1="218" x2="178" y2="54" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ak)"/>
+  <!-- 火克金: top to right -->
+  <line x1="180" y1="48" x2="248" y2="98" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ak)"/>
+  <!-- 金克木: right to bottom-left -->
+  <line x1="248" y1="125" x2="72" y2="212" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ak)"/>
+  <!-- 木克土: bottom-left to left -->
+  <line x1="60" y1="208" x2="55" y2="134" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ak)"/>
+  <!-- 土克水: left to right-bottom -->
+  <line x1="70" y1="125" x2="248" y2="215" stroke="#c94b4b" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ak)"/>
+
   <!-- 图例 -->
-  <text x="150" y="275" text-anchor="middle" font-size="11" fill="#5b9b5b">实线 = 相生</text>
-  <text x="150" y="292" text-anchor="middle" font-size="11" fill="#c94b4b">虚线 = 相克</text>
+  <text x="160" y="285" text-anchor="middle" font-size="11" fill="#5b9b5b">—— 实线 = 相生</text>
+  <text x="160" y="302" text-anchor="middle" font-size="11" fill="#c94b4b">- - 虚线 = 相克</text>
 </svg>
-</div>
-
-<h3>1.2 天干地支</h3>
-<div class="card">
-  <p><strong>十天干</strong>：甲、乙、丙、丁、戊、己、庚、辛、壬、癸</p>
-  <table>
-    <tr><th>天干</th><th>甲</th><th>乙</th><th>丙</th><th>丁</th><th>戊</th><th>己</th><th>庚</th><th>辛</th><th>壬</th><th>癸</th></tr>
-    <tr><td>五行</td><td>阳木</td><td>阴木</td><td>阳火</td><td>阴火</td><td>阳土</td><td>阴土</td><td>阳金</td><td>阴金</td><td>阳水</td><td>阴水</td></tr>
-    <tr><td>奇门角色</td><td>元帅</td><td>日奇</td><td>月奇</td><td>星奇</td><td>天门</td><td>地户</td><td>贼/仇</td><td>罪人</td><td>天牢</td><td>天藏</td></tr>
-  </table>
-  <p style="margin-top:0.8rem"><strong>十二地支</strong>：子、丑、寅、卯、辰、巳、午、未、申、酉、戌、亥</p>
-  <table>
-    <tr><th>地支</th><td>子</td><td>丑</td><td>寅</td><td>卯</td><td>辰</td><td>巳</td><td>午</td><td>未</td><td>申</td><td>酉</td><td>戌</td><td>亥</td></tr>
-    <tr><th>五行</th><td>阳水</td><td>阴土</td><td>阳木</td><td>阴木</td><td>阳土</td><td>阴火</td><td>阳火</td><td>阴土</td><td>阳金</td><td>阴金</td><td>阳土</td><td>阴水</td></tr>
-    <tr><th>生肖</th><td>鼠</td><td>牛</td><td>虎</td><td>兔</td><td>龙</td><td>蛇</td><td>马</td><td>羊</td><td>猴</td><td>鸡</td><td>狗</td><td>猪</td></tr>
-    <tr><th>时辰</th><td>23-1</td><td>1-3</td><td>3-5</td><td>5-7</td><td>7-9</td><td>9-11</td><td>11-13</td><td>13-15</td><td>15-17</td><td>17-19</td><td>19-21</td><td>21-23</td></tr>
-  </table>
-</div>
-
-<h3>1.3 九宫八卦方位</h3>
-<div class="card">
-  <p>奇门遁甲以<strong>后天八卦</strong>配<strong>洛书九宫</strong>作为空间框架。这是奇门盘的地盘基础，必须牢记。</p>
-  <div class="jiugong">
-    <div class="cell"><div class="gong-name">巽 四</div><div class="gong-num">东南</div><div style="font-size:0.7rem;color:#6b9b5b">木·杜门</div></div>
-    <div class="cell"><div class="gong-name">离 九</div><div class="gong-num">正南</div><div style="font-size:0.7rem;color:#c94b4b">火·景门</div></div>
-    <div class="cell"><div class="gong-name">坤 二</div><div class="gong-num">西南</div><div style="font-size:0.7rem;color:#c9a44b">土·死门</div></div>
-    <div class="cell"><div class="gong-name">震 三</div><div class="gong-num">正东</div><div style="font-size:0.7rem;color:#6b9b5b">木·伤门</div></div>
-    <div class="cell center"><div class="gong-name">中 五</div><div class="gong-num">中央</div><div style="font-size:0.7rem;color:#c9a44b">土·寄坤二</div></div>
-    <div class="cell"><div class="gong-name">兑 七</div><div class="gong-num">正西</div><div style="font-size:0.7rem;color:#c0c0c0">金·惊门</div></div>
-    <div class="cell"><div class="gong-name">艮 八</div><div class="gong-num">东北</div><div style="font-size:0.7rem;color:#c9a44b">土·生门</div></div>
-    <div class="cell"><div class="gong-name">坎 一</div><div class="gong-num">正北</div><div style="font-size:0.7rem;color:#4b8bc9">水·休门</div></div>
-    <div class="cell"><div class="gong-name">乾 六</div><div class="gong-num">西北</div><div style="font-size:0.7rem;color:#c0c0c0">金·开门</div></div>
   </div>
-  <p style="text-align:center;color:var(--text-dim);font-size:0.8rem;margin-top:0.5rem;">
-  口诀：戴九履一，左三右七，四二为肩，八六为足（洛书数）；坎一坤二震三巽四，中五乾六兑七艮八离九。
+  <p style="font-size:0.85rem;color:var(--dim);text-align:center;">记忆技巧：<strong>相生</strong>——木燃生火，火烧成土，土中出金，金熔成水，水润生木<br>
+  <strong>相克</strong>——木破土出，土挡水流，水灭火势，火熔金属，金断草木</p>
+</div>
+
+<h2>1.3 天干地支</h2>
+<div class="card">
+  <p><span class="tooltip" data-tip="天干地支是中国古代的计时符号。十天干配十二地支，最小公倍数为60，形成六十甲子，用来记录年、月、日、时。">天干地支</span>是奇门遁甲的"字母表"。所有排盘操作都是在对天干地支进行排列组合。</p>
+  <h3>十天干</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>天干</th><td>甲</td><td>乙</td><td>丙</td><td>丁</td><td>戊</td><td>己</td><td>庚</td><td>辛</td><td>壬</td><td>癸</td></tr>
+    <tr><th>阴阳</th><td>阳</td><td>阴</td><td>阳</td><td>阴</td><td>阳</td><td>阴</td><td>阳</td><td>阴</td><td>阳</td><td>阴</td></tr>
+    <tr><th>五行</th><td style="color:#6b9b5b">木</td><td style="color:#6b9b5b">木</td><td style="color:#c94b4b">火</td><td style="color:#c94b4b">火</td><td style="color:#c9a44b">土</td><td style="color:#c9a44b">土</td><td style="color:#c0c0c0">金</td><td style="color:#c0c0c0">金</td><td style="color:#4b8bc9">水</td><td style="color:#4b8bc9">水</td></tr>
+    <tr><th>奇门角色</th><td>元帅<br>(遁藏)</td><td>日奇<br>(参谋)</td><td>月奇<br>(武官)</td><td>星奇<br>(后勤)</td><td>天门<br>(资本)</td><td>地户<br>(坟墓)</td><td>仇敌<br>(阻隔)</td><td>罪人<br>(错误)</td><td>天牢<br>(流动)</td><td>天藏<br>(私密)</td></tr>
+  </table></div>
+
+  <h3>十二地支</h3>
+  <div class="tbl-wrap"><table>
+    <tr><th>地支</th><td>子</td><td>丑</td><td>寅</td><td>卯</td><td>辰</td><td>巳</td><td>午</td><td>未</td><td>申</td><td>酉</td><td>戌</td><td>亥</td></tr>
+    <tr><th>五行</th><td style="color:#4b8bc9">水</td><td style="color:#c9a44b">土</td><td style="color:#6b9b5b">木</td><td style="color:#6b9b5b">木</td><td style="color:#c9a44b">土</td><td style="color:#c94b4b">火</td><td style="color:#c94b4b">火</td><td style="color:#c9a44b">土</td><td style="color:#c0c0c0">金</td><td style="color:#c0c0c0">金</td><td style="color:#c9a44b">土</td><td style="color:#4b8bc9">水</td></tr>
+    <tr><th>时辰</th><td>23-1</td><td>1-3</td><td>3-5</td><td>5-7</td><td>7-9</td><td>9-11</td><td>11-13</td><td>13-15</td><td>15-17</td><td>17-19</td><td>19-21</td><td>21-23</td></tr>
+  </table></div>
+  <p style="font-size:0.85rem;color:var(--ac);margin-top:0.5rem;">关键：记住十天干在奇门中的"角色"。甲是元帅要隐藏起来（所以叫"遁甲"），乙丙丁是三支奇兵，戊己庚辛壬癸是六支仪仗队。</p>
+</div>
+
+<h2>1.4 九宫八卦</h2>
+<div class="card">
+  <p><span class="tooltip" data-tip="九宫来自洛书——一个三阶幻方。后天八卦是与方位、季节对应的一套符号系统。奇门遁甲将二者结合，构成地盘的基础框架。">九宫八卦</span>是奇门盘的"棋盘"。九宫来自洛书，八卦来自易经。二者组合，构成了地盘的基本框架。</p>
+
+  <div class="jg-grid">
+    <div class="jg-cell"><div class="nm">巽 四</div><div class="sub">东南·木</div><div style="font-size:0.72rem;color:#6b9b5b">杜门·天辅</div></div>
+    <div class="jg-cell"><div class="nm">离 九</div><div class="sub">正南·火</div><div style="font-size:0.72rem;color:#c94b4b">景门·天英</div></div>
+    <div class="jg-cell"><div class="nm">坤 二</div><div class="sub">西南·土</div><div style="font-size:0.72rem;color:#c9a44b">死门·天芮</div></div>
+    <div class="jg-cell"><div class="nm">震 三</div><div class="sub">正东·木</div><div style="font-size:0.72rem;color:#6b9b5b">伤门·天冲</div></div>
+    <div class="jg-cell ctr"><div class="nm">中 五</div><div class="sub">中央·土</div><div style="font-size:0.72rem;color:#c9a44b">天禽(寄坤二)</div></div>
+    <div class="jg-cell"><div class="nm">兑 七</div><div class="sub">正西·金</div><div style="font-size:0.72rem;color:#c0c0c0">惊门·天柱</div></div>
+    <div class="jg-cell"><div class="nm">艮 八</div><div class="sub">东北·土</div><div style="font-size:0.72rem;color:#c9a44b">生门·天任</div></div>
+    <div class="jg-cell"><div class="nm">坎 一</div><div class="sub">正北·水</div><div style="font-size:0.72rem;color:#4b8bc9">休门·天蓬</div></div>
+    <div class="jg-cell"><div class="nm">乾 六</div><div class="sub">西北·金</div><div style="font-size:0.72rem;color:#c0c0c0">开门·天心</div></div>
+  </div>
+
+  <p style="text-align:center;color:var(--dim);font-size:0.82rem;margin-top:0.5rem;">
+  洛书口诀：<strong>戴九履一，左三右七，四二为肩，八六为足</strong>（五居中央）<br>
+  八卦与宫的对应关系是固定的，必须像乘法口诀一样记住。
   </p>
 </div>
-
-<!-- ================================================================================== -->
-<!-- 第2章：奇门盘结构 -->
-<!-- ================================================================================== -->
-<h2 id="structure">二、奇门盘结构</h2>
-<div class="card">
-  <p>奇门遁甲盘由<strong>四层</strong>构成，从下到上依次为：</p>
-  <table>
-    <tr><th>层次</th><th>名称</th><th>代表</th><th>组成元素</th><th>变化规律</th></tr>
-    <tr><td>底层</td><td style="color:var(--accent)">地盘</td><td>地利</td><td>九宫八卦 + 三奇六仪</td><td>五天一局，18局（阳遁9局+阴遁9局）</td></tr>
-    <tr><td>二层</td><td style="color:var(--blue)">天盘</td><td>天时</td><td>九星（蓬任冲辅英芮柱心禽）</td><td>一个时辰换一个宫位（随时干转）</td></tr>
-    <tr><td>三层</td><td style="color:var(--green)">人盘</td><td>人和</td><td>八门（休生伤杜景死惊开）</td><td>一个时辰换一个宫位（随时支转）</td></tr>
-    <tr><td>顶层</td><td style="color:var(--red)">神盘</td><td>神助</td><td>八神（值符螣蛇太阴六合白虎玄武九地九天）</td><td>随值符星转动</td></tr>
-  </table>
 </div>
 
-<h3>2.1 三奇六仪与六甲遁藏</h3>
+<!-- ================================================================================== -->
+<!-- 第2页：盘结构 -->
+<!-- ================================================================================== -->
+<div class="page" id="p2">
+<h1>二、奇门盘结构</h1>
+<p style="text-align:center;color:var(--dim);margin-bottom:1.5rem;">奇门盘就像一座四层楼，从地基到顶层，各有不同的含义。</p>
+
+<h2>2.1 四层盘概览</h2>
 <div class="card">
-  <p>奇门遁甲的"<strong>遁甲</strong>"，就是把元帅<strong>甲</strong>隐藏起来。六甲大将分别隐藏在六仪之下：</p>
-  <table>
+  <p>奇门遁甲盘由四层叠加而成，</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>层次</th><th>名称</th><th>代表含义</th><th>组成</th><th>一句话理解</th></tr>
+    <tr><td>底</td><td style="color:var(--dim)">地盘</td><td>地利（环境）</td><td>九宫+三奇六仪</td><td>「棋盘的格子」——基础框架，五天一换</td></tr>
+    <tr><td>二</td><td style="color:var(--bl)">天盘</td><td>天时（时机）</td><td>九星</td><td>「天上的星星」——每时辰转动一次</td></tr>
+    <tr><td>三</td><td style="color:var(--ac)">人盘</td><td>人和（人事）</td><td>八门</td><td>「人的行动」——每时辰转动一次</td></tr>
+    <tr><td>顶</td><td style="color:var(--rd)">神盘</td><td>神助（外力）</td><td>八神</td><td>「看不见的力量」——随天盘转动</td></tr>
+  </table></div>
+</div>
+
+<h2>2.2 地盘：棋盘本身</h2>
+<div class="card">
+  <p>地盘由九宫八卦 <strong>+</strong> 三奇六仪组成。九宫八卦位置永远不变，三奇六仪<strong>每五天换一种排列方式</strong>。</p>
+
+  <h3>三奇六仪的固定队形</h3>
+  <p>九个天干（甲藏起来了）在九宫中按<strong>固定顺序</strong>排列：</p>
+  <p style="text-align:center;font-size:1.2rem;color:var(--ac);letter-spacing:0.3rem;margin:1rem 0;">
+  <strong>戊 → 己 → 庚 → 辛 → 壬 → 癸 → 丁 → 丙 → 乙</strong>
+  </p>
+  <p>这个顺序<strong>永远不变</strong>，像一条首尾相连的链条。把它放进九宫格时有两种走法：</p>
+  <ul>
+    <li><strong style="color:#c94b4b;">阳遁</strong>：从一宫→九宫顺着走（戊在几宫，就是阳遁几局）</li>
+    <li><strong style="color:#4b8bc9;">阴遁</strong>：从九宫→一宫倒着走（戊在几宫，就是阴遁几局）</li>
+  </ul>
+  <p style="color:var(--ac);font-size:0.9rem;">一句话：阳遁顺排，阴遁逆排。戊落在哪一宫，就叫"几局"。</p>
+</div>
+
+<h2>2.3 六甲遁藏</h2>
+<div class="card">
+  <p>"<strong>遁甲</strong>"就是把元帅<strong>甲</strong>藏起来。六甲（甲子、甲戌、甲申、甲午、甲辰、甲寅）分别藏在六仪之下：</p>
+  <div class="tbl-wrap"><table>
     <tr><th>六甲</th><td>甲子</td><td>甲戌</td><td>甲申</td><td>甲午</td><td>甲辰</td><td>甲寅</td></tr>
-    <tr><th>隐蔽于</th><td>戊</td><td>己</td><td>庚</td><td>辛</td><td>壬</td><td>癸</td></tr>
+    <tr><th>藏于</th><td>戊</td><td>己</td><td>庚</td><td>辛</td><td>壬</td><td>癸</td></tr>
     <tr><th>合称</th><td>甲子戊</td><td>甲戌己</td><td>甲申庚</td><td>甲午辛</td><td>甲辰壬</td><td>甲寅癸</td></tr>
-  </table>
-  <p>三奇六仪的<strong>固定队形</strong>（太极圈顺序）为：<strong>戊→己→庚→辛→壬→癸→丁→丙→乙→戊</strong>（首尾相连）</p>
-  <p>阳遁：从一宫到九宫<strong>顺排</strong>（戊在1,己在2,...丁在7,丙在8,乙在9）<br>
-     阴遁：从一宫到九宫<strong>逆排</strong>（戊在9,己在8,...丁在3,丙在2,乙在1）</p>
-  <p style="color:var(--accent)">核心：甲子戊落在几宫，就是几局。阳遁一局=甲子戊在一宫；阴遁九局=甲子戊在九宫。</p>
+    <tr><th>角色</th><td>元帅</td><td>大将</td><td>大将</td><td>大将</td><td>大将</td><td>大将</td></tr>
+  </table></div>
+  <p style="font-size:0.85rem;color:var(--dim);">十个时辰为一旬，一旬由一甲大将带班。比如"甲子旬"就是甲子戊在地盘某宫值班十个时辰。</p>
+</div>
+
+<h2>2.4 天盘、人盘、神盘如何转动</h2>
+<div class="card">
+  <p>地盘五天才换一次，而天盘和人盘<strong>每个时辰</strong>都在转动。转动规则：</p>
+  <div class="step"><div class="step-num">1</div><div><strong>找旬首</strong>：看当前时辰属于六甲中哪一甲的旬（如丁巳时→甲寅旬）</div></div>
+  <div class="step"><div class="step-num">2</div><div><strong>找值符值使</strong>：旬首在地盘的哪个宫 → 该宫对应的星就是<span style="color:var(--bl)">值符（值班的星）</span>，对应的门就是<span style="color:var(--ac)">值使（值班的门）</span></div></div>
+  <div class="step"><div class="step-num">3</div><div><strong>天盘随「时干」转</strong>：值符星跟着时辰的天干走。时干在地盘哪个宫，值符就转到哪个宫</div></div>
+  <div class="step"><div class="step-num">4</div><div><strong>人盘随「时支」转</strong>：值使门跟着时辰的地支走，从旬首地支开始数到当前地支，阳遁顺数、阴遁逆数</div></div>
+  <div class="step"><div class="step-num">5</div><div><strong>神盘随值符</strong>：小值符（八神之首）永远跟大值符（值班的星）走，落在同一个宫</div></div>
+</div>
 </div>
 
 <!-- ================================================================================== -->
-<!-- 第3章：关键符号详解 -->
+<!-- 第3页：符号详解 -->
 <!-- ================================================================================== -->
-<h2 id="symbols">三、关键符号详解</h2>
+<div class="page" id="p3">
+<h1>三、符号详解</h1>
+<p style="text-align:center;color:var(--dim);margin-bottom:1.5rem;">奇门盘中每个宫都会同时出现星、门、神、奇仪四类符号。理解每个符号的含义是断盘的基础。</p>
 
-<h3>3.1 八门</h3>
-<div class="card">
-  <table>
-    <tr><th>门</th><th>五行</th><th>方位</th><th>对应宫</th><th>吉凶</th><th>所主</th></tr>
-    <tr><td>休门</td><td>水</td><td>北</td><td>坎一宫</td><td class="ji">吉</td><td>见贵、休养、上官赴任</td></tr>
-    <tr><td>生门</td><td>土</td><td>东北</td><td>艮八宫</td><td class="ji">吉</td><td>求财、房产、种植、出行</td></tr>
-    <tr><td>伤门</td><td>木</td><td>东</td><td>震三宫</td><td class="xiong">凶</td><td>索债、捕盗、渔猎</td></tr>
-    <tr><td>杜门</td><td>木</td><td>东南</td><td>巽四宫</td><td class="ping">中平</td><td>躲灾避难、保密、技术</td></tr>
-    <tr><td>景门</td><td>火</td><td>南</td><td>离九宫</td><td class="ping">中平</td><td>文书、献策、宴饮</td></tr>
-    <tr><td>死门</td><td>土</td><td>西南</td><td>坤二宫</td><td class="xiong">凶</td><td>送葬、刑戮、捕猎</td></tr>
-    <tr><td>惊门</td><td>金</td><td>西</td><td>兑七宫</td><td class="xiong">凶</td><td>官讼、惊恐、赌博</td></tr>
-    <tr><td>开门</td><td>金</td><td>西北</td><td>乾六宫</td><td class="ji">吉</td><td>开业、远行、征战、婚娶</td></tr>
-  </table>
-  <p style="color:var(--text-dim);font-size:0.85rem">门克宫称为"迫"，宫克门称为"制"。吉门被克吉不就，凶门被克凶不起。</p>
+<div class="inl-tabs" id="symTabs">
+  <button class="inl-tab active" data-stab="s1">八门</button>
+  <button class="inl-tab" data-stab="s2">九星</button>
+  <button class="inl-tab" data-stab="s3">八神</button>
+  <button class="inl-tab" data-stab="s4">十干克应</button>
 </div>
 
-<h3>3.2 九星</h3>
+<!-- 八门 -->
+<div class="inl-panel active" id="s1">
 <div class="card">
-  <table>
-    <tr><th>星</th><th>别名</th><th>五行</th><th>对应宫</th><th>吉凶</th><th>所主</th></tr>
-    <tr><td>天蓬</td><td>贪狼</td><td>水</td><td>坎一</td><td class="xiong">凶</td><td>盗贼、修筑、屯守</td></tr>
-    <tr><td>天芮</td><td>巨门</td><td>土</td><td>坤二</td><td class="xiong">凶</td><td>疾病（用神）、交友</td></tr>
-    <tr><td>天冲</td><td>禄存</td><td>木</td><td>震三</td><td class="ping">次吉</td><td>出师、征伐、农事</td></tr>
-    <tr><td>天辅</td><td>文曲</td><td>木</td><td>巽四</td><td class="ji">吉</td><td>文化教育、升学考试</td></tr>
-    <tr><td>天禽</td><td>廉贞</td><td>土</td><td>中五</td><td class="ji">吉</td><td>百事皆宜（寄坤二宫）</td></tr>
-    <tr><td>天心</td><td>武曲</td><td>金</td><td>乾六</td><td class="ji">吉</td><td>领导、军事、治病配药</td></tr>
-    <tr><td>天柱</td><td>破军</td><td>金</td><td>兑七</td><td class="xiong">凶</td><td>破坏、惊恐、训练固守</td></tr>
-    <tr><td>天任</td><td>左辅</td><td>土</td><td>艮八</td><td class="ji">吉</td><td>安民、教化、商贾嫁娶</td></tr>
-    <tr><td>天英</td><td>右弼</td><td>火</td><td>离九</td><td class="ping">中平</td><td>谋划献策、不宜求财</td></tr>
-  </table>
+  <p><span class="tooltip" data-tip="八门代表人事，即人的行动和状态。开门、休门、生门为三吉门；死门、惊门、伤门为三凶门；杜门、景门为中平。但最终吉凶还要看门与所在宫的五行生克关系。">八门</span>代表人事活动的八种状态。落在不同的宫，吉凶效果不同。</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>门</th><th>宫位</th><th>方位</th><th>五行</th><th>吉凶</th><th>宜</th><th>忌</th></tr>
+    <tr><td><strong>休门</strong></td><td>坎一</td><td>北</td><td>水</td><td class="ji">吉</td><td>见贵人、休养、谈判</td><td>行刑断狱</td></tr>
+    <tr><td><strong>生门</strong></td><td>艮八</td><td>东北</td><td>土</td><td class="ji">吉</td><td>求财、房产、种植</td><td>埋葬丧葬</td></tr>
+    <tr><td><strong>伤门</strong></td><td>震三</td><td>东</td><td>木</td><td class="xiong">凶</td><td>讨债、捕盗、渔猎</td><td>经商、出行</td></tr>
+    <tr><td><strong>杜门</strong></td><td>巽四</td><td>东南</td><td>木</td><td class="ping">中平</td><td>躲藏、保密、技术</td><td>大部分事</td></tr>
+    <tr><td><strong>景门</strong></td><td>离九</td><td>南</td><td>火</td><td class="ping">中平</td><td>文书、献策、宴饮</td><td>求财</td></tr>
+    <tr><td><strong>死门</strong></td><td>坤二</td><td>西南</td><td>土</td><td class="xiong">凶</td><td>送葬、刑戮、捕猎</td><td>一切吉事</td></tr>
+    <tr><td><strong>惊门</strong></td><td>兑七</td><td>西</td><td>金</td><td class="xiong">凶</td><td>诉讼、设疑、赌博</td><td>婚嫁、出行</td></tr>
+    <tr><td><strong>开门</strong></td><td>乾六</td><td>西北</td><td>金</td><td class="ji">吉</td><td>开业、远行、婚娶</td><td>—</td></tr>
+  </table></div>
+  <p style="font-size:0.85rem;color:var(--dim);">门与宫的生克口诀：<strong>吉门克宫吉不就，凶门克宫事更凶；吉门被克吉不就，凶门被克凶不起。</strong></p>
+</div>
 </div>
 
-<h3>3.3 八神</h3>
+<!-- 九星 -->
+<div class="inl-panel" id="s2">
 <div class="card">
-  <table>
-    <tr><th>神</th><th>五行属性</th><th>吉凶</th><th>性质</th></tr>
-    <tr><td>值符</td><td>木（青龙）</td><td class="ji">吉</td><td>八神之首，百恶消散；天乙之神</td></tr>
-    <tr><td>螣蛇</td><td>火</td><td class="xiong">凶</td><td>虚诈之神，惊恐怪异，口舌毒辣</td></tr>
-    <tr><td>太阴</td><td>金（阴）</td><td class="ji">吉</td><td>荫护之神，密谋策划，避难藏兵</td></tr>
-    <tr><td>六合</td><td>木</td><td class="ji">吉</td><td>护卫之神，婚姻交易，谈判中介</td></tr>
-    <tr><td>白虎</td><td>金</td><td class="xiong">凶</td><td>凶煞之神，兵戈争斗，病死伤灾</td></tr>
-    <tr><td>玄武</td><td>水</td><td class="xiong">凶</td><td>奸谗小盗，盗贼逃亡，口舌之事</td></tr>
-    <tr><td>九地</td><td>土（坤）</td><td class="ji">吉</td><td>坚牢之神，柔顺安静，屯兵固守</td></tr>
-    <tr><td>九天</td><td>金（乾）</td><td class="ji">吉</td><td>威悍之神，刚强好动，扬兵布阵</td></tr>
-  </table>
-  <p style="color:var(--text-dim);font-size:0.85rem">阳遁顺排：值符→螣蛇→太阴→六合→白虎→玄武→九地→九天（顺时针）<br>
-  阴遁逆排：同上顺序，逆时针方向</p>
+  <p><span class="tooltip" data-tip="九星代表天时，即天体运行的影响。天心、天任、天禽、天辅为四吉星；天蓬、天芮、天柱为三凶星；天冲次吉；天英中平。九星的旺衰取决于它对地盘宫的作用，而非自身。">九星</span>代表天体运行对人事的影响，也常用来判断人的先天性格。</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>星</th><th>别名</th><th>宫位</th><th>五行</th><th>吉凶</th><th>主事</th></tr>
+    <tr><td>天蓬</td><td>贪狼</td><td>坎一</td><td>水</td><td class="xiong">凶</td><td>盗贼、大水、冒险</td></tr>
+    <tr><td>天芮</td><td>巨门</td><td>坤二</td><td>土</td><td class="xiong">凶</td><td>疾病（预测疾病必看）</td></tr>
+    <tr><td>天冲</td><td>禄存</td><td>震三</td><td>木</td><td class="ping">次吉</td><td>军事、农事、行动</td></tr>
+    <tr><td>天辅</td><td>文曲</td><td>巽四</td><td>木</td><td class="ji">吉</td><td>文化、考试、教育</td></tr>
+    <tr><td>天禽</td><td>廉贞</td><td>中五</td><td>土</td><td class="ji">吉</td><td>百事皆宜（寄坤二宫）</td></tr>
+    <tr><td>天心</td><td>武曲</td><td>乾六</td><td>金</td><td class="ji">吉</td><td>领导、医疗、策划</td></tr>
+    <tr><td>天柱</td><td>破军</td><td>兑七</td><td>金</td><td class="xiong">凶</td><td>破坏、毁折、口舌</td></tr>
+    <tr><td>天任</td><td>左辅</td><td>艮八</td><td>土</td><td class="ji">吉</td><td>农事、商贾、安稳</td></tr>
+    <tr><td>天英</td><td>右弼</td><td>离九</td><td>火</td><td class="ping">中平</td><td>文书、火光、血光</td></tr>
+  </table></div>
+</div>
 </div>
 
-<h3>3.4 十干克应（常用格局）</h3>
+<!-- 八神 -->
+<div class="inl-panel" id="s3">
 <div class="card">
-  <p>天盘天干与地盘天干相遇，形成特定格局组合。以下是预测中常用的格局：</p>
-  <div class="tabs" id="keYingTabs">
-    <button class="tab-btn active" data-tab="jy-jige">吉格</button>
-    <button class="tab-btn" data-tab="jy-xiongge">凶格</button>
-    <button class="tab-btn" data-tab="jy-such">速查表</button>
+  <p><span class="tooltip" data-tip="八神代表看不见的神秘力量。值符是八神之首，所到之处百恶消散。阳遁八神顺时针排列，阴遁逆时针排列。">八神</span>代表自然界中看不见的能量场，吉凶判断的重要参考。</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>神</th><th>性质</th><th>吉凶</th><th>代表意义</th></tr>
+    <tr><td><strong>值符</strong></td><td>木(青龙)</td><td class="ji">吉</td><td>八神之首，百恶消散。临之如得贵人相助。</td></tr>
+    <tr><td>螣蛇</td><td>火</td><td class="xiong">凶</td><td>虚诈不实，惊恐怪异。临之事情反复、有诈。</td></tr>
+    <tr><td>太阴</td><td>金(阴)</td><td class="ji">吉</td><td>荫佑庇护，利于密谋策划。</td></tr>
+    <tr><td>六合</td><td>木</td><td class="ji">吉</td><td>婚姻交易、中介撮合。临之利于合作。</td></tr>
+    <tr><td>白虎</td><td>金</td><td class="xiong">凶</td><td>凶杀打斗、疾病死伤、交通事故。</td></tr>
+    <tr><td>玄武</td><td>水</td><td class="xiong">凶</td><td>盗贼、诈骗、口舌是非、偷情。</td></tr>
+    <tr><td>九地</td><td>土(坤)</td><td class="ji">吉</td><td>稳固安静，利于屯守、播种。</td></tr>
+    <tr><td>九天</td><td>金(乾)</td><td class="ji">吉</td><td>积极主动，利于进攻、远行。</td></tr>
+  </table></div>
+</div>
+</div>
+
+<!-- 十干克应 -->
+<div class="inl-panel" id="s4">
+<div class="card">
+  <p><span class="tooltip" data-tip="十干克应指天盘天干与地盘天干相遇时产生的特定格局组合。这是断盘时最重要的判断依据。比如戊+丙叫「青龙返首」大吉；乙+辛叫「青龙逃走」主破财人亡。">十干克应</span>是断盘的核心依据 —— 天盘天干与地盘天干相遇时产生的64种固定格局。</p>
+  <div class="inl-tabs" id="keYingTabs2">
+    <button class="inl-tab active" data-ktab="kj1">常见吉格</button>
+    <button class="inl-tab" data-ktab="kj2">常见凶格</button>
+    <button class="inl-tab" data-ktab="kj3">完整速查表</button>
   </div>
-  <div class="tab-panel active" id="jy-jige">
-    <table>
-      <tr><th>格局名</th><th>组合</th><th>说明</th></tr>
+  <div class="inl-panel active" id="kj1">
+    <div class="tbl-wrap"><table>
+      <tr><th>格局名</th><th>组合</th><th>含义</th></tr>
       <tr><td>青龙返首</td><td>戊+丙</td><td>大吉大利，所谋可成</td></tr>
       <tr><td>飞鸟跌穴</td><td>丙+戊</td><td>百事吉，可谋大事</td></tr>
       <tr><td>青龙转光</td><td>丁+戊</td><td>官人升迁，常人威昌</td></tr>
       <tr><td>青龙耀明</td><td>戊+丁</td><td>见贵人求功名吉利</td></tr>
-      <tr><td>奇仪相佐</td><td>乙+丁</td><td>最利文书考试</td></tr>
+      <tr><td>奇仪相佐</td><td>乙+丁</td><td>最利文书、考试</td></tr>
       <tr><td>日月并行</td><td>丙+乙</td><td>公私皆吉</td></tr>
-      <tr><td>天遁</td><td>丙+丁（得吉门）</td><td>贵人相助</td></tr>
-      <tr><td>地遁</td><td>乙+己（得生开二门）</td><td>隐蔽藏形</td></tr>
-      <tr><td>人遁</td><td>丁+乙</td><td>贵人加官，婚财有喜</td></tr>
-      <tr><td>青龙和会</td><td>戊+乙</td><td>门吉则吉，门凶则凶</td></tr>
-    </table>
+      <tr><td>天遁</td><td>丙+丁+吉门</td><td>贵人相助</td></tr>
+      <tr><td>人遁</td><td>丁+乙</td><td>加官晋爵、婚财有喜</td></tr>
+    </table></div>
   </div>
-  <div class="tab-panel" id="jy-xiongge">
-    <table>
-      <tr><th>格局名</th><th>组合</th><th>说明</th></tr>
-      <tr><td>青龙逃走</td><td>乙+辛</td><td>人亡财破，测婚女逃男</td></tr>
-      <tr><td>白虎猖狂</td><td>辛+乙</td><td>主大风、争斗、家败人亡</td></tr>
+  <div class="inl-panel" id="kj2">
+    <div class="tbl-wrap"><table>
+      <tr><th>格局名</th><th>组合</th><th>含义</th></tr>
+      <tr><td>青龙逃走</td><td>乙+辛</td><td>人亡财破，女逃男</td></tr>
+      <tr><td>白虎猖狂</td><td>辛+乙</td><td>大风、争斗、家败</td></tr>
       <tr><td>朱雀投江</td><td>丁+癸</td><td>文书口舌，音信沉溺</td></tr>
       <tr><td>螣蛇夭矫</td><td>癸+丁</td><td>口舌官司，火烛之灾</td></tr>
       <tr><td>荧入太白</td><td>丙+庚</td><td>门户破败，盗贼耗失</td></tr>
       <tr><td>太白入荧</td><td>庚+丙</td><td>贼必来，宜防</td></tr>
-      <tr><td>值符飞宫</td><td>戊+庚</td><td>吉事不吉，凶事更凶</td></tr>
-      <tr><td>青龙折足</td><td>戊+辛</td><td>招灾破财，足疾折伤</td></tr>
-      <tr><td>日奇入墓</td><td>乙+己</td><td>门凶必凶，暗昧不明</td></tr>
+      <tr><td>值符飞宫</td><td>戊+庚</td><td>吉不吉、凶更凶，换地方</td></tr>
+      <tr><td>青龙折足</td><td>戊+辛</td><td>破财、足疾、折伤</td></tr>
       <tr><td>贵人入狱</td><td>戊+己</td><td>公私皆不利</td></tr>
-    </table>
+      <tr><td>日奇入墓</td><td>乙+己</td><td>暗昧不明，门凶必凶</td></tr>
+    </table></div>
   </div>
-  <div class="tab-panel" id="jy-such">
-    <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0.5rem;">下表为天盘（行）加地盘（列）的克应速查，空格请查询完整克应表。</p>
-    <table style="font-size:0.75rem">
+  <div class="inl-panel" id="kj3">
+    <p style="font-size:0.85rem;color:var(--dim);margin-bottom:0.5rem;">天盘(行)加地盘(列)。空格请查阅完整克应表。</p>
+    <div class="tbl-wrap"><table style="font-size:0.75rem">
       <tr><th>↓天\地→</th><th>戊</th><th>己</th><th>庚</th><th>辛</th><th>壬</th><th>癸</th><th>丁</th><th>丙</th><th>乙</th></tr>
-      <tr><td>戊</td><td>伏吟</td><td>入狱</td><td>飞宫</td><td>折足</td><td>天牢</td><td>华盖</td><td>耀明</td><td>返首</td><td>和会</td></tr>
-      <tr><td>己</td><td>犬遇龙</td><td>逢鬼</td><td>刑格</td><td>游魂</td><td>地网</td><td>地刑</td><td>朱雀入墓</td><td>火悖</td><td>墓神</td></tr>
-      <tr><td>庚</td><td>飞宫</td><td>刑格</td><td>战格</td><td>白虎干格</td><td>小格</td><td>大格</td><td>破禄</td><td>太白入荧</td><td>日奇被刑</td></tr>
-      <tr><td>辛</td><td>折足</td><td>游魂</td><td>白虎出力</td><td>伏吟</td><td>网罗</td><td>华盖</td><td>朱雀入狱</td><td>谋事成</td><td>猖狂</td></tr>
-      <tr><td>壬</td><td>天牢</td><td>地网</td><td>小格</td><td>网罗</td><td>天牢</td><td>复吟</td><td>合</td><td>火入天罗</td><td>入地</td></tr>
-      <tr><td>癸</td><td>华盖</td><td>地刑</td><td>大格</td><td>华盖</td><td>复吟</td><td>伏吟</td><td>投江</td><td>悖师</td><td>华盖逢星</td></tr>
-      <tr><td>丁</td><td>转光</td><td>火入勾陈</td><td>文书阻隔</td><td>朱雀入狱</td><td>贵人恩诏</td><td>投江</td><td>星奇入太阴</td><td>星随月转</td><td>人遁</td></tr>
-      <tr><td>丙</td><td>鸟跌穴</td><td>火悖入刑</td><td>荧入太白</td><td>谋事成</td><td>火入天罗</td><td>华盖悖师</td><td>星奇朱雀</td><td>悖师</td><td>日月并行</td></tr>
-      <tr><td>乙</td><td>乙克戊</td><td>日奇入墓</td><td>日奇被刑</td><td>青龙逃走</td><td>日奇入地</td><td>华盖逢星</td><td>奇仪相佐</td><td>奇仪顺遂</td><td>日奇伏吟</td></tr>
-    </table>
+      <tr><td><b>戊</b></td><td>伏吟</td><td style="color:#c94b4b">入狱</td><td style="color:#c94b4b">飞宫</td><td style="color:#c94b4b">折足</td><td>天牢</td><td>华盖</td><td style="color:#5b9b5b">耀明</td><td style="color:#5b9b5b">返首</td><td>和会</td></tr>
+      <tr><td><b>己</b></td><td>犬遇龙</td><td style="color:#c94b4b">逢鬼</td><td style="color:#c94b4b">刑格</td><td>游魂</td><td style="color:#c94b4b">地网</td><td style="color:#c94b4b">地刑</td><td>雀入墓</td><td>火悖</td><td>墓神</td></tr>
+      <tr><td><b>庚</b></td><td style="color:#c94b4b">飞宫</td><td style="color:#c94b4b">刑格</td><td>战格</td><td style="color:#c94b4b">干格</td><td style="color:#c94b4b">小格</td><td style="color:#c94b4b">大格</td><td>破禄</td><td style="color:#c94b4b">白入荧</td><td>被刑</td></tr>
+      <tr><td><b>辛</b></td><td style="color:#c94b4b">折足</td><td>游魂</td><td>出力</td><td>伏吟</td><td>网罗</td><td>华盖</td><td style="color:#c94b4b">雀入狱</td><td>谋事成</td><td style="color:#c94b4b">猖狂</td></tr>
+      <tr><td><b>壬</b></td><td>天牢</td><td style="color:#c94b4b">地网</td><td style="color:#c94b4b">小格</td><td>网罗</td><td>天牢</td><td>复吟</td><td>合</td><td>火入天罗</td><td>入地</td></tr>
+      <tr><td><b>癸</b></td><td>华盖</td><td style="color:#c94b4b">地刑</td><td style="color:#c94b4b">大格</td><td>华盖</td><td>复吟</td><td>伏吟</td><td style="color:#c94b4b">投江</td><td>悖师</td><td>华盖逢星</td></tr>
+      <tr><td><b>丁</b></td><td style="color:#5b9b5b">转光</td><td>火入勾陈</td><td>文书阻隔</td><td style="color:#c94b4b">雀入狱</td><td>恩诏</td><td style="color:#c94b4b">投江</td><td>入太阴</td><td>星随月转</td><td style="color:#5b9b5b">人遁</td></tr>
+      <tr><td><b>丙</b></td><td style="color:#5b9b5b">鸟跌穴</td><td>火悖入刑</td><td style="color:#c94b4b">荧入太白</td><td>谋事成</td><td>火入天罗</td><td>悖师</td><td>星奇朱雀</td><td>悖师</td><td style="color:#5b9b5b">日月并行</td></tr>
+      <tr><td><b>乙</b></td><td>克戊</td><td style="color:#c94b4b">入墓</td><td>被刑</td><td style="color:#c94b4b">逃走</td><td>入地</td><td>华盖逢星</td><td style="color:#5b9b5b">相佐</td><td>顺遂</td><td>伏吟</td></tr>
+    </table></div>
   </div>
+</div>
+</div>
 </div>
 
 <!-- ================================================================================== -->
-<!-- 第4章：二十四节气用局 -->
+<!-- 第4页：节气用局 -->
 <!-- ================================================================================== -->
-<h2 id="jqtable">四、二十四节气用局</h2>
+<div class="page" id="p4">
+<h1>四、节气与定局</h1>
+<p style="text-align:center;color:var(--dim);margin-bottom:1.5rem;">第一步：根据日期确定用阳遁还是阴遁、几局。这是排盘的第一关。</p>
 
-<h3>4.1 用局总表</h3>
+<h2>4.1 为什么需要定局</h2>
 <div class="card">
-  <p>古人总结的用局歌诀，直接背诵即可快速定局：</p>
+  <p>一年365天，每5天（60个时辰）排完一种格局，全年共72种格局（18种基本格局×4次循环）。</p>
+  <p>24节气是定局的坐标：</p>
+  <ul>
+    <li><strong style="color:#c94b4b;">从冬至到芒种</strong> → 阳遁（阳气上升，顺排）</li>
+    <li><strong style="color:#4b8bc9;">从夏至到大雪</strong> → 阴遁（阴气上升，逆排）</li>
+  </ul>
+</div>
+
+<h2>4.2 用局歌诀（背诵）</h2>
+<div class="card">
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
     <div>
-      <p><strong style="color:var(--red)">阳遁歌</strong>（冬至→芒种）</p>
-      <pre style="font-size:0.85rem;color:var(--text-dim);line-height:1.8;">
-冬至惊蛰一七四，小寒二八五同推
-大寒春分三九六，芒种六三九是真
-谷雨小满五二八，立春八五二相随
-立夏清明四一七，九六三从雨水期</pre>
+      <p style="font-weight:bold;color:#c94b4b;">阳遁歌（冬至→芒种）</p>
+      <p style="font-size:0.88rem;line-height:2;">冬至惊蛰一七四<br>小寒二八五同推<br>大寒春分三九六<br>芒种六三九是真<br>谷雨小满五二八<br>立春八五二相随<br>立夏清明四一七<br>九六三从雨水期</p>
     </div>
     <div>
-      <p><strong style="color:var(--blue)">阴遁歌</strong>（夏至→大雪）</p>
-      <pre style="font-size:0.85rem;color:var(--text-dim);line-height:1.8;">
-夏至白露九三六，小暑八二五重逢
-秋分大暑七一四，立秋二五八流通
-霜降小雪五八二，大雪四七一相同
-处暑排来一四七，立冬寒露六九三</pre>
+      <p style="font-weight:bold;color:#4b8bc9;">阴遁歌（夏至→大雪）</p>
+      <p style="font-size:0.88rem;line-height:2;">夏至白露九三六<br>小暑八二五重逢<br>秋分大暑七一四<br>立秋二五八流通<br>霜降小雪五八二<br>大雪四七一相同<br>处暑排来一四七<br>立冬寒露六九三</p>
     </div>
   </div>
+  <p style="font-size:0.85rem;color:var(--ac);margin-top:0.5rem;">歌诀中的三个数字分别代表该节气的<strong>上元、中元、下元</strong>所用局数。比如「冬至一七四」：上元阳遁1局，中元阳遁7局，下元阳遁4局。</p>
 </div>
 
-<h3>4.2 完整用局表</h3>
-<div class="card">
-  <table style="font-size:0.82rem">
-    <tr><th>节气</th><th>阳遁</th><th>上元</th><th>中元</th><th>下元</th><th>节气</th><th>阴遁</th><th>上元</th><th>中元</th><th>下元</th></tr>
-    <tr><td>冬至</td><td>阳</td><td>1</td><td>7</td><td>4</td><td>夏至</td><td>阴</td><td>9</td><td>3</td><td>6</td></tr>
-    <tr><td>小寒</td><td>阳</td><td>2</td><td>8</td><td>5</td><td>小暑</td><td>阴</td><td>8</td><td>2</td><td>5</td></tr>
-    <tr><td>大寒</td><td>阳</td><td>3</td><td>9</td><td>6</td><td>大暑</td><td>阴</td><td>7</td><td>1</td><td>4</td></tr>
-    <tr><td>立春</td><td>阳</td><td>8</td><td>5</td><td>2</td><td>立秋</td><td>阴</td><td>2</td><td>5</td><td>8</td></tr>
-    <tr><td>雨水</td><td>阳</td><td>9</td><td>6</td><td>3</td><td>处暑</td><td>阴</td><td>1</td><td>4</td><td>7</td></tr>
-    <tr><td>惊蛰</td><td>阳</td><td>1</td><td>7</td><td>4</td><td>白露</td><td>阴</td><td>9</td><td>3</td><td>6</td></tr>
-    <tr><td>春分</td><td>阳</td><td>3</td><td>9</td><td>6</td><td>秋分</td><td>阴</td><td>7</td><td>1</td><td>4</td></tr>
-    <tr><td>清明</td><td>阳</td><td>4</td><td>1</td><td>7</td><td>寒露</td><td>阴</td><td>6</td><td>9</td><td>3</td></tr>
-    <tr><td>谷雨</td><td>阳</td><td>5</td><td>2</td><td>8</td><td>霜降</td><td>阴</td><td>5</td><td>8</td><td>2</td></tr>
-    <tr><td>立夏</td><td>阳</td><td>4</td><td>1</td><td>7</td><td>立冬</td><td>阴</td><td>6</td><td>9</td><td>3</td></tr>
-    <tr><td>小满</td><td>阳</td><td>5</td><td>2</td><td>8</td><td>小雪</td><td>阴</td><td>5</td><td>8</td><td>2</td></tr>
-    <tr><td>芒种</td><td>阳</td><td>6</td><td>3</td><td>9</td><td>大雪</td><td>阴</td><td>4</td><td>7</td><td>1</td></tr>
-  </table>
-</div>
+<h2>4.3 完整用局表</h2>
+<div class="card"><div class="tbl-wrap"><table style="font-size:0.82rem">
+  <tr><th>节气</th><th>遁</th><th>上</th><th>中</th><th>下</th><th>节气</th><th>遁</th><th>上</th><th>中</th><th>下</th></tr>
+  <tr><td>冬至</td><td style="color:#c94b4b">阳</td><td>1</td><td>7</td><td>4</td><td>夏至</td><td style="color:#4b8bc9">阴</td><td>9</td><td>3</td><td>6</td></tr>
+  <tr><td>小寒</td><td style="color:#c94b4b">阳</td><td>2</td><td>8</td><td>5</td><td>小暑</td><td style="color:#4b8bc9">阴</td><td>8</td><td>2</td><td>5</td></tr>
+  <tr><td>大寒</td><td style="color:#c94b4b">阳</td><td>3</td><td>9</td><td>6</td><td>大暑</td><td style="color:#4b8bc9">阴</td><td>7</td><td>1</td><td>4</td></tr>
+  <tr><td>立春</td><td style="color:#c94b4b">阳</td><td>8</td><td>5</td><td>2</td><td>立秋</td><td style="color:#4b8bc9">阴</td><td>2</td><td>5</td><td>8</td></tr>
+  <tr><td>雨水</td><td style="color:#c94b4b">阳</td><td>9</td><td>6</td><td>3</td><td>处暑</td><td style="color:#4b8bc9">阴</td><td>1</td><td>4</td><td>7</td></tr>
+  <tr><td>惊蛰</td><td style="color:#c94b4b">阳</td><td>1</td><td>7</td><td>4</td><td>白露</td><td style="color:#4b8bc9">阴</td><td>9</td><td>3</td><td>6</td></tr>
+  <tr><td>春分</td><td style="color:#c94b4b">阳</td><td>3</td><td>9</td><td>6</td><td>秋分</td><td style="color:#4b8bc9">阴</td><td>7</td><td>1</td><td>4</td></tr>
+  <tr><td>清明</td><td style="color:#c94b4b">阳</td><td>4</td><td>1</td><td>7</td><td>寒露</td><td style="color:#4b8bc9">阴</td><td>6</td><td>9</td><td>3</td></tr>
+  <tr><td>谷雨</td><td style="color:#c94b4b">阳</td><td>5</td><td>2</td><td>8</td><td>霜降</td><td style="color:#4b8bc9">阴</td><td>5</td><td>8</td><td>2</td></tr>
+  <tr><td>立夏</td><td style="color:#c94b4b">阳</td><td>4</td><td>1</td><td>7</td><td>立冬</td><td style="color:#4b8bc9">阴</td><td>6</td><td>9</td><td>3</td></tr>
+  <tr><td>小满</td><td style="color:#c94b4b">阳</td><td>5</td><td>2</td><td>8</td><td>小雪</td><td style="color:#4b8bc9">阴</td><td>5</td><td>8</td><td>2</td></tr>
+  <tr><td>芒种</td><td style="color:#c94b4b">阳</td><td>6</td><td>3</td><td>9</td><td>大雪</td><td style="color:#4b8bc9">阴</td><td>4</td><td>7</td><td>1</td></tr>
+</table></div></div>
 
-<h3>4.3 三元规律与拆补法</h3>
+<h2>4.4 如何确定某一天用哪一局</h2>
 <div class="card">
-  <p><strong>三元规律</strong>：每个节气15天，分上中下三元，每元5天（60时辰）。日干支的<strong>符头</strong>（每元第一天）规则：</p>
-  <table>
-    <tr><th>元</th><th>符头天干</th><th>符头地支</th><th>口诀</th></tr>
-    <tr><td>上元</td><td>甲或己</td><td>子、午、卯、酉</td><td>子午卯酉为上元</td></tr>
-    <tr><td>中元</td><td>甲或己</td><td>寅、申、巳、亥</td><td>寅申巳亥为中元</td></tr>
-    <tr><td>下元</td><td>甲或己</td><td>辰、戌、丑、未</td><td>辰戌丑未为下元</td></tr>
-  </table>
-  <p style="margin-top:0.8rem"><strong style="color:var(--accent)">拆补法</strong>：不用置闰。以交节时刻为界，进什么节气就用该节气对应的局。日干支符头定上中下元。交节当天元数不满五天的为"残局"，到下元用完后再回来"补"。此法简便，符合自然规律。</p>
-</div>
-
-<!-- ================================================================================== -->
-<!-- 第5章：排盘起局 -->
-<!-- ================================================================================== -->
-<h2 id="paipan">五、排盘起局</h2>
-
-<div class="card">
-  <p>掌握了以上知识，就可以开始手动排盘。时家奇门起局共<strong>六步</strong>：</p>
+  <p>知道了节气用局表还不够，还需要知道当天属于<strong>上元、中元还是下元</strong>。</p>
+  <h3>三元判定规则</h3>
+  <p>看<span class="tooltip" data-tip="符头就是每元的「头一天」。日天干只要是甲或己，这天就是符头。一个节气15天，3个元，每个元的头一天天干必然是甲或己。">符头</span>（每元第一天的天干必须是甲或己）：</p>
+  <div class="tbl-wrap"><table>
+    <tr><th>元</th><th>符头日干支的地支</th><th>记忆</th></tr>
+    <tr><td>上元</td><td>子、午、卯、酉</td><td>四仲（每个季节中间一月）</td></tr>
+    <tr><td>中元</td><td>寅、申、巳、亥</td><td>四孟（每个季节第一个月）</td></tr>
+    <tr><td>下元</td><td>辰、戌、丑、未</td><td>四季（每个季节最后一个月）</td></tr>
+  </table></div>
+  <p style="margin-top:0.8rem;"><strong>使用方法</strong>：</p>
   <ol>
-    <li><strong>定局</strong>：根据日期，查节气→定阴阳遁→定上中下元→得局数</li>
-    <li><strong>布地盘</strong>：按"戊己庚辛壬癸丁丙乙"顺序，阳遁顺排，阴遁逆排</li>
-    <li><strong>找值符值使</strong>：根据时辰旬首在地盘的位置，对应天盘九星为值符，人盘八门为值使</li>
-    <li><strong>转天盘</strong>：值符星随时辰天干转，其余八星依次排布</li>
-    <li><strong>转人盘</strong>：值使门随时辰地支转，阳遁顺行，阴遁逆行</li>
-    <li><strong>布神盘</strong>：小值符随大值符，阳遁顺排，阴遁逆排</li>
+    <li>从当天日干支往前找最近的甲日或己日 → 符头</li>
+    <li>看符头地支属于哪一类 → 确定上/中/下元</li>
+    <li>结合节气用局表 → 得到局数</li>
   </ol>
 </div>
 
-<h3>5.1 排盘示例（书中案例）</h3>
+<h2>4.5 拆补法（推荐使用）</h2>
 <div class="card">
-  <p><strong>案例</strong>：1995年6月11日上午9:30（乙亥年壬午月癸酉日丁巳时）</p>
-  <p>步骤：</p>
-  <ol>
-    <li>癸酉日符头为己巳。芒种六三九，己巳到癸酉属芒种中元→<strong>阳遁三局</strong></li>
-    <li>地盘戊在三宫、己在四、庚在五、辛在六、壬在七、癸在八、丁在九、丙在一、乙在二</li>
-    <li>丁巳时属甲寅旬，甲寅癸在地盘八宫→天任星为值符，生门为值使</li>
-    <li>时干丁在九宫→值符天任星落九宫（癸+丁），其余八星依次排布</li>
-    <li>值使生门从八宫（寅时）起，阳遁顺数：卯9→辰1→巳2→生门落坤二宫</li>
-    <li>小值符随天任星落九宫，阳遁顺排八神</li>
-  </ol>
+  <p><span class="tooltip" data-tip="拆补法是「无闰派」的方法，不需要考虑复杂的置闰问题。原则很简单：节气一到就换局，日干支符头定元数。比起复杂的超神接气置闰法，拆补法更符合自然规律，也更方便使用。">拆补法</span>解决了节气与符头不完全对齐的问题：</p>
+  <ul>
+    <li><strong>不置闰</strong>：节气一到，立刻使用该节气的用局</li>
+    <li><strong>靠符头定元</strong>：仍按日干支符头定上中下元</li>
+    <li><strong>残局补全</strong>：如果交节当天元数不满5天，用完下元后再回头补</li>
+  </ul>
+  <p style="font-size:0.85rem;color:var(--dim);">拆补法免去了置闰的麻烦，本书推荐此法定局。排盘模拟器也使用拆补法。</p>
 </div>
-
-<h3>5.2 排盘格局展示</h3>
-<div class="qimen-grid" id="exampleGrid">
-  <div class="qcell"><div class="shen">九天</div><div class="men">开门</div><div class="xing">天蓬(丙)</div><div class="yi">地盘：己</div><div class="geju">丙+己</div><div class="gong-label">巽四</div></div>
-  <div class="qcell"><div class="shen">值符</div><div class="men">休门</div><div class="xing">天任(癸)</div><div class="yi">地盘：丁</div><div class="geju">癸+丁 蛇夭矫</div><div class="gong-label">离九</div></div>
-  <div class="qcell"><div class="shen">螣蛇</div><div class="men">生门</div><div class="xing">天冲(戊)</div><div class="yi">地盘：乙</div><div class="geju">戊+乙</div><div class="gong-label">坤二</div></div>
-  <div class="qcell"><div class="shen">九地</div><div class="men">惊门</div><div class="xing">天心(辛)</div><div class="yi">地盘：戊</div><div class="geju">辛+戊</div><div class="gong-label">震三</div></div>
-  <div class="qcell"><div class="gong-label" style="font-weight:bold;color:var(--accent)">中五<br>寄坤二</div><div class="xing">天禽</div><div class="yi">地盘：庚</div></div>
-  <div class="qcell"><div class="shen">太阴</div><div class="men">伤门</div><div class="xing">天辅(己)</div><div class="yi">地盘：壬</div><div class="geju">己+壬</div><div class="gong-label">兑七</div></div>
-  <div class="qcell"><div class="shen">玄武</div><div class="men">死门</div><div class="xing">天柱(壬)</div><div class="yi">地盘：癸</div><div class="geju">壬+癸</div><div class="gong-label">艮八</div></div>
-  <div class="qcell"><div class="shen">白虎</div><div class="men">景门</div><div class="xing">天芮(乙)天禽(庚)</div><div class="yi">地盘：丙</div><div class="geju">乙+丙 庚+丙</div><div class="gong-label">坎一</div></div>
-  <div class="qcell"><div class="shen">六合</div><div class="men">杜门</div><div class="xing">天英(丁)</div><div class="yi">地盘：辛</div><div class="geju">丁+辛</div><div class="gong-label">乾六</div></div>
 </div>
-<p style="text-align:center;color:var(--text-dim);font-size:0.8rem;">阳遁三局格局示例（乙亥 壬午 癸酉 丁巳时）</p>
 
 <!-- ================================================================================== -->
-<!-- 第6章：实战预测框架 -->
+<!-- 第5页：排盘起局 -->
 <!-- ================================================================================== -->
-<h2 id="practice">六、实战预测框架</h2>
+<div class="page" id="p5">
+<h1>五、排盘起局</h1>
+<p style="text-align:center;color:var(--dim);margin-bottom:1.5rem;">掌握了以上所有知识后，开始动手排盘。共六步。</p>
 
-<h3>6.1 各类预测用神速查</h3>
 <div class="card">
-  <table>
-    <tr><th>预测类别</th><th>主要用神</th><th>辅助用神</th><th>关键判断</th></tr>
-    <tr><td>考试求学</td><td>天辅星（考试）、景门（试卷）</td><td>日干（考生）、时干（结果）</td><td>天辅星得时得地则吉</td></tr>
-    <tr><td>疾病健康</td><td>天芮星（病神）</td><td>乙奇（医药）、天心星（医生）、日干（病人）</td><td>天芮落宫与日干生克关系</td></tr>
-    <tr><td>经营求财</td><td>日干（求测人）、时干（财）</td><td>生门（利润）、戊（资本）</td><td>日干与财星生克、生门旺相</td></tr>
-    <tr><td>出行出国</td><td>日干（出行人）、景门（道路）</td><td>九天（远行）、开门（顺利）</td><td>有无杜门死门阻隔、白虎玄武凶神</td></tr>
-    <tr><td>婚姻恋爱</td><td>乙奇（女方）、庚（男方）</td><td>六合（媒人/中介）、休门（家庭）</td><td>乙庚落宫生克关系</td></tr>
-    <tr><td>工作就业</td><td>开门（工作）、日干（求测人）</td><td>值符（上级）、时干（事体）</td><td>开门克日干则不利</td></tr>
-    <tr><td>怀孕分娩</td><td>坤宫（母）、天芮星（胎）</td><td>日干（母）、时干（子）</td><td>天芮与日干生克</td></tr>
-    <tr><td>官司诉讼</td><td>惊门（官司）、开门（法官）</td><td>值符（原告/有理方）、白虎（对方）</td><td>值符落宫是否克对方</td></tr>
-    <tr><td>行人走失</td><td>日干（寻人者）、时干（失者）</td><td>杜门（躲藏处）、六合（可能方位）</td><td>时干落宫定方位</td></tr>
-    <tr><td>刑事案件</td><td>玄武（盗贼）、白虎（凶犯）</td><td>伤门（捕盗方向）、六合（逃匿方向）</td><td>凶犯落宫与捕方生克</td></tr>
-  </table>
+  <h3>排盘六步法</h3>
+
+  <div class="step"><div class="step-num">1</div><div><strong>定局</strong><br>查日期 → 确定节气 → 确定阴阳遁和局数 → 确定上中下元。<br><em style="color:var(--dim);font-size:0.85rem;">例如：1995年6月11日，芒种中元 → 阳遁三局</em></div></div>
+
+  <div class="step"><div class="step-num">2</div><div><strong>布地盘三奇六仪</strong><br>按「戊己庚辛壬癸丁丙乙」顺序，阳遁从一宫顺排、阴遁从九宫逆排。<br><em style="color:var(--dim);font-size:0.85rem;">阳遁三局：戊(3)己(4)庚(5)辛(6)壬(7)癸(8)丁(9)丙(1)乙(2)</em></div></div>
+
+  <div class="step"><div class="step-num">3</div><div><strong>找旬首 → 找值符值使</strong><br>根据时辰干支确定旬首 → 旬首对应的六仪在地盘哪一宫 → 该宫对应的星为值符、门为值使。<br><em style="color:var(--dim);font-size:0.85rem;">丁巳时→甲寅旬→甲寅癸在地盘八宫→天任星值符、生门值使</em></div></div>
+
+  <div class="step"><div class="step-num">4</div><div><strong>转天盘（值符随时干）</strong><br>看时辰的天干在地盘哪一宫 → 值符星直接转到该宫 → 其余八星依次排列。<br><em style="color:var(--dim);font-size:0.85rem;">时干丁在九宫 → 天任星落九宫</em></div></div>
+
+  <div class="step"><div class="step-num">5</div><div><strong>转人盘（值使随时支）</strong><br>从旬首地支开始，数到时辰地支，阳遁顺数、阴遁逆数。<br><em style="color:var(--dim);font-size:0.85rem;">旬首寅在八宫→卯9→辰1→巳2→生门落坤二宫</em></div></div>
+
+  <div class="step"><div class="step-num">6</div><div><strong>布神盘</strong><br>小值符随大值符落同一宫 → 阳遁顺排、阴遁逆排八神。<br><em style="color:var(--dim);font-size:0.85rem;">值符天任在九宫→小值符也在九宫→顺排：螣蛇坤二、太阴兑七…</em></div></div>
 </div>
 
-<h3>6.2 判断思路流程</h3>
-<div class="card">
-  <ol>
-    <li><strong>明确问题</strong>：确定预测的具体事项和目标</li>
-    <li><strong>确定时间</strong>：精确到时辰的起局时间</li>
-    <li><strong>排盘布局</strong>：按阴阳遁规则排出天、地、人、神四盘</li>
-    <li><strong>选取用神</strong>：根据预测事项确定关键符号</li>
-    <li><strong>综合判断</strong>：
-      <ul>
-        <li>看用神落宫旺相休囚（得时得地为旺）</li>
-        <li>看用神与相关符号的生克关系</li>
-        <li>看用神所临之星、门、神</li>
-        <li>看有无吉格相助或凶格阻碍</li>
-      </ul>
-    </li>
-    <li><strong>定应期</strong>：根据用神落宫的生旺墓绝定时间远近</li>
-    <li><strong>给出结论</strong>：结合实际情况，给出预测结果和建议</li>
-  </ol>
+<h2>示例格局</h2>
+<p style="color:var(--dim);">以下为乙亥年壬午月癸酉日丁巳时·阳遁三局的完整排盘：</p>
+<div class="qm-grid">
+  <div class="qm-cell"><div class="shen">九天</div><div class="men">开门</div><div class="xing">天蓬(丙)</div><div class="yi">地盘己</div><div class="geju">丙+己</div><div class="gl">巽四</div></div>
+  <div class="qm-cell"><div class="shen">值符</div><div class="men">休门</div><div class="xing">天任(癸)</div><div class="yi">地盘丁</div><div class="geju" style="color:#c94b4b">癸+丁 蛇夭矫</div><div class="gl">离九</div></div>
+  <div class="qm-cell"><div class="shen">螣蛇</div><div class="men">生门</div><div class="xing">天冲(戊)</div><div class="yi">地盘乙</div><div class="geju">戊+乙</div><div class="gl">坤二</div></div>
+  <div class="qm-cell"><div class="shen">九地</div><div class="men">惊门</div><div class="xing">天心(辛)</div><div class="yi">地盘戊</div><div class="geju">辛+戊</div><div class="gl">震三</div></div>
+  <div class="qm-cell" style="opacity:0.5"><div style="font-weight:bold;color:var(--ac);font-size:0.75rem;">中五·寄坤二</div><div class="xing">天禽</div><div style="font-size:0.7rem;color:var(--dim)">地盘庚</div></div>
+  <div class="qm-cell"><div class="shen">太阴</div><div class="men">伤门</div><div class="xing">天辅(己)</div><div class="yi">地盘壬</div><div class="geju">己+壬</div><div class="gl">兑七</div></div>
+  <div class="qm-cell"><div class="shen">玄武</div><div class="men">死门</div><div class="xing">天柱(壬)</div><div class="yi">地盘癸</div><div class="geju">壬+癸</div><div class="gl">艮八</div></div>
+  <div class="qm-cell"><div class="shen">白虎</div><div class="men">景门</div><div class="xing">天芮(乙)天禽(庚)</div><div class="yi">地盘丙</div><div class="geju" style="color:#5b9b5b">乙+丙</div><div class="gl">坎一</div></div>
+  <div class="qm-cell"><div class="shen">六合</div><div class="men">杜门</div><div class="xing">天英(丁)</div><div class="yi">地盘辛</div><div class="geju" style="color:#c94b4b">丁+辛 雀入狱</div><div class="gl">乾六</div></div>
+</div>
 </div>
 
-<h3>6.3 案例解析</h3>
+<!-- ================================================================================== -->
+<!-- 第6页：实战框架 -->
+<!-- ================================================================================== -->
+<div class="page" id="p6">
+<h1>六、实战预测框架</h1>
+<p style="text-align:center;color:var(--dim);margin-bottom:1.5rem;">排好盘后如何判断？需要选取用神并分析符号之间的关系。</p>
+
+<h2>6.1 什么是用神</h2>
+<div class="card">
+  <p><span class="tooltip" data-tip="用神就是代表你所问事物的符号。比如问疾病，天芮星就是病神/用神；问考试，天辅星就是用神。选对用神是预测的第一步。">用神</span>是奇门盘中代表你所问事物的特定符号。选错用神，整个判断就失去了方向。</p>
+</div>
+
+<h2>6.2 常用用神速查</h2>
+<div class="card"><div class="tbl-wrap"><table>
+  <tr><th>预测事项</th><th>主要用神</th><th>含义</th><th>辅助参考</th></tr>
+  <tr><td>考试求学</td><td>天辅星、景门</td><td>文曲星=考试；景门=试卷成绩</td><td>日干(考生)、丁奇(文书)</td></tr>
+  <tr><td>疾病健康</td><td>天芮星</td><td>病神，代表疾病的性质与部位</td><td>乙奇(医药)、天心星(医生)</td></tr>
+  <tr><td>经营求财</td><td>戊(资本)、生门</td><td>戊=本钱；生门=利润</td><td>日干(求测人)、时干(时机)</td></tr>
+  <tr><td>出行出国</td><td>日干(出行人)</td><td>看落宫状态</td><td>景门(道路)、九天(远方)、开门(顺利)</td></tr>
+  <tr><td>婚姻恋爱</td><td>乙奇(女方)、庚(男方)</td><td>乙=妻、庚=夫</td><td>六合(媒人)、休门(家庭)</td></tr>
+  <tr><td>工作就业</td><td>开门(工作机会)</td><td>开门=事业之门</td><td>日干(求职者)、值符(领导)</td></tr>
+  <tr><td>官司诉讼</td><td>惊门(官司)、开门(法官)</td><td>看谁克谁</td><td>值符(有理方)、白虎(对方)</td></tr>
+  <tr><td>行人走失</td><td>时干(失者)</td><td>时干落宫=所在方位</td><td>杜门(躲藏处)、六合(方位)</td></tr>
+  <tr><td>刑事案件</td><td>玄武(盗贼)、白虎(凶犯)</td><td>凶犯落宫定方位</td><td>伤门(捕盗)、六合(逃匿)</td></tr>
+  <tr><td>怀孕分娩</td><td>坤宫(母腹)、天芮(胎)</td><td>看母子关系</td><td>日干(母)、时干(子)</td></tr>
+</table></div></div>
+
+<h2>6.3 判断思路</h2>
+<div class="card">
+  <div class="step"><div class="step-num">1</div><div><strong>排盘</strong>：根据时间排出完整奇门盘</div></div>
+  <div class="step"><div class="step-num">2</div><div><strong>选取用神</strong>：明确问什么事，选对应的符号</div></div>
+  <div class="step"><div class="step-num">3</div><div><strong>看落宫状态</strong>：用神落在哪个宫？该宫旺相还是休囚？</div></div>
+  <div class="step"><div class="step-num">4</div><div><strong>看生克关系</strong>：用神与其他相关符号的宫之间是生还是克？</div></div>
+  <div class="step"><div class="step-num">5</div><div><strong>看格局</strong>：宫内的十干克应、门宫关系、神煞</div></div>
+  <div class="step"><div class="step-num">6</div><div><strong>定应期</strong>：根据用神落宫判断事情发生的时间远近</div></div>
+</div>
+
+<h2>6.4 案例</h2>
 
 <div class="card">
-  <div class="card-header" style="cursor:pointer" onclick="this.nextElementSibling.classList.toggle('open');this.classList.toggle('open')">示例一：考试预测（书中案例）</div>
-  <div class="collapse-content">
-    <p><strong>背景</strong>：1997年8月24日卯时，叶梓铨女儿在美国参加医生统一考试，成绩优异被要求解释。</p>
-    <p><strong>格局</strong>：阳遁一局，值符天蓬星在坎一宫，值使休门在坤二宫</p>
-    <p><strong>用神</strong>：天辅星为考生，景门为考试，落离九宫</p>
-    <p><strong>判断</strong>：天辅星得时得地，景门旺相 → 成绩优异在前五名</p>
-    <p><strong>应期</strong>：阴历九月（阳历10月7日）得到承认</p>
-    <p><strong>结果</strong>：美国考试中心于1997年10月7日发出证书</p>
+  <div class="fold-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">考试预测（书中案例）</div>
+  <div class="fold-body">
+    <p>1997年8月24日卯时。阳遁一局，值符天蓬在坎一宫，值使休门在坤二宫。</p>
+    <p>用神：天辅星（考生）、景门（考试），二者均落离九宫。天辅得时得地，景门旺相 → 成绩优异在前五名。应期：阴历九月（10月7日）。实际：10月7日发出证书。</p>
   </div>
 </div>
 
 <div class="card">
-  <div class="card-header" style="cursor:pointer" onclick="this.nextElementSibling.classList.toggle('open');this.classList.toggle('open')">示例二：疾病预测</div>
-  <div class="collapse-content">
-    <p><strong>用神</strong>：天芮星为病神</p>
-    <p><strong>判断要点</strong>：</p>
-    <ul>
-      <li>天芮星落宫与日干的生克关系 —— 克日干病重，生日干病轻</li>
-      <li>病神所临之门 —— 死门加重，惊门惊恐，杜门阻塞</li>
-      <li>有无医药之星救援 —— 天任星、乙奇为医药</li>
-      <li>天芮落乾兑二宫（旺）则病难治；落震巽二宫（受克）则不药而愈</li>
-    </ul>
-    <p><strong>疾病定位</strong>：根据九宫方位判断病变部位（如落离宫主心脏/眼，落坎宫主肾/泌尿）。</p>
+  <div class="fold-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">疾病预测</div>
+  <div class="fold-body">
+    <p>用神：天芮星（病神）。看天芮落宫与日干（病人）的生克：克日干则病情重，生日干则病轻。天芮落乾兑二宫（旺）则难治；落震巽二宫（受克）则不药而愈。疾病定位：落离宫→心脏/眼；落坎宫→肾/泌尿。</p>
   </div>
 </div>
 
 <div class="card">
-  <div class="card-header" style="cursor:pointer" onclick="this.nextElementSibling.classList.toggle('open');this.classList.toggle('open')">示例三：求财预测</div>
-  <div class="collapse-content">
-    <p><strong>用神</strong>：日干=求测人，时干=财星，生门=利润，戊=资本</p>
-    <p><strong>判断要点</strong>：</p>
-    <ul>
-      <li>日干与财星生克：财星生日干→财运好；日干克财星→需努力</li>
-      <li>生门落宫旺相→利润丰厚；生门受制→获利艰难</li>
-      <li>戊落宫与生门同宫或相生→投资有利</li>
-    </ul>
-    <p><strong>求财方向</strong>：生门落宫的方向即为有利方向。</p>
+  <div class="fold-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">求财预测</div>
+  <div class="fold-body">
+    <p>用神：日干（求测人）、时干（财星）、生门（利润）、戊（资本）。财星生日干→财运好；生门旺相→利润丰厚。求财方向：生门落宫所在方位。</p>
   </div>
 </div>
 
 <div class="card">
-  <div class="card-header" style="cursor:pointer" onclick="this.nextElementSibling.classList.toggle('open');this.classList.toggle('open')">示例四：出行预测</div>
-  <div class="collapse-content">
-    <p><strong>用神</strong>：日干=出行人，景门=道路，九天=远行</p>
-    <p><strong>判断要点</strong>：</p>
-    <ul>
-      <li>日干落宫旺相→出行顺利，体力充沛</li>
-      <li>杜门（阻塞）、死门（危险）临则不利出行</li>
-      <li>白虎临→交通事故风险；玄武临→盗贼之患</li>
-      <li>开门或休门临→出行大吉</li>
-    </ul>
-    <p><strong>出行建议</strong>：选择开门、休门、生门所在方位出行。</p>
+  <div class="fold-btn" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">出行预测</div>
+  <div class="fold-body">
+    <p>用神：日干（出行人）、景门（道路）、九天（远行）。杜门或死门临→不宜出行；白虎临→交通事故；玄武临→盗贼。选择开门、休门、生门所在方位出行最吉。</p>
   </div>
+</div>
 </div>
 
 <!-- ================================================================================== -->
-<!-- 第7章：排盘模拟器 -->
+<!-- 第7页：排盘模拟器 -->
 <!-- ================================================================================== -->
-<h2 id="simulator">七、排盘模拟器</h2>
+<div class="page" id="p7">
+<h1>七、排盘模拟器</h1>
+<p style="text-align:center;color:var(--dim);margin-bottom:1.5rem;">输入日期和时间，使用拆补法自动排出时家奇门盘。对照上面学过的步骤验证理解。</p>
+
 <div class="card">
-  <p>输入日期和时间，自动排出时家奇门盘（使用拆补法定局）。</p>
-  <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:end;margin:1rem 0;">
-    <div>
-      <label style="display:block;font-size:0.85rem;color:var(--text-dim);">日期</label>
-      <input type="date" id="simDate" value="1995-06-11" style="width:160px;">
-    </div>
-    <div>
-      <label style="display:block;font-size:0.85rem;color:var(--text-dim);">时间</label>
-      <input type="time" id="simTime" value="09:30" style="width:140px;">
-    </div>
-    <button onclick="runSimulator()">排盘</button>
-    <span id="simInfo" style="color:var(--text-dim);font-size:0.85rem;"></span>
+  <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:end;">
+    <div><label style="display:block;font-size:0.85rem;color:var(--dim);">日期</label><input type="date" id="simDate" value="1995-06-11" style="width:160px;"></div>
+    <div><label style="display:block;font-size:0.85rem;color:var(--dim);">时间</label><input type="time" id="simTime" value="09:30" style="width:140px;"></div>
+    <button class="btn" onclick="runSimulator()">排 盘</button>
   </div>
 </div>
 <div id="simResult"></div>
-
-</div><!-- /container -->
-
-<footer style="text-align:center;padding:2rem;color:var(--text-dim);font-size:0.8rem;border-top:1px solid var(--border);margin-top:3rem;">
-  奇门遁甲学习指南 — 内容整理自《神奇之门》等公开资料，仅用于学习研究
-</footer>
+</div>
 
 <script>
-// ===== 数据定义 =====
-
-// 十天干
-const TG = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
-// 十二地支
-const DZ = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
-// 六甲旬首
-const LIUJIA_XUN = ["甲子","甲戌","甲申","甲午","甲辰","甲寅"];
-
-// 九宫固定信息: 宫数->{八卦, 方位, 五行, 八门, 九星, 地支对应}
-const GONG_INFO = {
-  1:{gua:"坎",dir:"北",wx:"水",men:"休门",xing:"天蓬",dz:"子",guaNum:6},
-  2:{gua:"坤",dir:"西南",wx:"土",men:"死门",xing:"天芮",dz:"未申",guaNum:8},
-  3:{gua:"震",dir:"东",wx:"木",men:"伤门",xing:"天冲",dz:"卯",guaNum:4},
-  4:{gua:"巽",dir:"东南",wx:"木",men:"杜门",xing:"天辅",dz:"辰巳",guaNum:5},
-  5:{gua:"中",dir:"中央",wx:"土",men:"",xing:"天禽",dz:"",guaNum:0},
-  6:{gua:"乾",dir:"西北",wx:"金",men:"开门",xing:"天心",dz:"戌亥",guaNum:1},
-  7:{gua:"兑",dir:"西",wx:"金",men:"惊门",xing:"天柱",dz:"酉",guaNum:2},
-  8:{gua:"艮",dir:"东北",wx:"土",men:"生门",xing:"天任",dz:"丑寅",guaNum:7},
-  9:{gua:"离",dir:"南",wx:"火",men:"景门",xing:"天英",dz:"午",guaNum:3}
+// ====== 数据定义 ======
+var TG = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+var DZ = ["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+var GONG_INFO = {
+  1:{gua:"坎",dir:"北",wx:"水",men:"休门",xing:"天蓬"},
+  2:{gua:"坤",dir:"西南",wx:"土",men:"死门",xing:"天芮"},
+  3:{gua:"震",dir:"东",wx:"木",men:"伤门",xing:"天冲"},
+  4:{gua:"巽",dir:"东南",wx:"木",men:"杜门",xing:"天辅"},
+  5:{gua:"中",dir:"中央",wx:"土",men:"",xing:"天禽"},
+  6:{gua:"乾",dir:"西北",wx:"金",men:"开门",xing:"天心"},
+  7:{gua:"兑",dir:"西",wx:"金",men:"惊门",xing:"天柱"},
+  8:{gua:"艮",dir:"东北",wx:"土",men:"生门",xing:"天任"},
+  9:{gua:"离",dir:"南",wx:"火",men:"景门",xing:"天英"}
+};
+var GONG_GRID = [4,9,2,3,5,7,8,1,6];
+var YIYI_ORDER = ["戊","己","庚","辛","壬","癸","丁","丙","乙"];
+var XING_ORDER = ["天蓬","天任","天冲","天辅","天英","天芮","天柱","天心","天禽"];
+var MEN_ORDER = ["休门","生门","伤门","杜门","景门","死门","惊门","开门"];
+var SHEN_ORDER = ["值符","螣蛇","太阴","六合","白虎","玄武","九地","九天"];
+var LIUJIA_YI = {"甲子":"戊","甲戌":"己","甲申":"庚","甲午":"辛","甲辰":"壬","甲寅":"癸"};
+var GONG_XING = {1:"天蓬",2:"天芮",3:"天冲",4:"天辅",5:"天禽",6:"天心",7:"天柱",8:"天任",9:"天英"};
+var GONG_MEN = {1:"休门",2:"死门",3:"伤门",4:"杜门",5:"死门",6:"开门",7:"惊门",8:"生门",9:"景门"};
+var SOLAR_TERM_BUREAU = {
+  "冬至":{yy:true,ju:[1,7,4]},"小寒":{yy:true,ju:[2,8,5]},"大寒":{yy:true,ju:[3,9,6]},
+  "立春":{yy:true,ju:[8,5,2]},"雨水":{yy:true,ju:[9,6,3]},"惊蛰":{yy:true,ju:[1,7,4]},
+  "春分":{yy:true,ju:[3,9,6]},"清明":{yy:true,ju:[4,1,7]},"谷雨":{yy:true,ju:[5,2,8]},
+  "立夏":{yy:true,ju:[4,1,7]},"小满":{yy:true,ju:[5,2,8]},"芒种":{yy:true,ju:[6,3,9]},
+  "夏至":{yy:false,ju:[9,3,6]},"小暑":{yy:false,ju:[8,2,5]},"大暑":{yy:false,ju:[7,1,4]},
+  "立秋":{yy:false,ju:[2,5,8]},"处暑":{yy:false,ju:[1,4,7]},"白露":{yy:false,ju:[9,3,6]},
+  "秋分":{yy:false,ju:[7,1,4]},"寒露":{yy:false,ju:[6,9,3]},"霜降":{yy:false,ju:[5,8,2]},
+  "立冬":{yy:false,ju:[6,9,3]},"小雪":{yy:false,ju:[5,8,2]},"大雪":{yy:false,ju:[4,7,1]}
 };
 
-// 九宫洛书格排列顺序（宫位顺序）：4 9 2 / 3 5 7 / 8 1 6
-const GONG_GRID_ORDER = [4,9,2,3,5,7,8,1,6];
+// ====== 日历计算 ======
+function dayOfYear(y,m,d){var md=[0,31,28,31,30,31,30,31,31,30,31,30,31];if((y%4===0&&y%100!==0)||y%400===0)md[2]=29;var s=d;for(var i=1;i<m;i++)s+=md[i];return s;}
 
-// 三奇六仪固定队形（太极圈）
-const YIYI_ORDER = ["戊","己","庚","辛","壬","癸","丁","丙","乙"];
-// 天盘九星固定顺序
-const XING_ORDER = ["天蓬","天任","天冲","天辅","天英","天芮","天柱","天心","天禽"];
-// 人盘八门固定顺序
-const MEN_ORDER = ["休门","生门","伤门","杜门","景门","死门","惊门","开门"];
-// 八神顺序
-const SHEN_ORDER = ["值符","螣蛇","太阴","六合","白虎","玄武","九地","九天"];
-
-// 六甲与六仪对应
-const LIUJIA_YI = {"甲子":"戊","甲戌":"己","甲申":"庚","甲午":"辛","甲辰":"壬","甲寅":"癸"};
-
-// 星到宫（地盘基准映射：宫→固定星）
-const GONG_XING = {1:"天蓬",2:"天芮",3:"天冲",4:"天辅",5:"天禽",6:"天心",7:"天柱",8:"天任",9:"天英"};
-// 门到宫（地盘基准映射：宫→固定门）
-const GONG_MEN = {1:"休门",2:"死门",3:"伤门",4:"杜门",5:"死门",6:"开门",7:"惊门",8:"生门",9:"景门"};
-
-// 廿四节气用局表（阳遁上半，阴遁下半）：[上元局, 中元局, 下元局]
-const SOLAR_TERM_BUREAU = {
-  "冬至":{yy:true, ju:[1,7,4]},
-  "小寒":{yy:true, ju:[2,8,5]},
-  "大寒":{yy:true, ju:[3,9,6]},
-  "立春":{yy:true, ju:[8,5,2]},
-  "雨水":{yy:true, ju:[9,6,3]},
-  "惊蛰":{yy:true, ju:[1,7,4]},
-  "春分":{yy:true, ju:[3,9,6]},
-  "清明":{yy:true, ju:[4,1,7]},
-  "谷雨":{yy:true, ju:[5,2,8]},
-  "立夏":{yy:true, ju:[4,1,7]},
-  "小满":{yy:true, ju:[5,2,8]},
-  "芒种":{yy:true, ju:[6,3,9]},
-  "夏至":{yy:false, ju:[9,3,6]},
-  "小暑":{yy:false, ju:[8,2,5]},
-  "大暑":{yy:false, ju:[7,1,4]},
-  "立秋":{yy:false, ju:[2,5,8]},
-  "处暑":{yy:false, ju:[1,4,7]},
-  "白露":{yy:false, ju:[9,3,6]},
-  "秋分":{yy:false, ju:[7,1,4]},
-  "寒露":{yy:false, ju:[6,9,3]},
-  "霜降":{yy:false, ju:[5,8,2]},
-  "立冬":{yy:false, ju:[6,9,3]},
-  "小雪":{yy:false, ju:[5,8,2]},
-  "大雪":{yy:false, ju:[4,7,1]}
-};
-
-// ===== 日历计算工具 =====
-
-// 1900年的节气近似日期（用于后续推算）
-// 格式：[月份, 日期]，2017年的节气作为基准
-function getSolarTermApprox(year, termName) {
-  // 使用近似数据（基于2017年基准，每年误差很小，拆补法下可接受）
-  const baseTerms = {
-    "小寒":[1,5],"大寒":[1,20],"立春":[2,3],"雨水":[2,18],"惊蛰":[3,5],
-    "春分":[3,20],"清明":[4,4],"谷雨":[4,20],"立夏":[5,5],"小满":[5,21],
-    "芒种":[6,5],"夏至":[6,21],"小暑":[7,7],"大暑":[7,22],"立秋":[8,7],
-    "处暑":[8,23],"白露":[9,7],"秋分":[9,22],"寒露":[10,8],"霜降":[10,23],
-    "立冬":[11,7],"小雪":[11,22],"大雪":[12,7],"冬至":[12,21]
-  };
-  return baseTerms[termName] || null;
-}
-
-// 获取日期所处的节气（简化近似，用于学习）
-// 以冬季为基准的近似节气日期表（考虑闰年偏移）
-function getCurrentSolarTerm(date) {
-  const terms = [
-    "小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满",
-    "芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降",
-    "立冬","小雪","大雪","冬至"
-  ];
-  const y = date.getFullYear();
-  const m = date.getMonth() + 1;
-  const d = date.getDate();
-  const isLeap = (y%4===0 && y%100!==0) || y%400===0;
-
-  // 近似计算1990-2050年的节气日期（公历大致在5-22日之间摆动）
-  // 每节对应近似doy（非闰年），闰年3月后+1
-  const baseDays = [
-    5,20,35,50,65,80,95,110,126,141,
-    156,171,186,201,216,231,246,261,276,291,
-    306,321,336,351
-  ];
-  let doy = dayOfYear(y, m, d);
-
-  for (let i = 0; i < terms.length; i++) {
-    let curDoy = baseDays[i];
-    // 闰年偏移：2月28日后+1
-    if (isLeap && doy > 59) {
-      // doy本身已经+1了，所以比较也用调整后的值
-    }
-    let nextDoy;
-    if (i === terms.length - 1) {
-      nextDoy = isLeap ? 366 : 365;
-    } else {
-      nextDoy = baseDays[i+1];
-      // 闰年且下个节气在3月后
-      if (isLeap && nextDoy > 59) nextDoy += 1;
-    }
-    // 闰年调整当前
-    if (isLeap && curDoy > 59) curDoy += 1;
-
-    if (doy >= curDoy && doy < nextDoy) return terms[i];
+function getCurrentSolarTerm(date){
+  var terms=["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"];
+  var base=[5,20,35,50,65,80,95,110,126,141,156,171,186,201,216,231,246,261,276,291,306,321,336,351];
+  var y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();
+  var isLeap=(y%4===0&&y%100!==0)||y%400===0;
+  var doy=dayOfYear(y,m,d);
+  for(var i=0;i<terms.length;i++){
+    var cur=base[i],nxt=(i===terms.length-1)?(isLeap?366:365):base[i+1];
+    if(isLeap&&cur>59)cur+=1; if(isLeap&&nxt>59)nxt+=1;
+    if(doy>=cur&&doy<nxt)return terms[i];
   }
-  // 跨年范围：冬至(12月21日左右) → 小寒(次年1月5日左右)
   return "冬至";
 }
 
-function dayOfYear(y, m, d) {
-  const monthDays = [0,31,28,31,30,31,30,31,31,30,31,30,31];
-  if ((y%4===0 && y%100!==0) || y%400===0) monthDays[2] = 29;
-  let doy = d;
-  for (let i=1; i<m; i++) doy += monthDays[i];
-  return doy;
+function getDayGanZhi(y,m,d){var base=new Date(2000,0,1),tgt=new Date(y,m-1,d);var diff=Math.round((tgt-base)/(86400000));var idx=((diff%60)+60)%60;return TG[idx%10]+DZ[idx%12];}
+
+function getHourGanZhi(dayGz,hour){
+  var dt=TG.indexOf(dayGz[0]),hd=Math.floor((hour+1)/2)%12;
+  var hb=[0,0,2,2,4,4,6,6,8,8]; return TG[(hb[dt]+hd)%10]+DZ[hd];
 }
 
-// 公历转干支（简化但足够用于排盘）
-function getYearGanZhi(y) {
-  const tgIdx = (y - 4) % 10;
-  const dzIdx = (y - 4) % 12;
-  return TG[tgIdx<0?tgIdx+10:tgIdx] + DZ[dzIdx<0?dzIdx+12:dzIdx];
-}
+function getXunShou(gz){var t=TG.indexOf(gz[0]),d=DZ.indexOf(gz[1]);return "甲"+DZ[((d-t)%12+12)%12];}
 
-function getMonthGanZhi(y, m) {
-  // 月干支以节气为界，简化为按公历月近似
-  // 年上起月：甲己之年丙作首...
-  const yearTg = (y - 4) % 10;
-  const monthTgBase = (yearTg < 0 ? yearTg+10 : yearTg) * 2 % 10; // (年干*2)%10
-  const monthTgIdx = (monthTgBase + m - 1) % 10;
-  return TG[monthTgIdx] + DZ[(m + 1) % 12]; // 正月寅，二月卯...
-}
-
-function getDayGanZhi(y, m, d) {
-  // 以已知日期为基准：2000年1月1日是甲子日
-  const base = new Date(2000, 0, 1);
-  const target = new Date(y, m-1, d);
-  const diffDays = Math.round((target - base) / (1000*60*60*24));
-  let idx = (diffDays % 60 + 60) % 60;
-  return TG[idx % 10] + DZ[idx % 12];
-}
-
-function getHourGanZhi(dayGz, hour) {
-  // 日上起时：甲己还加甲...
-  const dayTg = dayGz[0];
-  const dayTgIdx = TG.indexOf(dayTg);
-  const hourDzIdx = Math.floor((hour + 1) / 2) % 12; // 0点=子时
-  const hourTgBase = [0,0,2,2,4,4,6,6,8,8]; // 甲己=0, 乙庚=2, 丙辛=4...
-  const hourTgIdx = (hourTgBase[dayTgIdx] + hourDzIdx) % 10;
-  return TG[hourTgIdx] + DZ[hourDzIdx];
-}
-
-function getXunShou(gz) {
-  const tg = gz[0], dz = gz[1];
-  const dzIdx = DZ.indexOf(dz);
-  const tgIdx = TG.indexOf(tg);
-  const xunShouDzIdx = (dzIdx - tgIdx + 12) % 12;
-  // 旬首天干总是甲
-  return "甲" + DZ[xunShouDzIdx];
-}
-
-// 确定用局数
-function determineJu(date, timeStr) {
-  const y = date.getFullYear();
-  const m = date.getMonth() + 1;
-  const d = date.getDate();
-  const [h, min] = timeStr.split(":").map(Number);
-
-  const term = getCurrentSolarTerm(date);
-  const dayGz = getDayGanZhi(y, m, d);
-  const ft = findFuTou(dayGz);
-  const fuTouDz = ft[1];
-
-  // 确定上中下元
-  const shang = ["子","午","卯","酉"];
-  const zhong = ["寅","申","巳","亥"];
-  const xia = ["辰","戌","丑","未"];
-  let yuan;
-  if (shang.includes(fuTouDz)) yuan = 0; // 上元
-  else if (zhong.includes(fuTouDz)) yuan = 1; // 中元
-  else yuan = 2; // 下元
-
-  const st = SOLAR_TERM_BUREAU[term];
-  if (!st) return {ju:1, yy:true, term:term, yuan:0};
-
-  return {ju:st.ju[yuan], yy:st.yy, term:term, yuan:yuan, dayGz:dayGz};
-}
-
-function findFuTou(dayGz) {
-  // 符头是甲或己开头的日子
-  const dayTg = dayGz[0];
-  const dayDz = dayGz[1];
-  const tgIdx = TG.indexOf(dayTg);
-  const dzIdx = DZ.indexOf(dayDz);
-  // 往前找到最近的甲或己日
-  let offset = 0;
-  while (offset < 10) {
-    let checkTg = (tgIdx - offset + 10) % 10;
-    if (TG[checkTg] === "甲" || TG[checkTg] === "己") {
-      let checkDz = (dzIdx - offset + 12) % 12;
-      return TG[checkTg] + DZ[checkDz];
-    }
-    offset++;
-  }
+function findFuTou(dayGz){
+  var t=TG.indexOf(dayGz[0]),d=DZ.indexOf(dayGz[1]);
+  for(var o=0;o<10;o++){var ct=((t-o)%10+10)%10;if(TG[ct]==="甲"||TG[ct]==="己")return TG[ct]+DZ[((d-o)%12+12)%12];}
   return "甲子";
 }
 
-// ===== 核心排盘算法 =====
+function determineJu(date){
+  var y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();
+  var term=getCurrentSolarTerm(date),dayGz=getDayGanZhi(y,m,d);
+  var ft=findFuTou(dayGz),ftDz=ft[1];
+  var yuan; var sh=["子","午","卯","酉"],zh=["寅","申","巳","亥"];
+  if(sh.indexOf(ftDz)>=0)yuan=0;else if(zh.indexOf(ftDz)>=0)yuan=1;else yuan=2;
+  var st=SOLAR_TERM_BUREAU[term]; if(!st)return{ju:1,yy:true,term:term,yuan:0,dayGz:dayGz};
+  return{ju:st.ju[yuan],yy:st.yy,term:term,yuan:yuan,dayGz:dayGz};
+}
 
-function buildDiPan(ju, isYangDun) {
-  // 返回：{宫数: 六仪三奇}
-  const dp = {};
-  const order = [...YIYI_ORDER]; // ["戊","己","庚","辛","壬","癸","丁","丙","乙"]
-  // 阳遁：戊从ju宫开始顺排（1→9→1）
-  // 阴遁：戊从ju宫开始逆排（9→1→9）
-  for (let i = 0; i < 9; i++) {
-    let gong;
-    if (isYangDun) {
-      gong = ((ju - 1 + i) % 9) + 1;
-    } else {
-      gong = ((ju - 1 - i) % 9 + 9) % 9 + 1;
-    }
-    dp[gong] = order[i];
+function getMonthGanZhi(y,m){
+  var yt=(y-4)%10;if(yt<0)yt+=10;
+  var mb=[2,4,6,8,0,2,4,6,8,0];
+  var mi=(m+1)%12; // 寅=0
+  // approximate month stem
+  var miAdj=(m-2+12)%12; if(miAdj<0)miAdj+=12;
+  return TG[(mb[yt]+miAdj)%10]+DZ[(m+1)%12];
+}
+
+function getYearGanZhi(y){var t=(y-4)%10,d=(y-4)%12;if(t<0)t+=10;if(d<0)d+=12;return TG[t]+DZ[d];}
+
+// ====== 排盘引擎 ======
+function buildDiPan(ju,isYang){
+  var dp={};
+  for(var i=0;i<9;i++){
+    var g=isYang?((ju-1+i)%9+1):(((ju-1-i)%9+9)%9+1);
+    dp[g]=YIYI_ORDER[i];
   }
   return dp;
 }
 
-function runSimulator() {
-  const dateStr = document.getElementById("simDate").value;
-  const timeStr = document.getElementById("simTime").value;
-  if (!dateStr || !timeStr) { alert("请输入日期和时间"); return; }
+function runSimulator(){
+  var ds=document.getElementById("simDate").value,ts=document.getElementById("simTime").value;
+  if(!ds||!ts){alert("请输入日期和时间");return;}
+  var date=new Date(ds+"T"+ts+":00");
+  var y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate(),h=date.getHours();
+  var r=determineJu(date);
+  var ju=r.ju,isYang=r.yy,term=r.term,yuan=r.yuan,dayGz=r.dayGz;
+  var yrGz=getYearGanZhi(y),moGz=getMonthGanZhi(y,m);
+  var dayGz2=getDayGanZhi(y,m,d),hourGz=getHourGanZhi(dayGz2,h);
+  var xunShou=getXunShou(hourGz);
 
-  const date = new Date(dateStr + "T" + timeStr + ":00");
-  const y = date.getFullYear(), m = date.getMonth()+1, d = date.getDate();
-  const hour = date.getHours();
+  var diPan=buildDiPan(ju,isYang);
+  var xunShouYi=LIUJIA_YI[xunShou],xunShouGong=0;
+  for(var g=1;g<=9;g++){if(diPan[g]===xunShouYi){xunShouGong=g;break;}}
+  if(!xunShouGong)xunShouGong=ju;
 
-  // 定局
-  const {ju, yy, term, yuan, dayGz} = determineJu(date, timeStr);
-  const isYang = yy;
+  var zhiFuXing=GONG_XING[xunShouGong];
+  var zhiShiMen=(xunShouGong===5)?"死门":GONG_MEN[xunShouGong];
 
-  // 计算干支
-  const yearGz = getYearGanZhi(y);
-  const monthGz = getMonthGanZhi(y, m);
-  const dayGz2 = getDayGanZhi(y, m, d);
-  const hourGz = getHourGanZhi(dayGz2, hour);
-  const xunShou = getXunShou(hourGz);
+  var shiGan=hourGz[0],shiGanGong=0;
+  for(var g=1;g<=9;g++){if(diPan[g]===shiGan){shiGanGong=g;break;}}
+  if(!shiGanGong)shiGanGong=ju;
 
-  // 布地盘
-  const diPan = buildDiPan(ju, isYang);
-
-  // 找旬首对应的六仪在地盘的宫位
-  const xunShouYi = LIUJIA_YI[xunShou]; // 旬首对应的天干
-  let xunShouGong = 0;
-  for (let g = 1; g <= 9; g++) {
-    if (diPan[g] === xunShouYi) { xunShouGong = g; break; }
-  }
-  if (xunShouGong === 0) xunShouGong = ju; // fallback
-
-  // 值符星和值使门
-  const zhiFuXing = GONG_XING[xunShouGong];
-  const zhiShiMen = (xunShouGong === 5) ? "死门" : GONG_MEN[xunShouGong];
-
-  // 转天盘：值符随时干
-  const shiGan = hourGz[0];
-  let shiGanGong = 0;
-  for (let g = 1; g <= 9; g++) {
-    if (diPan[g] === shiGan) { shiGanGong = g; break; }
-  }
-  if (shiGanGong === 0) shiGanGong = ju;
-
-  // 计算天盘各宫落什么星（值符落时干宫，其余依次旋转）
-  const tianPan = {};
-  const xingList = [...XING_ORDER];
-  const zfIdx = xingList.indexOf(zhiFuXing);
-  // 旋转使值符对齐时干宫
-  // 在九宫格中，星随盘转，顺序依照排盘
-  for (let i = 0; i < 9; i++) {
-    let starGong;
-    if (isYang) {
-      starGong = ((shiGanGong - 1 + i) % 9) + 1;
-    } else {
-      starGong = ((shiGanGong - 1 - i) % 9 + 9) % 9 + 1;
-    }
-    tianPan[starGong] = xingList[(zfIdx + i) % 9];
+  var tianPan={};
+  var zfIdx=XING_ORDER.indexOf(zhiFuXing);
+  for(var i=0;i<9;i++){
+    var sg=isYang?((shiGanGong-1+i)%9+1):(((shiGanGong-1-i)%9+9)%9+1);
+    tianPan[sg]=XING_ORDER[(zfIdx+i)%9];
   }
 
-  // 转人盘：值使随时支
-  const shiZhi = hourGz[1];
-  const shiZhiIdx = DZ.indexOf(shiZhi);
-  const xunShouDz = xunShou[1]; // 旬首地支
-  const xunShouDzIdx = DZ.indexOf(xunShouDz);
+  var shiZhi=hourGz[1],shiZhiIdx=DZ.indexOf(shiZhi);
+  var xunShouDz=xunShou[1],xunShouDzIdx=DZ.indexOf(xunShouDz);
+  var dzSteps=((shiZhiIdx-xunShouDzIdx)%12+12)%12;
+  var zhiShiGong=isYang?((xunShouGong-1+dzSteps)%9+1):(((xunShouGong-1-dzSteps)%9+9)%9+1);
 
-  // 从旬首地支开始在值使原宫（或寄宫），数到时辰地支
-  let dzSteps = (shiZhiIdx - xunShouDzIdx + 12) % 12;
-  let zhiShiGong;
-  if (isYang) {
-    zhiShiGong = ((xunShouGong - 1 + dzSteps) % 9) + 1;
-  } else {
-    zhiShiGong = ((xunShouGong - 1 - dzSteps) % 9 + 9) % 9 + 1;
+  var renPan={};
+  var zmIdx=MEN_ORDER.indexOf(zhiShiMen);
+  for(var i=0;i<8;i++){
+    var mg=isYang?((zhiShiGong-1+i)%9+1):(((zhiShiGong-1-i)%9+9)%9+1);
+    if(mg===5)mg=2;
+    if(!renPan[mg])renPan[mg]=MEN_ORDER[(zmIdx+i)%8];
   }
 
-  // 计算人盘各宫的门（值使落宫，其余依次排列）
-  const renPan = {};
-  const menList = [...MEN_ORDER];
-  const zmIdx = menList.indexOf(zhiShiMen);
-  for (let i = 0; i < 8; i++) {
-    let menGong;
-    if (isYang) {
-      menGong = ((zhiShiGong - 1 + i) % 9) + 1;
-      if (menGong === 5) menGong = 2; // 中五寄坤二
-    } else {
-      menGong = ((zhiShiGong - 1 - i) % 9 + 9) % 9 + 1;
-      if (menGong === 5) menGong = 2;
-    }
-    // 跳过重复（中五寄二导致的）
-    if (!renPan[menGong]) {
-      renPan[menGong] = menList[(zmIdx + i) % 8];
-    }
+  var shenPan={};
+  for(var i=0;i<8;i++){
+    var sng=isYang?((shiGanGong-1+i)%9+1):(((shiGanGong-1-i)%9+9)%9+1);
+    shenPan[sng]=SHEN_ORDER[i];
   }
 
-  // 布神盘：小值符随大值符
-  const shenPan = {};
-  for (let i = 0; i < 8; i++) {
-    let shenGong;
-    if (isYang) {
-      shenGong = ((shiGanGong - 1 + i) % 9) + 1;
-    } else {
-      shenGong = ((shiGanGong - 1 - i) % 9 + 9) % 9 + 1;
-    }
-    shenPan[shenGong] = SHEN_ORDER[i];
+  // 天盘天干
+  var starOrig={};
+  for(var g=1;g<=9;g++)starOrig[GONG_XING[g]]=g;
+  var tianPanGan={};
+  for(var g=1;g<=9;g++){if(g===5)continue;var sn=tianPan[g];if(sn){var og=starOrig[sn];tianPanGan[g]=diPan[og]||"";}}
+
+  function getKeYing(tg,dg){
+    if(!tg||!dg)return"";
+    var c=tg+"+"+dg;
+    var j={"戊+丙":"青龙返首","丙+戊":"飞鸟跌穴","丁+戊":"青龙转光","戊+丁":"青龙耀明","乙+丁":"奇仪相佐","丙+乙":"日月并行","丁+乙":"人遁","戊+乙":"青龙和会","丙+丁":"天遁"};
+    var x={"乙+辛":"青龙逃走","辛+乙":"白虎猖狂","丁+癸":"朱雀投江","癸+丁":"蛇夭矫","丙+庚":"荧入太白","庚+丙":"太白入荧","戊+庚":"值符飞宫","戊+辛":"青龙折足","乙+己":"日奇入墓","戊+己":"贵人入狱"};
+    if(j[c])return'<span style="color:#5b9b5b">'+j[c]+'</span>';
+    if(x[c])return'<span style="color:#c94b4b">'+x[c]+'</span>';
+    return"";
   }
 
-  // 天盘带过来的天干（每个宫的天盘天干=值符星原所在地盘的天干）——这里用简化规则
-  // 实际上每个星带动它原来下方地盘的天干一起移动
-  // 但为了简化显示，我们用：天盘星所在原宫对应的地盘天干作为天盘天干
-  const tianPanGan = {};
-  const starOrigGong = {};
-  // 逆向：找到每个星原来在哪个宫
-  for (let g = 1; g <= 9; g++) {
-    const starName = GONG_XING[g];
-    starOrigGong[starName] = g;
-  }
-  for (let g = 1; g <= 9; g++) {
-    if (g === 5) continue;
-    const starName = tianPan[g];
-    if (starName) {
-      const origGong = starOrigGong[starName];
-      tianPanGan[g] = diPan[origGong] || "";
-    }
-  }
+  var yuanN=["上元","中元","下元"];
+  var htm='<div class="card"><div class="card-hd">排盘结果</div>';
+  htm+='<p style="font-size:0.85rem">';
+  htm+='公历：<b>'+y+'年'+m+'月'+d+'日 '+ts+'</b> | 干支：<b>'+yrGz+'年 '+moGz+'月 '+dayGz2+'日 '+hourGz+'时</b><br>';
+  htm+='节气：<b>'+term+'</b> | '+(isYang?'<span style="color:#c94b4b">阳遁':'<span style="color:#4b8bc9">阴遁')+ju+'局</span> | '+yuanN[yuan]+' | 旬首：'+xunShou+'<br>';
+  htm+='值符：<b style="color:#4b8bc9">'+zhiFuXing+'</b> | 值使：<b style="color:#c9a44b">'+zhiShiMen+'</b> | 值符落'+shiGanGong+'宫 | 值使落'+zhiShiGong+'宫';
+  htm+='</p></div>';
 
-  // 十干克应简化判断
-  function getKeYingSimple(tianGan, diGan) {
-    if (!tianGan || !diGan) return "";
-    const combo = tianGan + "+" + diGan;
-    const jige = {
-      "戊+丙":"青龙返首", "丙+戊":"飞鸟跌穴", "丁+戊":"青龙转光",
-      "戊+丁":"青龙耀明", "乙+丁":"奇仪相佐", "丙+乙":"日月并行",
-      "丁+乙":"人遁", "戊+乙":"青龙和会", "丙+丁":"天遁"
-    };
-    const xiongge = {
-      "乙+辛":"青龙逃走", "辛+乙":"白虎猖狂", "丁+癸":"朱雀投江",
-      "癸+丁":"蛇夭矫", "丙+庚":"荧入太白", "庚+丙":"太白入荧",
-      "戊+庚":"值符飞宫", "戊+辛":"青龙折足", "乙+己":"日奇入墓",
-      "戊+己":"贵人入狱"
-    };
-    if (jige[combo]) return '<span style="color:#5b9b5b">'+jige[combo]+'</span>';
-    if (xiongge[combo]) return '<span style="color:#c94b4b">'+xiongge[combo]+'</span>';
-    return "";
+  htm+='<div class="qm-grid">';
+  for(var gi=0;gi<9;gi++){
+    var g=GONG_GRID[gi],info=GONG_INFO[g];
+    if(g===5){htm+='<div class="qm-cell" style="opacity:0.5"><div style="font-weight:bold;color:var(--ac);font-size:0.75rem;">中五·寄坤二</div><div class="xing">天禽</div><div style="font-size:0.7rem;color:var(--dim)">寄二宫</div></div>';continue;}
+    var shn=shenPan[g]||"",men=renPan[g]||"",xing=tianPan[g]||"";
+    var dg=diPan[g]||"",tg=tianPanGan[g]||"",ky=getKeYing(tg,dg);
+    htm+='<div class="qm-cell">';
+    htm+='<div class="shen">'+shn+'</div><div class="men">'+men+'</div><div class="xing">'+xing+'('+tg+')</div>';
+    htm+='<div class="yi">地盘：'+dg+'</div>';
+    if(ky)htm+='<div class="geju">'+ky+'</div>';
+    htm+='<div class="gl">'+info.gua+' '+g+'宫 '+info.dir+'</div>';
+    htm+='</div>';
   }
-
-  // 渲染结果
-  const yuanNames = ["上元","中元","下元"];
-  let html = '<div class="card"><div class="card-header">排盘结果</div>';
-  html += '<p style="font-size:0.9rem">';
-  html += '公历：<strong>' + y + '年' + m + '月' + d + '日 ' + timeStr + '</strong> | ';
-  html += '干支：<strong>' + yearGz + '年 ' + monthGz + '月 ' + dayGz2 + '日 ' + hourGz + '时</strong><br>';
-  html += '节气：<strong>' + term + '</strong> | ';
-  html += (isYang ? '<span style="color:#c94b4b">阳遁' : '<span style="color:#4b8bc9">阴遁') + ju + '局</span> | ';
-  html += yuanNames[yuan] + ' | 旬首：' + xunShou + '<br>';
-  html += '值符：<strong style="color:#4b8bc9">' + zhiFuXing + '</strong> | ';
-  html += '值使：<strong style="color:#c9a44b">' + zhiShiMen + '</strong> | ';
-  html += '值符落' + shiGanGong + '宫 | 值使落' + zhiShiGong + '宫';
-  html += '</p></div>';
-
-  html += '<div class="qimen-grid">';
-  for (let gi = 0; gi < 9; gi++) {
-    const gong = GONG_GRID_ORDER[gi];
-    const info = GONG_INFO[gong];
-    if (gong === 5) {
-      html += '<div class="qcell" style="opacity:0.5"><div class="gong-label" style="font-weight:bold;color:var(--accent)">中五<br>寄坤二</div><div class="xing">天禽</div><div style="font-size:0.7rem;color:var(--text-dim)">寄二宫</div></div>';
-      continue;
-    }
-    const shen = shenPan[gong] || "";
-    const men = renPan[gong] || "";
-    const xing = tianPan[gong] || "";
-    const diGan = diPan[gong] || "";
-    const tianGan = tianPanGan[gong] || "";
-    const keying = getKeYingSimple(tianGan, diGan);
-    html += '<div class="qcell">';
-    html += '<div class="shen">' + shen + '</div>';
-    html += '<div class="men">' + men + '</div>';
-    html += '<div class="xing">' + xing + '(' + tianGan + ')</div>';
-    html += '<div class="yi">地盘：' + diGan + '</div>';
-    if (keying) html += '<div class="geju">' + keying + '</div>';
-    html += '<div class="gong-label">' + info.gua + ' ' + gong + '宫 ' + info.dir + '</div>';
-    html += '</div>';
-  }
-  html += '</div>';
-
-  document.getElementById("simResult").innerHTML = html;
-  document.getElementById("simInfo").innerText = '';
+  htm+='</div>';
+  document.getElementById("simResult").innerHTML=htm;
 }
 
-// 默认加载时运行一次
-window.addEventListener("DOMContentLoaded", () => {
-  runSimulator();
+// ====== 页面导航 ======
+function switchPage(pageId){
+  document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
+  document.querySelectorAll("nav.page-tabs button").forEach(function(b){b.classList.remove("active");});
+  document.getElementById(pageId).classList.add("active");
+  document.querySelector('nav.page-tabs button[data-page="'+pageId+'"]').classList.add("active");
+}
 
-  // 绑定tab切换
-  document.querySelectorAll(".tab-btn").forEach(btn => {
-    btn.addEventListener("click", function() {
-      const tabGroup = this.parentElement;
-      const tabId = this.dataset.tab;
-      tabGroup.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-      this.classList.add("active");
-      const container = tabGroup.parentElement;
-      container.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-      const panel = container.querySelector("#" + tabId);
-      if (panel) panel.classList.add("active");
+// ====== 初始化 ======
+window.addEventListener("DOMContentLoaded",function(){
+  // 页面导航
+  document.querySelectorAll("nav.page-tabs button").forEach(function(btn){
+    btn.addEventListener("click",function(){switchPage(this.dataset.page);});
+  });
+
+  // 符号页内的子标签切换
+  document.getElementById("symTabs").addEventListener("click",function(e){
+    if(e.target.classList.contains("inl-tab")){
+      var tabId=e.target.dataset.stab;
+      this.querySelectorAll(".inl-tab").forEach(function(b){b.classList.remove("active");});
+      e.target.classList.add("active");
+      var panels=this.parentElement.querySelectorAll(".inl-panel");
+      panels.forEach(function(p){p.classList.remove("active");});
+      document.getElementById(tabId).classList.add("active");
+    }
+  });
+
+  // 十干克应子标签切换
+  var kyTabs=document.getElementById("keYingTabs2");
+  if(kyTabs){
+    kyTabs.addEventListener("click",function(e){
+      if(e.target.classList.contains("inl-tab")){
+        var ktabId=e.target.dataset.ktab;
+        this.querySelectorAll(".inl-tab").forEach(function(b){b.classList.remove("active");});
+        e.target.classList.add("active");
+        var panels=this.parentElement.querySelectorAll(".inl-panel");
+        panels.forEach(function(p){p.classList.remove("active");});
+        document.getElementById(ktabId).classList.add("active");
+      }
+    });
+  }
+
+  // 折叠按钮
+  document.querySelectorAll(".fold-btn").forEach(function(btn){
+    btn.addEventListener("click",function(){
+      this.classList.toggle("open");this.nextElementSibling.classList.toggle("open");
     });
   });
+
+  // 初始运行排盘模拟器
+  if(document.getElementById("simResult"))runSimulator();
 });
 </script>
-
 </body>
 </html>
