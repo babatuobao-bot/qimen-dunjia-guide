@@ -835,7 +835,7 @@ function goPage(id){
   document.addEventListener('mouseover', function(e){
     var el = e.target;
     while(el && el !== document.body){
-      if(el.classList.contains('tip')){
+      if(el.nodeType===1 && el.classList.contains('tip')){
         if(cur === el) return;
         show(el);
         return;
@@ -845,9 +845,16 @@ function goPage(id){
   });
 
   document.addEventListener('mouseout', function(e){
+    var rel = e.relatedTarget;
     var el = e.target;
     while(el && el !== document.body){
-      if(el.classList.contains('tip')){
+      if(el.nodeType===1 && el.classList.contains('tip')){
+        // 检查鼠标是否移到了 tip 内部的子元素或浮层上
+        var p = rel;
+        while(p && p !== document.body){
+          if(p === el || p === ov) return;
+          p = p.parentElement;
+        }
         hide();
         return;
       }
