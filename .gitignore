@@ -1,0 +1,11 @@
+# 原始资料文件（不提交）
+神奇之门_OCR全文.txt
+任务分解.md
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
