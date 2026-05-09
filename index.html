@@ -709,6 +709,153 @@ var GX={1:"天蓬",2:"天芮",3:"天冲",4:"天辅",5:"天禽",6:"天心",7:"天
 var GM={1:"休门",2:"死门",3:"伤门",4:"杜门",5:"死门",6:"开门",7:"惊门",8:"生门",9:"景门"};
 var STB={"冬至":{yy:1,j:[1,7,4]},"小寒":{yy:1,j:[2,8,5]},"大寒":{yy:1,j:[3,9,6]},"立春":{yy:1,j:[8,5,2]},"雨水":{yy:1,j:[9,6,3]},"惊蛰":{yy:1,j:[1,7,4]},"春分":{yy:1,j:[3,9,6]},"清明":{yy:1,j:[4,1,7]},"谷雨":{yy:1,j:[5,2,8]},"立夏":{yy:1,j:[4,1,7]},"小满":{yy:1,j:[5,2,8]},"芒种":{yy:1,j:[6,3,9]},"夏至":{yy:0,j:[9,3,6]},"小暑":{yy:0,j:[8,2,5]},"大暑":{yy:0,j:[7,1,4]},"立秋":{yy:0,j:[2,5,8]},"处暑":{yy:0,j:[1,4,7]},"白露":{yy:0,j:[9,3,6]},"秋分":{yy:0,j:[7,1,4]},"寒露":{yy:0,j:[6,9,3]},"霜降":{yy:0,j:[5,8,2]},"立冬":{yy:0,j:[6,9,3]},"小雪":{yy:0,j:[5,8,2]},"大雪":{yy:0,j:[4,7,1]}};
 
+// ====== 完整十干克应表（81格）[格局名, 含义, 吉凶:1吉/0平/-1凶] ======
+var KY={
+"戊+戊":["伏吟","凡事不利，宜静不宜动。",0],
+"戊+己":["贵人入狱","公私皆不利，困顿难伸。",-1],
+"戊+庚":["值符飞宫","吉事不吉、凶事更凶。主换地方、迁居。",-1],
+"戊+辛":["青龙折足","破财招灾、足疾折伤、行动受阻。",-1],
+"戊+壬":["青龙入牢","凡事不利，谋为困顿，如入天牢。",-1],
+"戊+癸":["青龙华盖","逢吉门则吉，逢凶门则凶。宜合作。",0],
+"戊+丁":["青龙耀明","宜见上级领导、求功名、谒贵人。",1],
+"戊+丙":["青龙返首","大吉大利，百事可成，奇门第一吉格。",1],
+"戊+乙":["青龙和会","合作顺利，门吉事吉，门凶事凶。",0],
+"己+戊":["犬遇青龙","虽不吉但有所得，主有意外收获。",0],
+"己+己":["地户逢鬼","病者危重，百事不遂，暗昧不明。",-1],
+"己+庚":["刑格返名","词讼反复，刑狱之灾，出行不利。",-1],
+"己+辛":["游魂入墓","阴灵作祟，家有暗昧怪异之事。",-1],
+"己+壬":["地网高张","凡事不吉，宜静不宜动，动则有灾。",-1],
+"己+癸":["地刑玄武","病危难治，主有牢狱官非之灾。",-1],
+"己+丁":["朱雀入墓","文书词讼先曲后直，终可得雪。",0],
+"己+丙":["火悖地户","男者冤冤相报，事情反复多变。",-1],
+"己+乙":["墓神不明","事多暗昧不明，宜退不宜进。",-1],
+"庚+戊":["天乙伏宫","换人换地，主迁移变动，百事难成。",-1],
+"庚+己":["官符刑格","官司刑狱，出行病患皆不利。",-1],
+"庚+庚":["太白同宫","兄弟雷攻，主争斗不和，夫妻反目。",-1],
+"庚+辛":["白虎干格","远行不利，主交通事故、刀兵之伤。",-1],
+"庚+壬":["小格移荡","远行迷途，求谋有阻，事情反复。",-1],
+"庚+癸":["大格","诸事不利，行人失伴，出行大凶。",-1],
+"庚+丁":["亭亭之格","私匿暗昧，主因女人起官司口舌。",-1],
+"庚+丙":["太白入荧","贼必来犯，宜防偷盗和意外之灾。",-1],
+"庚+乙":["太白逢星","退吉进凶，谋为不利，宜退守。",-1],
+"辛+戊":["困龙被伤","官事破财，屈而不伸，有冤难诉。",-1],
+"辛+己":["入狱自刑","奴仆谋主，官司难伸，自找麻烦。",-1],
+"辛+庚":["白虎出力","刀刃相交，主斗杀伤灾，血光之祸。",-1],
+"辛+辛":["伏吟天庭","公废私就，讼狱自刑，凡事不顺。",-1],
+"辛+壬":["凶蛇入狱","两男争女，口舌是非，官讼难了。",-1],
+"辛+癸":["天牢华盖","误入天网罗网，凡事须小心谨慎。",-1],
+"辛+丁":["朱雀入狱","官人失位，罪人得释，文书有困。",-1],
+"辛+丙":["干合悖师","因财致讼，凡事须谨慎，防合作破裂。",-1],
+"辛+乙":["白虎猖狂","家败人亡，远行大凶，出行切忌。",-1],
+"壬+戊":["小蛇化龙","男人发达，事业有起色，女产婴男。",1],
+"壬+己":["凶蛇入狱","主有官讼是非，事难成，身陷困境。",-1],
+"壬+庚":["太白擒蛇","讼狱公平，主得公正处理，正气压邪。",1],
+"壬+辛":["螣蛇相缠","被人欺骗陷害，事难成，须防小人。",-1],
+"壬+壬":["天狱自刑","求谋无成，祸患自招，内外交困。",-1],
+"壬+癸":["幼女奸淫","家有丑事暧昧，主隐私泄露之患。",-1],
+"壬+丁":["干合蛇刑","文书牵连，贵人匆匆，事有反复。",0],
+"壬+丙":["水蛇入火","官灾刑禁，口舌是非，祸从口出。",-1],
+"壬+乙":["小蛇得势","女人柔顺得势，占男命则不利。",0],
+"癸+戊":["天乙会合","吉格，宜求财婚成，合作得利。",1],
+"癸+己":["华盖地户","音信阻隔，男女宜避，事多阻碍。",-1],
+"癸+庚":["太白入网","争讼自伤，主刑狱官非，自投罗网。",-1],
+"癸+辛":["网盖天牢","官司败诉，占病危险，死罪难逃。",-1],
+"癸+壬":["复见螣蛇","重婚再嫁，晚年孤独，事多反复。",-1],
+"癸+癸":["天网四张","凡事小心谨慎，行人失伴，动则有祸。",-1],
+"癸+丁":["螣蛇夭矫","口舌官司不休，火烛之灾需防。",-1],
+"癸+丙":["华盖悖师","贵贱逢之皆不利，事多阻逆。",-1],
+"癸+乙":["华盖逢星","贵人除授升迁，常人平安。",0],
+"丁+戊":["青龙转光","官人升迁，常人威昌，宜求职晋升。",1],
+"丁+己":["火入勾陈","主有阴私暧昧，女人口舌是非。",-1],
+"丁+庚":["星奇受阻","文书阻隔不通，行人必归。",-1],
+"丁+辛":["朱雀入狱","官人失位，罪人得释，文书不顺。",-1],
+"丁+壬":["五神互合","贵人恩诏降，讼狱公平得雪。",1],
+"丁+癸":["朱雀投江","文书口舌是非，音信沉溺不通。",-1],
+"丁+丁":["星入太阴","文书即至，喜事重重，百事顺遂。",1],
+"丁+丙":["星随月转","贵人相助，越级高升，前程似锦。",1],
+"丁+乙":["人遁吉格","加官晋爵，婚财有喜，百事大吉。",1],
+"丙+戊":["飞鸟跌穴","百事吉昌，可谋大事，奇门两大吉格之一。",1],
+"丙+己":["火悖入刑","囚人刑杖，文书不行，事情受阻。",-1],
+"丙+庚":["荧入太白","门户破败，盗贼耗失，事业凶险。",-1],
+"丙+辛":["日月相会","谋事可成，病人不凶，合作有利。",1],
+"丙+壬":["火入天罗","为客不利，是非颇多，宜守不宜攻。",-1],
+"丙+癸":["月入地网","阴人害事，凡事暗昧，防小人暗算。",-1],
+"丙+丁":["星奇朱雀","贵人文书吉利，常人平静安稳。",1],
+"丙+丙":["月奇悖师","文书逼迫，破耗遗失，防口舌。",-1],
+"丙+乙":["日月并行","公私皆吉，合作顺利，谋事可成。",1],
+"乙+戊":["阴害阳门","利阴不利阳，宜退守不宜进攻。",-1],
+"乙+己":["日奇入墓","暗昧不明，门凶则必凶，宜谨慎。",-1],
+"乙+庚":["日奇被刑","争财破财，夫妻不睦，口舌官非。",-1],
+"乙+辛":["青龙逃走","人亡财破，奴仆拐逃，女逃男散。",-1],
+"乙+壬":["日奇入地","尊卑悖乱，事多官非，宜安分守己。",-1],
+"乙+癸":["华盖逢星","宜遁迹修道、隐匿藏形，退守为佳。",0],
+"乙+丁":["奇仪相佐","百事可为，最利文书考试，大吉。",1],
+"乙+丙":["奇仪顺遂","吉星相伴，事多顺利，谋为通达。",1],
+"乙+乙":["日奇伏吟","不宜见官求名，只宜安分守己。",0]
+};
+
+// ====== 五行/门/星/神 辅助函数 ======
+var WX_ORDER=["木","火","土","金","水"];
+var MEN_WX={"休门":"水","生门":"土","伤门":"木","杜门":"木","景门":"火","死门":"土","惊门":"金","开门":"金"};
+var XING_WX={"天蓬":"水","天芮":"土","天冲":"木","天辅":"木","天英":"火","天禽":"土","天心":"金","天柱":"金","天任":"土"};
+var XING_JX={"天蓬":-1,"天芮":-1,"天冲":0,"天辅":1,"天英":0,"天禽":1,"天心":1,"天柱":-1,"天任":1};
+var SHEN_JX={"值符":1,"螣蛇":-1,"太阴":1,"六合":1,"白虎":-1,"玄武":-1,"九地":1,"九天":1};
+
+function wxRel(a,b){ // a对b: 1=生, -1=克, 0=比和
+  if(a===b)return 0;
+  var ai=WX_ORDER.indexOf(a),bi=WX_ORDER.indexOf(b);
+  if(ai<0||bi<0)return 0;
+  if((ai+1)%5===bi)return 1;  // a生b
+  if((ai+2)%5===bi)return -1; // a克b
+  if((bi+1)%5===ai)return -2; // b生a → a泄
+  return 2; // b克a → a被克
+}
+
+function menGongTxt(mn,g){
+  var mw=MEN_WX[mn],gw=GONG_INFO[g].wx,rel=wxRel(mw,gw);
+  if(rel===0)return'<span style="color:#5b9b5b">门宫比和</span>——'+mn+'与'+gw+'同位，门的功能最旺，顺利。';
+  if(rel===1)return'<span style="color:#5b9b5b">门生宫（泄）</span>——'+mn+'生'+gw+'，门泄气于宫，事可成但较费力。';
+  if(rel===-1)return'<span style="color:#c94b4b">门克宫（迫）</span>——'+mn+'克'+gw+'，门强宫弱，事可强行但伤宫，吉门减吉。';
+  if(rel===-2)return'<span style="color:#4b8bc9">宫生门（助）</span>——'+gw+'生'+mn+'，宫助门势，门的功能增强，大利。';
+  return'<span style="color:#c94b4b">宫克门（制）</span>——'+gw+'克'+mn+'，宫制门，门的功能被压制，不利。';
+}
+
+function xingGongTxt(xn,g){
+  var xw=XING_WX[xn],gw=GONG_INFO[g].wx,rel=wxRel(xw,gw);
+  if(rel===0)return'星宫比和——'+xn+'得宫位助力，气势最旺。';
+  if(rel===1)return'星生宫——'+xn+'泄气于宫，天时助力减弱。';
+  if(rel===-1)return'星克宫——'+xn+'压制宫位，天时虽强但伤地利。';
+  if(rel===-2)return'宫生星——宫位生助'+xn+'，天时得地利滋养，力量增强。';
+  return'宫克星——宫位克制'+xn+'，天时受制，不利。';
+}
+
+// 综合断语生成器
+function palaceAna(pd){
+  var items=[],jg='',xj='';
+  // 格局
+  var k=pd.tg+'+'+pd.dg,ke=KY[k];
+  if(ke){
+    jg=ke[0]; var c=ke[2]===1?'ji':ke[2]===-1?'xiong':'ping';
+    items.push({k:'格局',v:ke[0]+'（'+k+'）',d:ke[1],t:c});
+    xj='j'+ke[2];
+  }
+  // 门
+  if(pd.mn)items.push({k:'八门',v:pd.mn,d:menGongTxt(pd.mn,pd.g).replace(/<[^>]+>/g,''),t:''});
+  // 星
+  if(pd.xn)items.push({k:'九星',v:pd.xn,d:xingGongTxt(pd.xn,pd.g).replace(/<[^>]+>/g,''),t:''});
+  // 神
+  if(pd.sh)items.push({k:'八神',v:pd.sh,d:'',t:''});
+  // 综合评分
+  var sc=0;
+  if(ke){sc+=ke[2]*2;}
+  if(pd.mn){var mr=wxRel(MEN_WX[pd.mn],GONG_INFO[pd.g].wx); if(mr===0)sc+=1; if(mr===-2)sc+=1; if(mr===-1)sc-=1; if(mr===2)sc-=1;}
+  if(pd.xn){var xr=wxRel(XING_WX[pd.xn],GONG_INFO[pd.g].wx); if(xr===0)sc+=1; if(xr===-2)sc+=1; if(xr===-1)sc-=0; if(xr===2)sc-=1;}
+  if(pd.sh){sc+=SHEN_JX[pd.sh]||0;}
+  var scTxt=sc>=3?'大吉':sc>=1?'偏吉':sc<=-3?'大凶':sc<=-1?'偏凶':'中平';
+  var scCls=sc>=3?'ji':sc>=1?'ji':sc<=-3?'xiong':sc<=-1?'xiong':'ping';
+  return {items:items,score:sc,scTxt:scTxt,scCls:scCls,jgName:jg,xj:xj};
+}
+
 // ====== 日历 ======
 function doy(y,m,d){var md=[0,31,28,31,30,31,30,31,31,30,31,30,31];if((y%4===0&&y%100!==0)||y%400===0)md[2]=29;var s=d;for(var i=1;i<m;i++)s+=md[i];return s;}
 function getTerm(date){
@@ -768,13 +915,14 @@ function runSim(){
   for(var i=0;i<8;i++){var sng2=yd?((sgg-1+i)%9+1):(((sgg-1-i)%9+9)%9+1);sp[sng2]=SHEN[i];}
   var so={};for(var g=1;g<=9;g++)so[GX[g]]=g;
   var tpg={};for(var g=1;g<=9;g++){if(g===5)continue;var sn=tp[g];if(sn){var og=so[sn];tpg[g]=dp[og]||"";}}
-  function ky(tg,dg){if(!tg||!dg)return"";var c=tg+"+"+dg;var j={"戊+丙":"青龙返首","丙+戊":"飞鸟跌穴","丁+戊":"青龙转光","戊+丁":"青龙耀明","乙+丁":"奇仪相佐","丙+乙":"日月并行","丁+乙":"人遁","戊+乙":"青龙和会"};var x={"乙+辛":"青龙逃走","辛+乙":"白虎猖狂","丁+癸":"朱雀投江","癸+丁":"蛇夭矫","丙+庚":"荧入太白","庚+丙":"太白入荧","戊+庚":"值符飞宫","戊+辛":"青龙折足","乙+己":"日奇入墓","戊+己":"贵人入狱"};if(j[c])return'<span style="color:#5b9b5b">'+j[c]+'</span>';if(x[c])return'<span style="color:#c94b4b">'+x[c]+'</span>';return"";}
+  function ky(tg,dg){if(!tg||!dg)return"";var e=KY[tg+"+"+dg];if(!e)return"";var cls=e[2]===1?"ji":e[2]===-1?"xiong":"ping";return'<span class="'+cls+'">'+e[0]+'</span>';}
   var yn=["上元","中元","下元"];
   var htm='<div class="card"><div class="card-hd">排盘结果</div>';
   htm+='<p style="font-size:0.83rem">公历：<b>'+y+'年'+m+'月'+d+'日 '+ts+'</b> | 干支：<b>'+ygz+'年 '+mgz+'月 '+dgz2+'日 '+hgz+'时</b><br>';
   htm+='节气：<b>'+term+'</b> | '+(yd?'<span style="color:#c94b4b">阳遁':'<span style="color:#4b8bc9">阴遁')+ju+'局</span> | '+yn[yuan]+' | 旬首：'+xs+'<br>';
   htm+='值符：<b style="color:#4b8bc9">'+zfx+'</b> | 值使：<b style="color:#c9a44b">'+zsm+'</b> | 值符落'+sgg+'宫 | 值使落'+zsg+'宫</p></div>';
   htm+='<div class="qm-grid">';
+  var pds=[]; // 收集各宫数据
   for(var gi=0;gi<9;gi++){
     var g=GRID[gi],info=GONG_INFO[g];
     if(g===5){htm+='<div class="qm-cell" style="opacity:0.5"><div style="font-weight:bold;color:var(--ac);font-size:0.7rem;">中五·寄坤二</div><div class="xng">天禽</div><div style="font-size:0.68rem;color:var(--dim)">寄二宫</div></div>';continue;}
@@ -782,8 +930,96 @@ function runSim(){
     htm+='<div class="qm-cell"><div class="sh">'+sh+'</div><div class="mn">'+mn+'</div><div class="xng">'+xng+'('+tg+')</div><div class="yi">地盘：'+dg+'</div>';
     if(ke)htm+='<div class="gj">'+ke+'</div>';
     htm+='<div class="gl">'+info.gua+' '+g+'宫 '+info.dir+'</div></div>';
+    pds.push({g:g,tg:tg,dg:dg,mn:mn,xn:xng,sh:sh});
   }
   htm+='</div>';
+
+  // ====== 格局分析 ======
+  var jiList=[],xiongList=[],pingList=[];
+  for(var i=0;i<pds.length;i++){
+    var pd=pds[i],k=pd.tg+'+'+pd.dg,ke=KY[k];
+    if(!ke)continue;
+    var entry={g:pd.g,gua:GONG_INFO[pd.g].gua,name:ke[0],desc:ke[1],type:ke[2],key:k};
+    if(ke[2]===1)jiList.push(entry);
+    else if(ke[2]===-1)xiongList.push(entry);
+    else pingList.push(entry);
+  }
+  htm+='<div class="card" style="margin-top:1.2rem;"><div class="card-hd">格局分析</div>';
+  if(jiList.length>0){
+    htm+='<p style="color:#5b9b5b;font-weight:bold;">吉格（'+jiList.length+'个）</p>';
+    for(var i=0;i<jiList.length;i++){
+      var e=jiList[i];
+      htm+='<div style="font-size:0.85rem;margin:0.3rem 0;"> <span class="tag t-gn">吉</span> <b>'+e.gua+e.g+'宫</b>：<span style="color:#5b9b5b">'+e.name+'</span>（'+e.key+'）—— '+e.desc+'</div>';
+    }
+  }
+  if(xiongList.length>0){
+    htm+='<p style="color:#c94b4b;font-weight:bold;margin-top:0.8rem;">凶格（'+xiongList.length+'个）</p>';
+    for(var i=0;i<xiongList.length;i++){
+      var e=xiongList[i];
+      htm+='<div style="font-size:0.85rem;margin:0.3rem 0;"> <span class="tag t-rd">凶</span> <b>'+e.gua+e.g+'宫</b>：<span style="color:#c94b4b">'+e.name+'</span>（'+e.key+'）—— '+e.desc+'</div>';
+    }
+  }
+  if(jiList.length===0&&xiongList.length===0){
+    htm+='<p style="color:var(--dim);">本局无突出吉凶格局，以门、星、神煞为主进行判断。</p>';
+  }
+  htm+='</div>';
+
+  // ====== 各宫综合解读 ======
+  htm+='<div class="card" style="margin-top:0.6rem;"><div class="card-hd">各宫综合解读</div><p style="font-size:0.8rem;color:var(--dim);">点击展开各宫详细分析</p>';
+  var gongOrder=[1,8,3,4,9,2,7,6]; // 坎艮震巽离坤兑乾
+  for(var gi=0;gi<gongOrder.length;gi++){
+    var g=gongOrder[gi],pd=null;
+    for(var i=0;i<pds.length;i++){if(pds[i].g===g){pd=pds[i];break;}}
+    if(!pd)continue;
+    var ana=palaceAna(pd);
+    var info2=GONG_INFO[g];
+    var scLabel=ana.scTxt,scCls2=ana.scCls;
+    htm+='<div style="margin:0.4rem 0;">';
+    htm+='<div class="fold-hd" data-fold="ana'+g+'" style="font-size:0.9rem;">';
+    htm+=info2.gua+' '+g+'宫（'+info2.dir+'·'+info2.wx+'） ';
+    if(pd.mn)htm+=pd.mn+' ';
+    if(pd.xn)htm+=pd.xn+' ';
+    if(ana.jgName)htm+='— <span class="'+(scCls2==='ji'?'ji':scCls2==='xiong'?'xiong':'')+'">'+ana.jgName+'</span> ';
+    htm+='<span class="tag '+(scCls2==='ji'?'t-gn':scCls2==='xiong'?'t-rd':'t-gy')+'">'+scLabel+'</span>';
+    htm+='</div>';
+    htm+='<div class="fold-bd" id="ana'+g+'" style="font-size:0.83rem;">';
+    // 格局详情
+    var k=pd.tg+'+'+pd.dg,ke2=KY[k];
+    if(ke2){
+      var gpx=ke2[2]===1?'（吉）':ke2[2]===-1?'（凶）':'（平）';
+      htm+='<p><b>【格局】</b>天盘'+pd.tg+' + 地盘'+pd.dg+' = <b>'+ke2[0]+'</b>'+gpx+'：'+ke2[1]+'</p>';
+    }
+    // 门宫关系
+    if(pd.mn){
+      htm+='<p><b>【门宫关系】</b>'+menGongTxt(pd.mn,g)+'</p>';
+    }
+    // 星宫关系
+    if(pd.xn){
+      htm+='<p><b>【星宫关系】</b>'+xingGongTxt(pd.xn,g)+'</p>';
+    }
+    // 神煞
+    if(pd.sh){
+      var sjx=SHEN_JX[pd.sh]||0,shTxt=sjx===1?'吉神':sjx===-1?'凶神':'';
+      htm+='<p><b>【神煞】</b>'+pd.sh+'（'+shTxt+'）—— '+(sjx===1?'此神护佑，利于此宫所主之事。':sjx===-1?'此神临宫，需防此宫所主领域有不利变化。':'')+'</p>';
+    }
+    // 综合断语
+    htm+='<p><b>【综合断语】</b><span class="'+(scCls2==='ji'?'ji':scCls2==='xiong'?'xiong':'')+'">此宫'+scLabel+'</span>。';
+    var tips=[];
+    if(ke2&&ke2[2]===1)tips.push('格局吉利，'+ke2[0]+'主'+ke2[1]);
+    if(ke2&&ke2[2]===-1)tips.push('格局为凶，需注意：'+ke2[1]);
+    if(pd.mn&&pd.mn==="开门")tips.push('开门主事业、工作，此宫方位（'+info2.dir+'）利于求职和开业');
+    if(pd.mn&&pd.mn==="生门")tips.push('生门主财运，此宫方位（'+info2.dir+'）利于求财');
+    if(pd.mn&&pd.mn==="休门")tips.push('休门主休养、人际关系，此宫方位利于见贵人和谈判');
+    if(pd.mn&&pd.mn==="死门")tips.push('死门主终结、丧葬之事，此方位不宜求财和出行');
+    if(pd.mn&&pd.mn==="伤门")tips.push('伤门主竞争、伤害，此方位利于讨债和竞技，不宜婚嫁');
+    if(pd.sh&&pd.sh==="白虎")tips.push('白虎临宫，需防意外伤害和交通事故');
+    if(pd.sh&&pd.sh==="玄武")tips.push('玄武临宫，需防盗贼、诈骗和口舌是非');
+    if(pd.sh&&pd.sh==="值符")tips.push('值符为八神之首，百恶消散，得贵人相助');
+    htm+=tips.join('；')+'。</p>';
+    htm+='</div></div>';
+  }
+  htm+='</div>';
+
   document.getElementById("simResult").innerHTML=htm;
 }
 
@@ -900,13 +1136,13 @@ window.addEventListener("DOMContentLoaded",function(){
     pp.forEach(function(p){p.classList.remove("active");});
     document.getElementById(kid).classList.add("active");
   });}
-  // 折叠按钮
-  document.querySelectorAll(".fold-hd").forEach(function(f){
-    f.addEventListener("click",function(){
-      this.classList.toggle("open");
-      var bd=document.getElementById(this.dataset.fold);
-      if(bd)bd.classList.toggle("open");
-    });
+  // 折叠按钮（事件委托，支持排盘后动态生成的折叠面板）
+  document.addEventListener("click",function(e){
+    var hd=e.target.closest(".fold-hd");
+    if(!hd)return;
+    hd.classList.toggle("open");
+    var bd=document.getElementById(hd.dataset.fold);
+    if(bd)bd.classList.toggle("open");
   });
   // 初始排盘
   if(document.getElementById("simResult"))runSim();
