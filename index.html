@@ -154,6 +154,8 @@ input:focus,select:focus { border-color:var(--ac); outline:none; }
   <button data-page="p6">六、实战框架</button>
   <button data-page="p7">七、排盘模拟器</button>
   <button data-page="p8">八、经典文献</button>
+  <a href="symbols-reference.html" style="display:flex;align-items:center;padding:0.65rem 0.85rem;font-size:0.85rem;color:var(--ac);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;font-family:inherit;">📖 符号速查</a>
+  <a href="排盘过程详解.html" style="display:flex;align-items:center;padding:0.65rem 0.85rem;font-size:0.85rem;color:var(--ac);text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;font-family:inherit;">🔍 排盘详解</a>
 </nav>
 
 <!-- ====== 第1页：概念入门 ====== -->
@@ -1072,8 +1074,8 @@ function getTerm(date){
   }
   return "冬至";
 }
-function dayGz(y,m,d){var bs=new Date(2000,0,1),tg=new Date(y,m-1,d);var df=Math.round((tg-bs)/86400000);var ix=((df%60)+60)%60;return TG[ix%10]+DZ[ix%12];}
-function hourGz(dgz,h){var dt=TG.indexOf(dgz[0]),hd=Math.floor((h+1)/2)%12;var hb=[0,0,2,2,4,4,6,6,8,8];return TG[(hb[dt]+hd)%10]+DZ[hd];}
+function dayGz(y,m,d){var bs=new Date(2000,0,1),tg=new Date(y,m-1,d);var df=Math.round((tg-bs)/86400000);var ix=((df+54)%60+60)%60;return TG[ix%10]+DZ[ix%12];}
+function hourGz(dgz,h){var dt=TG.indexOf(dgz[0]),hd=Math.floor((h+1)/2)%12;var hb=[0,2,4,6,8,0,2,4,6,8];return TG[(hb[dt]+hd)%10]+DZ[hd];}
 function xunS(gz){var t=TG.indexOf(gz[0]),d=DZ.indexOf(gz[1]);return"甲"+DZ[((d-t)%12+12)%12];}
 function fuTou(dgz){var t=TG.indexOf(dgz[0]),d=DZ.indexOf(dgz[1]);for(var o=0;o<10;o++){var ct=((t-o)%10+10)%10;if(TG[ct]==="甲"||TG[ct]==="己")return TG[ct]+DZ[((d-o)%12+12)%12];}return"甲子";}
 function detJu(date){
@@ -1085,7 +1087,7 @@ function detJu(date){
   return{ju:st.j[yuan],yy:st.yy,term:term,yuan:yuan,dgz:dgz};
 }
 function yrGz(y){var t=(y-4)%10,d=(y-4)%12;if(t<0)t+=10;if(d<0)d+=12;return TG[t]+DZ[d];}
-function moGz(y,m){var yt=(y-4)%10;if(yt<0)yt+=10;var mb=[2,4,6,8,0,2,4,6,8,0];var mi=((m-2)%12+12)%12;return TG[(mb[yt]+mi)%10]+DZ[(m+1)%12];}
+function moGz(y,m,d){var yt=(y-4)%10;if(yt<0)yt+=10;var mb=[2,4,6,8,0,2,4,6,8,0];var term=getTerm(new Date(y,m-1,d));var t2dz={大雪:"子",冬至:"子",小寒:"丑",大寒:"丑",立春:"寅",雨水:"寅",惊蛰:"卯",春分:"卯",清明:"辰",谷雨:"辰",立夏:"巳",小满:"巳",芒种:"午",夏至:"午",小暑:"未",大暑:"未",立秋:"申",处暑:"申",白露:"酉",秋分:"酉",寒露:"戌",霜降:"戌",立冬:"亥",小雪:"亥"};var dzm=t2dz[term]||"子";var md=DZ.indexOf(dzm),mi=((md-2)%12+12)%12;return TG[(mb[yt]+mi)%10]+dzm;}
 
 // ====== 排盘 ======
 function buildDP(ju,yd){var dp={};for(var i=0;i<9;i++){var g=yd?((ju-1+i)%9+1):(((ju-1-i)%9+9)%9+1);dp[g]=YIYI[i];}return dp;}
@@ -1096,7 +1098,7 @@ function runSim(){
   var date=new Date(ds+"T"+ts+":00");
   var y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate(),h=date.getHours();
   var r=detJu(date),ju=r.ju,yd=r.yy,term=r.term,yuan=r.yuan,dgz=r.dgz;
-  var ygz=yrGz(y),mgz=moGz(y,m),dgz2=dayGz(y,m,d),hgz=hourGz(dgz2,h);
+  var ygz=yrGz(y),mgz=moGz(y,m,d),dgz2=dayGz(y,m,d),hgz=hourGz(dgz2,h);
   var xs=xunS(hgz),dp=buildDP(ju,yd);
   var xsy=LJY[xs],xsg=0;
   for(var g=1;g<=9;g++){if(dp[g]===xsy){xsg=g;break;}}

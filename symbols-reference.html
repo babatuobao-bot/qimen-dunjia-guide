@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奇门遁甲 · 符号速查表</title>
+<style>
+:root {
+  --bg:#0f0f14; --sur:#1a1a24; --bd:#2a2a3a; --tx:#d0d0d8; --dim:#808090;
+  --ac:#c9a44b; --rd:#c94b4b; --bl:#4b8bc9; --gn:#5b9b5b;
+  --mu:#6b9b5b; --huo:#c94b4b; --tu:#c9a44b; --jin:#c0c0c0; --shui:#4b8bc9;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--tx); font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; line-height:1.85; }
+
+/* 导航 */
+nav.top-nav {
+  position:sticky; top:0; z-index:200;
+  background:rgba(15,15,20,0.96); backdrop-filter:blur(10px);
+  border-bottom:2px solid var(--bd);
+  display:flex; flex-wrap:wrap; gap:0; justify-content:center;
+  padding:0 0.5rem; overflow-x:auto;
+}
+nav.top-nav a, nav.top-nav button {
+  background:none; color:var(--dim); border:none; text-decoration:none;
+  padding:0.65rem 0.85rem; font-size:0.85rem; cursor:pointer;
+  border-bottom:2px solid transparent; margin-bottom:-2px;
+  white-space:nowrap; font-family:inherit;
+}
+nav.top-nav a:hover, nav.top-nav button:hover { color:var(--tx); }
+nav.top-nav a.active, nav.top-nav button.active { color:var(--ac); border-bottom-color:var(--ac); font-weight:bold; }
+
+/* 主容器 */
+main { max-width:1100px; margin:0 auto; padding:0 1.5rem 3rem; }
+
+/* 标题 */
+h1 { font-size:1.8rem; text-align:center; margin:2rem 0 0.3rem; color:#fff; }
+h1 .sub { font-size:0.9rem; color:var(--dim); display:block; margin-top:0.3rem; font-weight:normal; }
+h2 { font-size:1.3rem; margin:2.5rem 0 1rem; padding-left:0.7rem; border-left:3px solid var(--ac); color:#fff; }
+h3 { font-size:1.05rem; margin:1.5rem 0 0.6rem; color:var(--ac); }
+
+/* 表格 */
+.tbl-wrap { overflow-x:auto; margin:0.75rem 0; }
+table { width:100%; border-collapse:collapse; font-size:0.84rem; min-width:600px; }
+th,td { border:1px solid var(--bd); padding:0.45rem 0.55rem; }
+th { background:rgba(201,164,75,0.12); color:var(--ac); font-weight:bold; white-space:nowrap; text-align:center; }
+td { vertical-align:top; }
+tr:nth-child(even) td { background:rgba(255,255,255,0.015); }
+
+/* 紧凑表格 */
+.tbl-compact th, .tbl-compact td { text-align:center; vertical-align:middle; padding:0.35rem 0.4rem; font-size:0.82rem; }
+.tbl-compact td:first-child { text-align:left; font-weight:bold; }
+
+/* 吉凶标签 */
+.ji { color:var(--gn); font-weight:bold; }
+.xiong { color:var(--rd); font-weight:bold; }
+.ping { color:var(--dim); }
+
+/* 章节简介 */
+.intro { color:var(--dim); font-size:0.9rem; margin-bottom:1rem; }
+
+/* 返回链接 */
+.back-link { display:inline-block; margin-top:2rem; color:var(--ac); text-decoration:none; font-size:0.9rem; }
+.back-link:hover { text-decoration:underline; }
+
+/* 响应式 */
+@media(max-width:700px) {
+  nav.top-nav a, nav.top-nav button { font-size:0.72rem; padding:0.45rem 0.5rem; }
+  h1 { font-size:1.4rem; }
+  table { font-size:0.75rem; min-width:auto; }
+}
+
+/* 八卦行底色 */
+.row-qian td { background:rgba(255,242,204,0.06) !important; }
+.row-kun  td { background:rgba(226,239,218,0.05) !important; }
+.row-zhen td { background:rgba(217,226,243,0.06) !important; }
+.row-xun  td { background:rgba(228,223,236,0.05) !important; }
+.row-kan  td { background:rgba(242,242,242,0.04) !important; }
+.row-li   td { background:rgba(252,228,214,0.06) !important; }
+.row-gen  td { background:rgba(237,237,237,0.04) !important; }
+.row-dui  td { background:rgba(221,235,247,0.06) !important; }
+</style>
+</head>
+<body>
+
+<!-- ====== 导航 ====== -->
+<nav class="top-nav" id="topNav">
+  <a href="index.html">← 返回主页</a>
+  <a href="#bagua" class="active">八卦万物类象</a>
+  <a href="#tiangan">十天干</a>
+  <a href="#dizhi">十二地支</a>
+  <a href="#liujia">六甲遁藏</a>
+  <a href="#bamen">八门</a>
+  <a href="#jiuxing">九星</a>
+  <a href="#bashen">八神</a>
+</nav>
+
+<main>
+
+<h1>奇门遁甲 · 符号速查表<span class="sub">八卦 · 干支 · 八门 · 九星 · 八神</span></h1>
+
+<!-- ========== 一、八卦万物类象 ========== -->
+<h2 id="bagua">一、八卦万物类象</h2>
+<p class="intro">八卦囊括天地人、时间、空间万事万物。以下是各卦所对应的万物类象。</p>
+
+<div class="tbl-wrap"><table>
+<thead>
+<tr>
+  <th>卦名</th><th>卦象</th><th>基本含义</th><th>天象</th><th>国家/单位</th><th>家庭</th>
+  <th>社会</th><th>性别</th><th>年龄</th><th>场所</th><th>方位</th><th>时间</th>
+  <th>数字</th><th>动物</th><th>静物</th><th>人体</th><th>颜色</th><th>五味</th>
+</tr>
+</thead>
+<tbody>
+
+<tr class="row-qian">
+  <td nowrap><b>乾（一）</b></td>
+  <td nowrap>乾为天</td>
+  <td>为太阳，表现天的功能、意识及刚健的性质；还代表冰、雹、霰</td>
+  <td>晴天、冰、雹、霰</td>
+  <td>国君、主席、总统；单位一把手、主要领导人</td>
+  <td>父亲、大人、老人、长辈</td>
+  <td>名人、公门人、宦官</td>
+  <td nowrap>男</td>
+  <td nowrap>老头</td>
+  <td>京都、大城市、形胜之地、高亢之所</td>
+  <td>西北方（后天）、南方（先天）、上方、高处</td>
+  <td>秋季，农历九、十月，戌亥年月日时，立冬至大雪45天</td>
+  <td>一(先天)、六(后天)、四九(五行金数)</td>
+  <td>马、象、天鹅、狮子</td>
+  <td>金玉、珠宝、圆物、木果、刚物、冠、镜</td>
+  <td>头、右腿(九宫位)、肺、骨骼、男性生殖器</td>
+  <td>白色、大赤色、玄色</td>
+  <td>辛、辣</td>
+</tr>
+
+<tr class="row-kun">
+  <td nowrap><b>坤（二）</b></td>
+  <td nowrap>坤为地</td>
+  <td>表现地的功能、潜意识及柔顺的性质</td>
+  <td>阴云、雾气、冰霜</td>
+  <td>皇后、第一夫人；单位职工、群众</td>
+  <td>母亲、祖母、老母、后母、老妇人</td>
+  <td>众人、乡人、小人、大腹人、懦弱之人、吝啬之人</td>
+  <td nowrap>女</td>
+  <td nowrap>老妇</td>
+  <td>田野、大地、乡村、平地</td>
+  <td>西南方（后天）、北方（先天）、下方、底层</td>
+  <td>农历六、七月，未申年月日时，辰戌丑未土年月日时，立秋至白露45天</td>
+  <td>二(后天)、八(先天)、五十(五行土数)</td>
+  <td>牛、牝马、猫、百兽</td>
+  <td>水泥、砖瓦、五谷、布帛、丝绵、方物、柔物、土中之物、牛肉、食品、大车、锅</td>
+  <td>腹、右肩(九宫位)、脾、胃、肌肉、女性生殖器</td>
+  <td>黄色、黑色</td>
+  <td>甘、甜</td>
+</tr>
+
+<tr class="row-zhen">
+  <td nowrap><b>震（三）</b></td>
+  <td nowrap>震为雷</td>
+  <td>表示震动、奋起的性质和状态</td>
+  <td>雷雨、雷鸣、地震、火山喷发</td>
+  <td>当权的二把手</td>
+  <td>长男</td>
+  <td>驾驶员、运动员、警察、法官、军人、飞行员、列车员、社会活动家、舞蹈演员、足球爱好者、狂人、壮士</td>
+  <td nowrap>男</td>
+  <td nowrap>长男</td>
+  <td>工厂、广播电台、乐器店、游乐场、机场、发射场、车站、舞厅、歌厅、闹市、战场、森林、草木茂盛之所</td>
+  <td>东方（后天）、东北方（先天）</td>
+  <td>农历春二月，春分至谷雨45天，卯年月日时</td>
+  <td>四(先天)、三(后天)、八(五行木数)</td>
+  <td>龙、蛇、善鸣之马、善鸣之鸟、百虫、鲤鱼</td>
+  <td>木、竹、苇、乐器、蔬菜、鲜花树木、电话、飞机、汽车、火箭、鞭炮、闹钟、花草繁鲜之物、蹄、肉、山林野味</td>
+  <td>足、肝胆、左胁</td>
+  <td>青、绿、碧色</td>
+  <td>酸</td>
+</tr>
+
+<tr class="row-xun">
+  <td nowrap><b>巽（四）</b></td>
+  <td nowrap>巽为风</td>
+  <td>表示自由活动和渗透性</td>
+  <td>刮风、台风、飓风、龙卷风等</td>
+  <td>—</td>
+  <td>长女、大女儿</td>
+  <td>科技人员、教师、僧尼、仙道之人、气功师、练功者、商人、营业员、木材经营者、手艺人、能工巧匠、额头宽的人、头发细长而直的人、优柔寡断的人、自由职业者</td>
+  <td nowrap>女</td>
+  <td nowrap>长女</td>
+  <td>邮局、管道、线路、隘路、过道、长廊、寺观、草原、竹林、芦苇荡、升降机、传送带</td>
+  <td>东南方（后天）、西南（先天）</td>
+  <td>春夏之交，农历三、四月，辰巳年月日时，立夏至芒种45天</td>
+  <td>五(先天)、四(九宫数)、三八(五行木数)</td>
+  <td>鸡、鸭、鹅、蝶、蜻蜓、蛇、蚯蚓、带鱼、鳗鱼、鳝鱼、斑马等</td>
+  <td>树木、木材、木制品、纤维品、丝线、绳子、麻、风扇、干燥机、飞机、气球、气垫船、帆船、蚊香、木香、兰花、草药、羽毛、枝叶、腰带、海带、下面有口的器物</td>
+  <td>股、肱、胆、气管、神经、左肩(九宫位)、练功之元气</td>
+  <td>绿色、蓝色</td>
+  <td>酸</td>
+</tr>
+
+<tr class="row-kan">
+  <td nowrap><b>坎（五）</b></td>
+  <td nowrap>坎为水</td>
+  <td>为月亮，表示艰难、险阻的状态</td>
+  <td>雨、雷、露、霜</td>
+  <td>—</td>
+  <td>中男、中年男子</td>
+  <td>江湖之人、舟人、盗贼、匪徒、数学家、医生、律师、逃亡者、黑社会之人、诈骗犯、劳务人员、酒鬼、娼妇、自来水公司人员</td>
+  <td nowrap>男</td>
+  <td nowrap>中男</td>
+  <td>江河、湖、海、沟、渠、井、泉、下水道、洼地、酒店、冷饮店、浴室、澡堂、水族馆、地下室、暗室、自来水公司、鱼塘、饮食店、妓院</td>
+  <td>北方（后天）、西方（先天）</td>
+  <td>农历十一月，子年月日时，冬至至大寒45天</td>
+  <td>一(九宫数)、六(五行水数：一六水)</td>
+  <td>猪、鼠、狐狸、水鸟、鱼类、水中动物、美脊之马、劳苦之马、脊椎动物</td>
+  <td>油、酒、醋、酱油、饮料、石油、药品、水车、轮子、刑具、蒺藜、丛刺、带核的果品、冷藏设备、浮萍、潜水艇</td>
+  <td>肾脏、膀胱、泌尿系统、生殖系统、血液、内分泌系统、耳、肛门</td>
+  <td>黑色、白色（玄空飞星：一白）</td>
+  <td>咸</td>
+</tr>
+
+<tr class="row-li">
+  <td nowrap><b>离（六）</b></td>
+  <td nowrap>离为火</td>
+  <td>为日，表示光明、美丽的性质和状态</td>
+  <td>晴天、热天、酷暑、烈日、干旱、虹霓、霞光</td>
+  <td>中层干部</td>
+  <td>中女、中年妇女</td>
+  <td>中间层人物、美人、美容师、文人、作家、艺术家、演员、明星、革命家、军人、画家、编辑、侦察员、纪检人员</td>
+  <td nowrap>女</td>
+  <td nowrap>中女</td>
+  <td>朝阳的场所、名胜古迹、圣地、教堂、华丽的街道、电影院、电视台、画院、美术馆、图书馆、印刷厂、广告塔、电车站、冶炼厂、放射室</td>
+  <td>南方（后天）、东方（先天）</td>
+  <td>夏天，农历五月，午年月日时，夏至至大暑45天</td>
+  <td>三(先天)、九(九宫数)、二七(五行火数)</td>
+  <td>野鸡、孔雀、凤凰、仙鹤、虾、蟹、螺、贝类、鳖、龟、「变色龙」、萤火虫</td>
+  <td>字、画、美术品、报纸、刊物、图书、杂志、契约、文书、合同、书信、照相机、摄影机、录像机、电视机、复印机、照明用具、广告、奖状、电报、连环画、化妆品、火炉、打火机、火柴、烧烤物品、焊枪、霓虹灯</td>
+  <td>眼、头部、心脏、小肠</td>
+  <td>红色、赤色、花色、紫色（九紫）</td>
+  <td>苦</td>
+</tr>
+
+<tr class="row-gen">
+  <td nowrap><b>艮（七）</b></td>
+  <td nowrap>艮为山</td>
+  <td>为土，表示静止和安定的状态</td>
+  <td>云、雾、岚</td>
+  <td>—</td>
+  <td>少男、青少年</td>
+  <td>少年、儿童、土建人员、宗教人员、官僚、贵族、继承人、警卫、守门人、矿工、狱吏、石匠、储蓄所人员</td>
+  <td nowrap>男</td>
+  <td nowrap>少男</td>
+  <td>山、山地、丘陵、高台、堤坝、休息室、坟场、阁寺、房屋、监狱、公安机关、派出所、大楼、城墙、仓库、宗庙、祠堂、矿山、采石场、银行、贮藏室</td>
+  <td>东北方（后天）、西北（先天）</td>
+  <td>冬春之交，农历十二月和正月，丑寅年月日时，立春至惊蛰45天</td>
+  <td>七(先天)、八(九宫数)、五十(五行土数)</td>
+  <td>狗、虎、鼠、狼、熊、牛等有牙有角的动物，昆虫、爬虫、家畜等有尾的动物</td>
+  <td>岩石、山坡、土堆、坟墓、墙壁、门坎、阶梯、台阶、门板、石碑、土炕、柜台、桌子、床</td>
+  <td>鼻、背、手指、关节、左腿(九宫位)、脚趾、乳房、脾、胃、结肠</td>
+  <td>黄色、棕黄、咖啡色、白色（八白）</td>
+  <td>甘、甜</td>
+</tr>
+
+<tr class="row-dui">
+  <td nowrap><b>兑（八）</b></td>
+  <td nowrap>兑为泽</td>
+  <td>为雨，表示喜悦和言词</td>
+  <td>潮湿天气、气压低、露水、阴雨连绵</td>
+  <td>—</td>
+  <td>少女、小女孩</td>
+  <td>讲师、教授、演说家、讲解员、翻译、巫师、占卜者、媒婆、传达室人员、歌唱家、音乐家、相声演员、娱乐场所人员、娼妓、牙科医生、外科医生等</td>
+  <td nowrap>女</td>
+  <td nowrap>少女</td>
+  <td>沼泽地、峡谷、洼地、湖泊、池塘、滑冰场、游乐园、会议室、音乐厅、茶座、饭店、废墟、旧屋、山口、洞穴、井</td>
+  <td>西方（后天）、东南（先天）</td>
+  <td>农历八月，酉年月日时，秋分到霜降45天</td>
+  <td>二(先天)、七(九宫数)、四九(五行金数)</td>
+  <td>羊、豹、豺、猿猴、水鸟、兔子、沼泽动物、鸡鸭</td>
+  <td>石榴、胡桃、饮食用具、带口的器物、刀剑、剪刀、玩具、破损物品、垃圾箱等</td>
+  <td>口、舌、牙齿、咽喉、肺、右胁(九宫位)、肛门等</td>
+  <td>白色、赤色（七赤）</td>
+  <td>辛、辣</td>
+</tr>
+</tbody>
+</table></div>
+
+<!-- ========== 二、十天干 ========== -->
+<h2 id="tiangan">二、十天干</h2>
+<p class="intro">十天干是奇门遁甲的"基本字母"。以下为原文详细万物类象。</p>
+
+<div class="tbl-wrap"><table>
+<thead>
+<tr><th style="min-width:60px">天干</th><th>五行</th><th>方位</th><th>五脏</th><th>体表</th><th>颜色</th><th>五味</th><th>性质/体形</th><th>性格</th><th>得令</th><th>失令</th><th>奇门角色</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td nowrap><b>甲</b></td>
+  <td style="color:var(--mu)">阳木</td>
+  <td>东方</td><td>胆</td><td>头部</td>
+  <td>青色</td><td>酸</td>
+  <td>劲健性直，体形长方，有萌动作用</td>
+  <td>过于自负，不能娴于世故</td>
+  <td>为栋梁</td>
+  <td>为废材；受克太过则无用，生旺太过则漂泊无依</td>
+  <td><b>首领、主帅</b>，经常遁在六仪之下</td>
+</tr>
+<tr>
+  <td nowrap><b>乙</b></td>
+  <td style="color:var(--mu)">阴木</td>
+  <td>东方</td><td>肝</td><td>脖项和肩</td>
+  <td>碧或浅绿色</td><td>酸甘</td>
+  <td>体质柔嫩</td>
+  <td>柔顺，依附世情</td>
+  <td>繁华茂盛</td>
+  <td>枯萎</td>
+  <td><b>日奇</b>，为医生、为女人、为妻子</td>
+</tr>
+<tr>
+  <td nowrap><b>丙</b></td>
+  <td style="color:var(--huo)">阳火</td>
+  <td>南方</td><td>小肠</td><td>肩或额</td>
+  <td>紫赤色</td><td>苦辣</td>
+  <td>体形魁伟</td>
+  <td>刚烈，工作清廉。能成大材但难持久</td>
+  <td>战果辉煌</td>
+  <td>灰槁无力</td>
+  <td><b>月奇</b>，为有权威之人，为婚姻的第三者男人</td>
+</tr>
+<tr>
+  <td nowrap><b>丁</b></td>
+  <td style="color:var(--huo)">阴火</td>
+  <td>南方</td><td>心脏</td><td>胸和舌</td>
+  <td>淡红</td><td>苦</td>
+  <td>形体秀丽清高</td>
+  <td>温和而有心计</td>
+  <td>洞察奸邪</td>
+  <td>愁苦、呻吟</td>
+  <td><b>星奇</b>，为玉女，婚姻中第三者女人</td>
+</tr>
+<tr>
+  <td nowrap><b>戊</b></td>
+  <td style="color:var(--tu)">阳土</td>
+  <td>中方</td><td>胃</td><td>胁和鼻子</td>
+  <td>深黄</td><td>甘辛</td>
+  <td>体形敦厚</td>
+  <td>刚烈暴躁</td>
+  <td>豪杰果敢</td>
+  <td>愚笨痴呆</td>
+  <td><b>天门</b>，代表资本、钱财等</td>
+</tr>
+<tr>
+  <td nowrap><b>己</b></td>
+  <td style="color:var(--tu)">阴土</td>
+  <td>中央</td><td>脾</td><td>腹部和面部</td>
+  <td>浅黄</td><td>甘辛</td>
+  <td>体质沉静</td>
+  <td>温顺</td>
+  <td>教化万物</td>
+  <td>洁身自好</td>
+  <td><b>地户</b>，代表坟墓等</td>
+</tr>
+<tr>
+  <td nowrap><b>庚</b></td>
+  <td style="color:var(--jin)">阳金</td>
+  <td>西方</td><td>大肠</td><td>脐轮和筋</td>
+  <td>白</td><td>辛辣</td>
+  <td>体形长方，性坚执能屈人而不屈于人</td>
+  <td>刚健锐利</td>
+  <td>呈其专制</td>
+  <td>失去雄威</td>
+  <td><b>贼人、丈夫、仇人、公安干警</b></td>
+</tr>
+<tr>
+  <td nowrap><b>辛</b></td>
+  <td style="color:var(--jin)">阴金</td>
+  <td>西方</td><td>肺</td><td>胸部和股部</td>
+  <td>浅白</td><td>苦辣</td>
+  <td>体形方正沉静，为用坚耐似玉</td>
+  <td>忠诚爽柔</td>
+  <td>黄钟</td>
+  <td>瓦缶</td>
+  <td><b>罪人</b>或犯过错误的人</td>
+</tr>
+<tr>
+  <td nowrap><b>壬</b></td>
+  <td style="color:var(--shui)">阳水</td>
+  <td>北方</td><td>膀胱三焦</td><td>小腿</td>
+  <td>深黑</td><td>咸</td>
+  <td>性格柔而险，可共忧患，难以同乐</td>
+  <td>柔而险</td>
+  <td>济物利人</td>
+  <td>妨贤害国</td>
+  <td>代表与<b>流动</b>有关的事物</td>
+</tr>
+<tr>
+  <td nowrap><b>癸</b></td>
+  <td style="color:var(--shui)">阴水</td>
+  <td>北方</td><td>肾和心包</td><td>足</td>
+  <td>浅黑</td><td>咸浊</td>
+  <td>性格阴柔浅露</td>
+  <td>阴柔，得令则从龙变化狐假虎威；失令则沉溺淫心或摇尾乞怜</td>
+  <td>从龙变化，狐假虎威</td>
+  <td>沉溺淫心，或摇尾乞怜</td>
+  <td>代表与<b>女性、性生活</b>有关系的事物或人</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<h3 style="margin-top:1.5rem;">附：十天干阴阳旺衰及吉凶</h3>
+<div class="card" style="font-size:0.88rem;">
+
+<p><b>五阳时与五阴时</b></p>
+<p>甲、乙、丙、丁、戊前五位为<b style="color:var(--ac)">五阳时</b>，利客不利主，做事宜先动。五阳为喜神，出军征战、远行求财、迁徙起造，百事可为而得利。逃亡者不可得。古人云：得阳干者飞而不止，利客先举。</p>
+<p>己、庚、辛、壬、癸后五位为<b style="color:var(--rd)">五阴时</b>，利主不利客，做事宜后动。五阴为恶神，举兵御敌，待敌动后自己再动可决胜。不可拜官迁徙、婚嫁出行、举造百事。宜按兵不动、密谋策划、坐收渔人之利。逃亡者可得。古人云：得阴干利为主，伏而不起则利。</p>
+
+<p style="margin-top:1rem;"><b>天干冲合</b></p>
+<div class="tbl-wrap"><table style="font-size:0.84rem;">
+<tr><th>关系</th><th>配对</th></tr>
+<tr><td><b>相冲</b><br><small>阳克阳、阴克阴</small></td><td>甲庚相冲、乙辛相冲、壬丙相冲、癸丁相冲<br><small>（戊己中央土除外）</small></td></tr>
+<tr><td><b>相合</b></td>
+<td>甲己合化土（中正之合）、乙庚合化金（仁义之合）、丙辛合化水（权威之合）、丁壬合化木（淫荡之合）、戊癸合化火（无情之合）</td></tr>
+</table></div>
+
+<p style="margin-top:1rem;"><b>十天干生旺死绝表</b></p>
+<div class="tbl-wrap"><table style="font-size:0.82rem;">
+<tr><th>天干</th><th>长生</th><th>帝旺</th><th>死</th><th>墓</th><th>绝</th></tr>
+<tr><td>甲</td><td>亥</td><td>卯</td><td>午</td><td>未</td><td>申</td></tr>
+<tr><td>乙（逆行）</td><td>午</td><td>寅</td><td>亥</td><td>戌</td><td>酉</td></tr>
+<tr><td>丙、戊</td><td>寅</td><td>午</td><td>酉</td><td>戌</td><td>亥</td></tr>
+<tr><td>丁、己（逆行）</td><td>酉</td><td>巳</td><td>寅</td><td>丑</td><td>子</td></tr>
+<tr><td>庚</td><td>巳</td><td>酉</td><td>子</td><td>丑</td><td>寅</td></tr>
+<tr><td>辛（逆行）</td><td>子</td><td>申</td><td>巳</td><td>辰</td><td>卯</td></tr>
+<tr><td>壬</td><td>申</td><td>子</td><td>卯</td><td>辰</td><td>巳</td></tr>
+<tr><td>癸（逆行）</td><td>卯</td><td>亥</td><td>申</td><td>未</td><td>午</td></tr>
+</table></div>
+<p style="font-size:0.8rem;color:var(--dim);">辰戌丑未为四库/四墓：辰为壬水之墓又为辛金之墓，戌为丙火戊土之墓又为乙木之墓，丑为庚金之墓又为丁火己土之墓，未为甲木之墓又为癸水之墓。</p>
+
+<p style="margin-top:1rem;"><b>十天干吉凶命名</b></p>
+<div class="tbl-wrap"><table style="font-size:0.82rem;">
+<tr><th>甲</th><th>乙</th><th>丙</th><th>丁</th><th>戊</th><th>己</th><th>庚</th><th>辛</th><th>壬</th><th>癸</th></tr>
+<tr><td>天福</td><td>天德</td><td>天威</td><td>太阴<br>（玉女）</td><td>天武</td><td>六合<br>（明堂）</td><td>天狱<br>（天刑）</td><td>天庭</td><td>天牢</td><td>天藏<br>（天网）</td></tr>
+<tr style="font-size:0.78rem;"><td>宜行恩施惠<br>进德赏功</td><td>宜施恩赏德<br>敛恤抚告</td><td>宜发号施令<br>以彰雄威</td><td>宜静居无忧</td><td>宜发号施令<br>行诛屠戮</td><td>宜发明旧事<br>修疆理城</td><td>宜决断刑狱<br>诛戮邪恶</td><td>宜正法治囚<br>莫为吉事</td><td>宜平讼决狱<br>吉事勿为</td><td>宜扬威责罚<br>积蓄收敛</td></tr>
+</table></div>
+
+<p style="margin-top:1rem;"><b>十天干时辰出行歌诀</b>（仅供参考）</p>
+<blockquote style="font-size:0.84rem;color:var(--dim);line-height:2;">
+六甲出门最吉利，金马玉堂逢贵人。<br>
+乘着六乙出门去，秃头公吏宜终身。<br>
+执持弓弩遇骑射，盖为时乘六丙行。<br>
+州官县宰相遇面，只为行时正六丁。<br>
+若逢戊己出行去，两个妇人身着青。<br>
+庚辛壬时最为恶，大凶无吉有灾祸。<br>
+六癸出门逢骑射，多遇山林隐逸客。
+</blockquote>
+</div>
+
+
+<!-- ========== 三、十二地支 ========== -->
+<h2 id="dizhi">三、十二地支</h2>
+<p class="intro">十二地支万物类象，原文详细记录了各支的五行、方位、场所、人物、动植物、物品及遇吉凶神的不同应验。</p>
+
+<div class="tbl-wrap"><table>
+<thead>
+<tr><th style="min-width:50px">地支</th><th>五行</th><th>方位</th><th>场所</th><th>人物</th><th>动物</th><th>静物</th><th>遇吉神</th><th>遇凶神</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td nowrap><b>子</b></td>
+  <td style="color:var(--shui)">阳水</td><td>北方</td>
+  <td>池塘、沟河，与水有关场所</td>
+  <td>妇女、盗贼</td>
+  <td>燕子、蝙蝠、蜗牛</td>
+  <td>地瓜、水萝卜、浮萍</td>
+  <td>聪明吉祥</td>
+  <td>淫佚</td>
+</tr>
+<tr>
+  <td nowrap><b>丑</b></td>
+  <td style="color:var(--tu)">阴土</td><td>东北方</td>
+  <td>桑园、桥梁、宫殿、礼堂、坟墓</td>
+  <td>贵人、尊长、神佛</td>
+  <td>牛、驴、骡子</td>
+  <td>锁匙、首饰、珍宝、斛斗、鞋类</td>
+  <td>喜庆、迁官晋职</td>
+  <td>刑狱、词讼、口舌是非、离乡背井或疾病</td>
+</tr>
+<tr>
+  <td nowrap><b>寅</b></td>
+  <td style="color:var(--mu)">阳木</td><td>东北方</td>
+  <td>山林、桥梁</td>
+  <td>丈夫、女婿、贵人、清官、公门人</td>
+  <td>老虎、豹子、猫</td>
+  <td>文书、单据、发票、香炉、织机、财物、棺材</td>
+  <td>文书、财帛、信息</td>
+  <td>失财、疾病、官非</td>
+</tr>
+<tr>
+  <td nowrap><b>卯</b></td>
+  <td style="color:var(--mu)">阴木</td><td>东方</td>
+  <td>大街、道路</td>
+  <td>兄弟、姑娘、妇女、盗贼、手工业者</td>
+  <td>兔子、蛐蛐</td>
+  <td>船只、车辆、门窗</td>
+  <td>车辆船只平安无事</td>
+  <td>官司口舌、车船遇险</td>
+</tr>
+<tr>
+  <td nowrap><b>辰</b></td>
+  <td style="color:var(--tu)">阳土</td><td>东南方</td>
+  <td>高冈土岭、土堰、坟墓、麦地、寺观</td>
+  <td>僧人、道人、妇女</td>
+  <td>—</td>
+  <td>瓷器、缸瓮、灰盆、香纸、皮毛</td>
+  <td>医生药物</td>
+  <td>屠夫、争讼</td>
+</tr>
+<tr>
+  <td nowrap><b>巳</b></td>
+  <td style="color:var(--huo)">阴火</td><td>东南方</td>
+  <td>—</td>
+  <td>妇人、少妇、少女、乞丐</td>
+  <td>长虫、蚯蚓、蝉、萤火虫</td>
+  <td>书画、文字、花果、砖瓦、瓷器</td>
+  <td>文书、票证</td>
+  <td>疫病、梦魇</td>
+</tr>
+<tr>
+  <td nowrap><b>午</b></td>
+  <td style="color:var(--huo)">阳火</td><td>南方</td>
+  <td>大厅、会议室、电影院、娱乐场所</td>
+  <td>僧人、骑马人、女秘书、宫女、使者</td>
+  <td>—</td>
+  <td>电视机、音响、电器、书画、衣服、旌旗</td>
+  <td>信息、文章</td>
+  <td>惊疑、口舌是非</td>
+</tr>
+<tr>
+  <td nowrap><b>未</b></td>
+  <td style="color:var(--tu)">阴土</td><td>西南</td>
+  <td>大院、墙堰、坟墓、田野</td>
+  <td>老妇人、老男人、放羊人、寡妇、巫师</td>
+  <td>羊、鹰、白头翁</td>
+  <td>衣服、药品、食物、酒器</td>
+  <td>酒食、宴会、喜美之事</td>
+  <td>疾病孝服、官灾</td>
+</tr>
+<tr>
+  <td nowrap><b>申</b></td>
+  <td style="color:var(--jin)">阳金</td><td>西南方</td>
+  <td>神堂、佛堂、麦地</td>
+  <td>行人、军徒、凶恶之人</td>
+  <td>猿猴、狮子</td>
+  <td>自行车、三轮车、摩托车、火车、汽车、刀剑、金银、铁器类</td>
+  <td>有佳音、喜美之事</td>
+  <td>道路损失、疾病、破财</td>
+</tr>
+<tr>
+  <td nowrap><b>酉</b></td>
+  <td style="color:var(--jin)">阴金</td><td>西方</td>
+  <td>—</td>
+  <td>妇女、少女、阴贵人、卖酒人</td>
+  <td>鸡、鸽</td>
+  <td>金银、首饰、珍宝、刀剑、皮毛、爪骨、瓜果、口罩、石柱</td>
+  <td>清谈和会</td>
+  <td>疾患、离别</td>
+</tr>
+<tr>
+  <td nowrap><b>戌</b></td>
+  <td style="color:var(--tu)">阴土</td><td>西北方</td>
+  <td>山岭、冈坡、寺观、坟墓、厕所、牢狱</td>
+  <td>长者、善人、僧道之人</td>
+  <td>狗、驴</td>
+  <td>砖瓦、瓷器、药物、尸骨、锁匙、鞋履；植物：大豆、高粱、荞麦</td>
+  <td>办事顺利</td>
+  <td>虚诈不实及争斗走失、牢狱之灾</td>
+</tr>
+<tr>
+  <td nowrap><b>亥</b></td>
+  <td style="color:var(--shui)">阴水</td><td>西北方</td>
+  <td>江河、湖海、仓库、寺院、楼台、厕所</td>
+  <td>小儿、乞丐、掌鞋人、赶猪人、醉酒人、罪人、盗贼</td>
+  <td>鱼类、虾类、蟹类</td>
+  <td>毛发、麻布、绸绢、笔墨</td>
+  <td>婚姻、求索</td>
+  <td>争斗、难产</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<h3 style="margin-top:1.5rem;">附：十二地支的刑冲害化合</h3>
+<div class="card" style="font-size:0.88rem;">
+
+<p><b>一、地支相刑</b>（互相对立刑克，造成事物挫折不顺）</p>
+<div class="tbl-wrap"><table style="font-size:0.84rem;">
+<tr><th>类型</th><th>组合</th><th>含义</th></tr>
+<tr><td>无礼之刑</td><td>子刑卯、卯刑子</td><td>子卯相刑</td></tr>
+<tr><td>无恩之刑</td><td>寅刑巳、巳刑申、申刑寅</td><td>寅巳申相刑</td></tr>
+<tr><td>恃势之刑</td><td>丑刑未、未刑戌、戌刑丑</td><td>丑未戌相刑</td></tr>
+<tr><td>自相刑</td><td>辰、午、酉、亥</td><td>辰午酉亥自相刑</td></tr>
+</table></div>
+
+<p style="margin-top:1rem;"><b>二、地支相冲</b>（相对位置两两相冲克。吉事逢冲不吉，凶事逢冲不凶。八门、九星若逢相冲位置，则为反吟。）</p>
+<div class="tbl-wrap"><table style="font-size:0.84rem;">
+<tr><th>对冲</th><th>子午冲</th><th>卯酉冲</th><th>辰戌冲</th><th>巳亥冲</th><th>丑未冲</th><th>寅申冲</th></tr>
+</table></div>
+
+<p style="margin-top:1rem;"><b>三、地支相害</b>（受害、被害，严重受克。凡遇害，气旺无制则有凶灾；气弱受制、休囚状态又有相神，则可能调动工作或出差走动。测婚遇害往往有第三者插足。）</p>
+<div class="tbl-wrap"><table style="font-size:0.84rem;">
+<tr><th>相害</th><th>子未害</th><th>丑午害</th><th>寅巳害</th><th>卯辰害</th><th>申亥害</th><th>酉戌害</th></tr>
+</table></div>
+
+<p style="margin-top:1rem;"><b>四、地支化合</b></p>
+<p><b>三会局</b>（会合一方之气）：寅卯辰会东方木局，巳午未会南方火局，申酉戌会西方金局，亥子丑会北方水局。</p>
+<p><b>三合局</b>：申子辰合水局，亥卯未合木局，寅午戌合火局，巳酉丑合金局。</p>
+<p><b>两两相合</b>：子丑合、寅亥合、卯戌合、辰酉合、巳申合、午未合。合中相生者越合越好（如寅亥合——亥水生寅木；辰酉合——辰土生酉金）；合中相克者做事先好后坏、先热后冷（如子丑合——丑土克子水；卯戌合——卯木克戌土）。</p>
+</div>
+
+
+<!-- ========== 四、六甲遁藏 ========== -->
+<h2 id="liujia">四、六甲遁藏</h2>
+<p class="intro">"遁甲"就是把元帅甲藏起来。六甲分别藏在六仪之下，让敌人找不到主帅。</p>
+
+<div class="tbl-wrap"><table class="tbl-compact">
+<thead>
+<tr><th>六甲</th><th>甲子</th><th>甲戌</th><th>甲申</th><th>甲午</th><th>甲辰</th><th>甲寅</th></tr>
+</thead>
+<tbody>
+<tr><td>藏于</td><td>戊</td><td>己</td><td>庚</td><td>辛</td><td>壬</td><td>癸</td></tr>
+<tr><td>合称</td><td>甲子戊</td><td>甲戌己</td><td>甲申庚</td><td>甲午辛</td><td>甲辰壬</td><td>甲寅癸</td></tr>
+<tr><td>角色</td><td>元帅</td><td>大将</td><td>大将</td><td>大将</td><td>大将</td><td>大将</td></tr>
+</tbody>
+</table></div>
+
+<p style="color:var(--dim);font-size:0.85rem;margin-top:0.5rem;">三奇六仪固定队形：<b style="color:var(--ac)">戊 → 己 → 庚 → 辛 → 壬 → 癸 → 丁 → 丙 → 乙</b>（首尾相连，顺序绝对不变）</p>
+
+<!-- ========== 五、八门 ========== -->
+<h2 id="bamen">五、八门</h2>
+<p class="intro">八门代表人活动的八种状态和方位。开、休、生为三吉门；死、惊、伤为三凶门；杜门、景门中平。以下为《神奇之门》原文详细记载。</p>
+
+<div class="tbl-wrap"><table>
+<thead>
+<tr><th style="min-width:50px">门</th><th>宫位</th><th>方位</th><th>五行</th><th>吉凶</th><th>旺于</th><th>宜做什么</th><th>忌做什么</th><th style="min-width:300px">详解</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td nowrap><b>开门</b></td><td>乾六</td><td>西北</td><td>金</td><td class="ji">大吉</td>
+  <td style="font-size:0.8rem;">秋季（戌亥月），相于四季末，休于冬，囚于春，死于夏</td>
+  <td>开业经商、征战远行、考学参军、婚娶乔迁、建筑贸易、添人进口、治病求医</td>
+  <td>—</td>
+  <td style="font-size:0.8rem;">乾卦为八卦之首，为天为父，于社会为首长；乾纳甲壬，亥为甲木长生之地，甲又为十干之首，故喻万物开始之意。居乾宫伏吟，居巽宫反吟，居艮宫入墓，居离宫受制，居坤宫大吉，居兑宫旺相，居坎宫次吉，居震宫为迫。</td>
+</tr>
+<tr>
+  <td nowrap><b>休门</b></td><td>坎一</td><td>北</td><td>水</td><td class="ji">吉</td>
+  <td style="font-size:0.8rem;">冬季（子月），相于秋，休于春，囚于夏，死于四季末</td>
+  <td>求见领导贵人、上官赴任、嫁娶迁徙、经商建造</td>
+  <td>行刑断狱</td>
+  <td style="font-size:0.8rem;">坎水得乾金之生，于人为中男，上有兄下有弟，从容休闲；坎宫处冬季最寒冷季节，万物休息冬眠，乃休养生息之地。居坎宫伏吟，居离宫反吟，居巽宫入墓，居坤艮二宫受克，居乾兑二宫大吉，居震宫次吉。</td>
+</tr>
+<tr>
+  <td nowrap><b>生门</b></td><td>艮八</td><td>东北</td><td>土</td><td class="ji">大吉</td>
+  <td style="font-size:0.8rem;">四季月（丑寅月），相于夏，休于秋，囚于冬，死于春</td>
+  <td>求财（特别是房产、种植、养殖）、征战出行、嫁娶建造</td>
+  <td>埋葬治丧</td>
+  <td style="font-size:0.8rem;">正当立春之后，万物复苏，阳气回转，土生万物，故为大吉大利之门。居艮宫伏吟，居坤宫反吟，居巽宫入墓，居震宫受克，居离宫大吉，居乾兑二宫次吉，居坎宫被迫。</td>
+</tr>
+<tr>
+  <td nowrap><b>伤门</b></td><td>震三</td><td>东</td><td>木</td><td class="xiong">凶</td>
+  <td style="font-size:0.8rem;">春（卯月），相于冬，休于夏，囚于四季月，死于秋</td>
+  <td>索债、捕捉盗贼、渔猎、赌钱</td>
+  <td>经商、出行、赴任、修造、嫁娶（经商易破财，出行易有灾）</td>
+  <td style="font-size:0.8rem;">正当卯月春分之后甲木帝旺之时，旺则易折；震卦主动，动则易伤；元帅甲子常隐于戊土之下，子与卯相刑，刑则受伤。居震宫伏吟，居兑宫反吟，居坤宫入墓，居坎宫生旺大凶，居乾宫受制，居艮宫被迫大凶，居离宫泄气。</td>
+</tr>
+<tr>
+  <td nowrap><b>杜门</b></td><td>巽四</td><td>东南</td><td>木</td><td class="ping">中平</td>
+  <td style="font-size:0.8rem;">春（辰巳月），相于冬，休于夏，囚于四季月，死于秋</td>
+  <td>躲灾避难、捕盗剿贼、防洪筑堤、判决隐狱</td>
+  <td>其余事多不利</td>
+  <td style="font-size:0.8rem;">巽为长女，受乾父冲克又克坤母，与父母皆不和，故处事杜塞；东南方面临大海，大陆到海边就杜塞不通；与西北开门对冲，一开一杜。多主武官、军队、警察、公安等保密检察性质单位。居巽宫伏吟，居乾宫反吟，居坤宫入墓，居兑宫受克，居艮宫被迫，居坎宫受生，居震宫比和，居离宫泄气。</td>
+</tr>
+<tr>
+  <td nowrap><b>景门</b></td><td>离九</td><td>南</td><td>火</td><td class="ping">中平</td>
+  <td style="font-size:0.8rem;">夏（午月），相于春，休于四季月，囚于秋，死于冬</td>
+  <td>献策筹谋、选士荐贤、拜职遣使、火攻杀戮</td>
+  <td>谨防口舌及血光火灾，余者不利</td>
+  <td style="font-size:0.8rem;">在家中为中女，克乾金之父，与丈夫中男坎水对冲，易动口舌，常有血光之灾；景门正当日升中天、大放光明之时，但烈日炎炎，难免酷暑之忧。居离宫伏吟，居坎宫反吟，居乾宫入墓，居兑宫被迫，居震巽二宫生旺，居坤艮二宫生宫。多主文书之事。</td>
+</tr>
+<tr>
+  <td nowrap><b>死门</b></td><td>坤二</td><td>西南</td><td>土</td><td class="xiong">凶</td>
+  <td style="font-size:0.8rem;">秋（未申月），相于夏，囚于冬，死于春</td>
+  <td>吊死送丧、刑戮争战、捕猎杀牲</td>
+  <td>一切吉事</td>
+  <td style="font-size:0.8rem;">死门与艮宫生门相对，万物春生秋死，春种秋收，故命名为死门。居坤宫伏吟，居艮宫反吟，居巽宫入墓，居震宫受克，居离宫生旺大凶，居坎宫被迫大凶，居乾兑二宫相生。</td>
+</tr>
+<tr>
+  <td nowrap><b>惊门</b></td><td>兑七</td><td>西</td><td>金</td><td class="xiong">凶</td>
+  <td style="font-size:0.8rem;">秋（酉月），相于四季月，休于冬，囚于春，死于夏</td>
+  <td>斗讼官司、掩捕盗贼、蛊惑乱众、设疑伏兵、赌博游戏</td>
+  <td>其余事不可为</td>
+  <td style="font-size:0.8rem;">正当秋分、寒露、霜降之时，金秋寒气肃杀，草木面临凋蔽，一片惊恐萧瑟之象；兑卦为泽、为缺、为破损；兑主口，主口舌官非。居兑宫伏吟，居震宫反吟，居艮宫入墓，居离宫受制，居巽宫为迫，居坎宫泄气，居坤宫受生，居乾宫比和。</td>
+</tr>
+</tbody>
+</table></div>
+
+<p style="color:var(--ac);font-size:0.85rem;margin-top:0.5rem;"><b>八门执事歌：</b>欲求财利往生方，葬猎须知死路强。征战远行开门吉，休门见贵最为良。惊门官讼是非多，杜门无事好逃藏。伤门搏斗能捉贼，景门饮酒好思量。</p>
+<p style="color:var(--dim);font-size:0.83rem;"><b>门宫关系：</b>门克宫为"迫"（吉门被迫吉不就，凶门被迫事更凶）；宫克门为"制"（吉门受克吉不就，凶门受克凶不起）；门生宫为"和"，宫生门为"义"。吉门受生好上加好，凶门受生则凶上加凶。</p><!-- ========== 六、九星 ========== -->
+<h2 id="jiuxing">六、九星</h2>
+<p class="intro">九星代表"天时"——天体运行对地球和人类的影响。天心、天任、天禽、天辅为四吉星；天冲为次吉之星；天蓬、天芮、天柱为三凶星；天英中平。以下为《神奇之门》原文详细记载。</p>
+
+<div class="tbl-wrap"><table>
+<thead>
+<tr><th style="min-width:55px">星</th><th>别名<br>（北斗）</th><th>宫位</th><th>阴阳</th><th>五行</th><th>吉凶</th><th>宜做什么</th><th>详解</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td nowrap><b>天蓬</b></td><td>贪狼</td><td>坎一</td><td>阴</td><td>水</td><td class="xiong">凶</td>
+  <td>安抚边境、修筑城池、兴作土木、培垫堤防、屯兵固守</td>
+  <td style="font-size:0.8rem;">坎水正当隆冬季节，至寒至冷至暗，喜阴害阳，与盗贼出没有关，故称为凶星、盗星。不利经商出行（易遇盗贼或破财）。</td>
+</tr>
+<tr>
+  <td nowrap><b>天芮</b></td><td>巨门</td><td>坤二</td><td>阴</td><td>土</td><td class="xiong">凶</td>
+  <td>受业师长、交纳朋友、屯兵固守</td>
+  <td style="font-size:0.8rem;">与死门对应，与疾病流行有关，故为病星、凶星。<b>预测疾病以它为用神</b>，看落宫及旺相休囚定病位及轻重。天芮落乾兑二宫（旺）则难治；落震巽二宫（受克）则不药而愈。不宜用兵、嫁娶、争讼、迁徙修造。</td>
+</tr>
+<tr>
+  <td nowrap><b>天冲</b></td><td>禄存</td><td>震三</td><td>阳</td><td>木</td><td class="ping">次吉</td>
+  <td>选将出师、征伐交战、鸣金击鼓、摇旗呐喊</td>
+  <td style="font-size:0.8rem;">有慈心造化、助人为乐之德，与农事活动有关。称为次吉之星。其他一般或不利。</td>
+</tr>
+<tr>
+  <td nowrap><b>天辅</b></td><td>文曲</td><td>巽四</td><td>阳</td><td>木</td><td class="ji">大吉</td>
+  <td>百事皆宜：出行、经商、婚娶、修造均吉</td>
+  <td style="font-size:0.8rem;">为天上文曲星，与文化教育事业有关，故为大吉之星。<b>特别利于升学考官</b>、发展文化教育事业。</td>
+</tr>
+<tr>
+  <td nowrap><b>天禽</b></td><td>廉贞</td><td>中五</td><td>阳</td><td>土</td><td class="ji">大吉</td>
+  <td>百事皆宜，四时皆吉</td>
+  <td style="font-size:0.8rem;">土生万物，中宫是遁甲元帅值符所在之地，故为大吉之星。中五宫寄坤二宫（与天芮同宫）。</td>
+</tr>
+<tr>
+  <td nowrap><b>天心</b></td><td>武曲</td><td>乾六</td><td>阴</td><td>金</td><td class="ji">大吉</td>
+  <td>惩恶助善、百事吉昌；求仙长寿、治病配药</td>
+  <td style="font-size:0.8rem;">与四宫天辅文曲星相对，处西北乾位。能动能静，与乾卦为天为父为首长相应，长于心计，和领导才能、军事指挥、医疗治病有关，故为大吉之星。像孙悟空一样是天上的武曲星。</td>
+</tr>
+<tr>
+  <td nowrap><b>天柱</b></td><td>破军</td><td>兑七</td><td>阴</td><td>金</td><td class="xiong">凶</td>
+  <td>修筑营垒、训练士卒、屯兵固守</td>
+  <td style="font-size:0.8rem;">正当金秋肃杀之时，喜杀好战，与惊恐怪异、破坏毁折有关，故为凶星。不宜出战交兵、经商远行（强行则车破马伤、士卒败亡、破财折本、意外伤灾）。</td>
+</tr>
+<tr>
+  <td nowrap><b>天任</b></td><td>左辅</td><td>艮八</td><td>阳</td><td>土</td><td class="ji">大吉</td>
+  <td>立国邑、安人民、断决群凶、教化人民、入官见贵、商贾嫁娶</td>
+  <td style="font-size:0.8rem;">土能生万物，又正当春季万物萌生之时，故为吉星。百事皆吉，四时皆宜。</td>
+</tr>
+<tr>
+  <td nowrap><b>天英</b></td><td>右弼</td><td>离九</td><td>阴</td><td>火</td><td class="ping">中平<br>（小凶）</td>
+  <td>谋划献策、面君谒贵</td>
+  <td style="font-size:0.8rem;">居离宫之位，烈火炎炎，性躁易暴，虽如日升中天大放光明，但又和血光之灾有关。不宜求财考官、嫁娶迁徙。</td>
+</tr>
+</tbody>
+</table></div>
+
+<p style="color:var(--ac);font-size:0.85rem;margin-top:0.5rem;"><b>九星旺相休囚口诀：</b>我生之月诚为旺，与我同行即为相；废于父母休于财，囚于鬼兮真不妄。即：九星对地盘宫产生生助时最旺（我生之月），比和时为相（次旺），被地盘宫生助时为废（不起作用），克制地盘宫时为休（休息），被地盘宫克制时为囚（被囚禁，不能发挥作用）。</p>
+<p style="color:var(--dim);font-size:0.83rem;">九星没有"死"只有"废"——因为它们一直在天上运行，地球上的五行变化不能致其于死地。</p><!-- ========== 七、八神 ========== -->
+<h2 id="bashen">七、八神</h2>
+<p class="intro">八神又叫八将，是古人在天人感应中发现的与九宫八卦具有对应性质的八种神秘力量。阳遁顺行，阴遁逆行，随天盘九星值符运行。以下为《神奇之门》原文详细记载。</p>
+
+<div class="tbl-wrap"><table>
+<thead>
+<tr><th style="min-width:55px">神</th><th>属性</th><th>吉凶</th><th>性格</th><th>专管</th><th>宜做什么</th><th>详解</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td nowrap><b>值符</b></td><td>木（青龙）</td><td class="ji">吉</td>
+  <td>领袖之性</td>
+  <td>为八神之首、天乙之神</td>
+  <td>百恶消散，临之如得贵人相助</td>
+  <td style="font-size:0.8rem;">具有东方青龙甲木的性质，与地盘值班六甲大将和天盘值班星球相对应。所到之处，百恶消散——即使太白庚金这最凶的恶煞，临于值符之下，也力量大减，难以作恶了。小值符永远跟大值符走。</td>
+</tr>
+<tr>
+  <td nowrap><b>螣蛇</b></td><td>火（南方）</td><td class="xiong">凶</td>
+  <td>虚伪，口舌毒辣</td>
+  <td>惊恐怪异、虚诈不实之事</td>
+  <td>需防上当受骗</td>
+  <td style="font-size:0.8rem;">具有南方火的性质，为虚诈之神。临之则事情反复多变、有欺诈成分。</td>
+</tr>
+<tr>
+  <td nowrap><b>太阴</b></td><td>金（西方阴金）</td><td class="ji">吉</td>
+  <td>阴匿暗昧</td>
+  <td>荫庇护佑</td>
+  <td>密谋策划、避难藏兵</td>
+  <td style="font-size:0.8rem;">具有西方阴金性质，为荫护之神。太阴所临之方可以密谋策划、避难藏兵。利于暗中行事，不宜公开。</td>
+</tr>
+<tr>
+  <td nowrap><b>六合</b></td><td>木（东方）</td><td class="ji">吉</td>
+  <td>开朗平和</td>
+  <td>婚姻交易中介之事</td>
+  <td>谈判、交易、婚姻嫁娶</td>
+  <td style="font-size:0.8rem;">具有东方木的性质，为护卫之神。六合所临之方利于谈判、交易、婚嫁。测婚遇六合则有好媒。</td>
+</tr>
+<tr>
+  <td nowrap><b>白虎<br><small>（下隐勾陈）</small></b></td><td>金（西方）</td><td class="xiong">凶</td>
+  <td>凶猛好斗</td>
+  <td>行兵打仗、凶杀打斗、疾病死伤、交通事故</td>
+  <td>需防血光之灾和意外伤害</td>
+  <td style="font-size:0.8rem;">具有西方金的性质，为凶煞神。白虎下隐有勾陈——勾陈具有地户己土性质，己土长生于酉，故隐于白虎之下。白虎也代表权威和魄力。</td>
+</tr>
+<tr>
+  <td nowrap><b>玄武<br><small>（下隐朱雀）</small></b></td><td>水（北方）</td><td class="xiong">凶</td>
+  <td>爱偷（包括偷情）喜盗</td>
+  <td>盗贼、逃亡、口舌之事</td>
+  <td>需防盗贼诈骗和口舌是非</td>
+  <td style="font-size:0.8rem;">具有北方水的性质，为奸谗小盗之神。朱雀本来为南方火神，但北方玄武子水之位正是丙火怀胎之地，故朱雀隐于玄武之下，也管一些口舌是非之事。</td>
+</tr>
+<tr>
+  <td nowrap><b>九地</b></td><td>土（坤）</td><td class="ji">吉</td>
+  <td>柔顺安静，滋生万物</td>
+  <td>万物之母、坚牢之神</td>
+  <td>屯兵固守、播种养殖</td>
+  <td style="font-size:0.8rem;">具有坤土的性质，有厚载之德，为万物之母。古人称其为坚牢之神。利于安分守己、持久之事。</td>
+</tr>
+<tr>
+  <td nowrap><b>九天</b></td><td>金（乾）</td><td class="ji">吉</td>
+  <td>刚强好动</td>
+  <td>威悍之神</td>
+  <td>扬兵布阵、行军打仗、坐飞机旅游出国</td>
+  <td style="font-size:0.8rem;">具有乾金的性质，为天为父。古人称其为威悍之神。利于主动出击、远行出国。</td>
+</tr>
+</tbody>
+</table></div><!-- ====== 导航高亮 ====== -->
+<script>
+const navLinks = document.querySelectorAll('nav.top-nav a[href^="#"]');
+const sections = [];
+navLinks.forEach(a => {
+  const id = a.getAttribute('href').slice(1);
+  const el = document.getElementById(id);
+  if (el) sections.push({ el, a });
+});
+
+function updateNav() {
+  let current = sections[0];
+  for (const s of sections) {
+    if (s.el.offsetTop <= window.scrollY + 80) current = s;
+  }
+  navLinks.forEach(a => a.classList.remove('active'));
+  if (current) current.a.classList.add('active');
+}
+
+window.addEventListener('scroll', updateNav);
+
+// 平滑滚动
+document.querySelectorAll('nav a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+});
+</script>
+
+</body>
+</html>

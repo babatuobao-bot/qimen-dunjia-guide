@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>奇门遁甲 · 排盘过程详解</title>
+<style>
+:root {
+  --bg:#0f0f14; --sur:#1a1a24; --bd:#2a2a3a; --tx:#d0d0d8; --dim:#808090;
+  --ac:#c9a44b; --rd:#c94b4b; --bl:#4b8bc9; --gn:#5b9b5b;
+  --mu:#6b9b5b; --huo:#c94b4b; --tu:#c9a44b; --jin:#c0c0c0; --shui:#4b8bc9;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--tx);font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;line-height:1.85;}
+main{max-width:960px;margin:0 auto;padding:1rem 1.5rem 3rem;}
+h1{font-size:1.6rem;text-align:center;margin:1.5rem 0 0.3rem;color:#fff;}
+h1 .sub{font-size:0.85rem;color:var(--dim);display:block;margin-top:0.3rem;font-weight:normal;}
+h2{font-size:1.2rem;margin:2rem 0 0.8rem;padding-left:0.6rem;border-left:3px solid var(--ac);color:#fff;}
+h3{font-size:1rem;margin:1.3rem 0 0.5rem;color:var(--ac);}
+
+/* 输入区 */
+.input-row{display:flex;flex-wrap:wrap;gap:0.6rem;align-items:center;justify-content:center;margin:1.2rem 0;}
+input,select{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:4px;padding:0.45rem 0.7rem;font-size:0.95rem;font-family:inherit;}
+input:focus,select:focus{border-color:var(--ac);outline:none;}
+.btn{background:var(--ac);color:#000;border:none;border-radius:4px;padding:0.5rem 1.5rem;font-size:0.95rem;cursor:pointer;font-weight:bold;font-family:inherit;}
+.btn:hover{opacity:0.85;}
+
+/* 九宫格 */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;max-width:500px;margin:0.8rem auto;}
+.gcell{background:var(--sur);border:1px solid var(--bd);border-radius:6px;padding:0.5rem;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:0.8rem;text-align:center;position:relative;}
+.gcell .gn{position:absolute;top:2px;left:5px;font-size:0.6rem;color:var(--dim);}
+.gcell .label{font-size:0.7rem;color:var(--dim);margin-top:2px;}
+.gcell .star{color:var(--bl);font-weight:bold;}
+.gcell .door{color:var(--ac);font-weight:bold;}
+.gcell .god{color:var(--rd);font-weight:bold;}
+.gcell .yi{color:#ccc;font-size:0.78rem;}
+.gcell .highlight{background:rgba(201,164,75,0.15);border:2px solid var(--ac);border-radius:6px;}
+
+/* 步骤卡片 */
+.step-card{background:var(--sur);border:1px solid var(--bd);border-radius:8px;padding:1.2rem;margin:1rem 0;}
+.step-card .step-num{display:inline-block;width:28px;height:28px;border-radius:50%;background:var(--ac);color:#000;text-align:center;line-height:28px;font-weight:bold;font-size:0.85rem;margin-right:0.5rem;}
+.step-card .step-title{font-weight:bold;color:#fff;font-size:1.05rem;}
+.step-card p{margin:0.5rem 0;font-size:0.9rem;}
+
+/* 标签 */
+.tag{display:inline-block;padding:0.1rem 0.5rem;border-radius:10px;font-size:0.75rem;margin:0.05rem;}
+.t-ac{background:rgba(201,164,75,0.2);color:var(--ac);}
+.t-rd{background:rgba(201,75,75,0.2);color:var(--rd);}
+.t-bl{background:rgba(75,139,201,0.2);color:var(--bl);}
+.t-gn{background:rgba(91,155,91,0.2);color:var(--gn);}
+.ji{color:var(--gn);font-weight:bold;}
+.xiong{color:var(--rd);font-weight:bold;}
+
+/* 折叠 */
+summary{cursor:pointer;color:var(--ac);font-weight:bold;padding:0.3rem 0;font-size:0.95rem;}
+summary:hover{color:#fff;}
+details{margin:0.5rem 0;}
+
+/* 表格 */
+.tbl-wrap{overflow-x:auto;margin:0.5rem 0;}
+table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+th,td{border:1px solid var(--bd);padding:0.3rem 0.5rem;text-align:center;}
+th{background:rgba(201,164,75,0.12);color:var(--ac);font-weight:bold;white-space:nowrap;}
+
+/* 公式框 */
+.formula{background:rgba(201,164,75,0.08);border:1px solid var(--ac);border-radius:6px;padding:0.8rem 1rem;margin:0.8rem 0;font-size:0.88rem;}
+
+/* 响应式 */
+@media(max-width:600px){
+  .grid3{max-width:100%;}
+  .gcell{min-height:65px;font-size:0.7rem;}
+  main{padding:0.5rem 0.8rem 2rem;}
+}
+</style>
+</head>
+<body>
+<main>
+<p style="text-align:center;margin-top:0.8rem;"><a href="index.html" style="color:var(--ac);text-decoration:none;font-size:0.9rem;">← 返回主页</a> | <a href="symbols-reference.html" style="color:var(--ac);text-decoration:none;font-size:0.9rem;">📖 符号速查</a></p>
+<h1>奇门遁甲 · 排盘过程详解<span class="sub">时家奇门拆补法 · 点击"开始排盘"逐步查看每个环节</span></h1>
+
+<div class="input-row">
+  <input type="date" id="simDate" value="2022-06-01">
+  <input type="time" id="simTime" value="08:00">
+  <button class="btn" onclick="run()">开始排盘</button>
+</div>
+
+<div id="result"></div>
+</main>
+
+<script>
+// ========== 数据 ==========
+var TG=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+var DZ=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
+var GONG_INFO={1:{gua:"坎",dir:"北",wx:"水"},2:{gua:"坤",dir:"西南",wx:"土"},3:{gua:"震",dir:"东",wx:"木"},4:{gua:"巽",dir:"东南",wx:"木"},5:{gua:"中",dir:"中央",wx:"土"},6:{gua:"乾",dir:"西北",wx:"金"},7:{gua:"兑",dir:"西",wx:"金"},8:{gua:"艮",dir:"东北",wx:"土"},9:{gua:"离",dir:"南",wx:"火"}};
+var GRID=[4,9,2,3,5,7,8,1,6];
+var YIYI=["戊","己","庚","辛","壬","癸","丁","丙","乙"];
+var XING=["天蓬","天任","天冲","天辅","天英","天芮","天柱","天心","天禽"];
+var MEN=["休门","生门","伤门","杜门","景门","死门","惊门","开门"];
+var SHEN=["值符","螣蛇","太阴","六合","白虎","玄武","九地","九天"];
+var LJY={"甲子":"戊","甲戌":"己","甲申":"庚","甲午":"辛","甲辰":"壬","甲寅":"癸"};
+var GX={1:"天蓬",2:"天芮",3:"天冲",4:"天辅",5:"天禽",6:"天心",7:"天柱",8:"天任",9:"天英"};
+var GM={1:"休门",2:"死门",3:"伤门",4:"杜门",5:"死门",6:"开门",7:"惊门",8:"生门",9:"景门"};
+var KY={
+"戊+戊":["伏吟","凡事不利，宜静不宜动。",0],
+"戊+己":["贵人入狱","公私皆不利，困顿难伸。",-1],
+"戊+庚":["值符飞宫","吉事不吉、凶事更凶。主换地方、迁居。",-1],
+"戊+辛":["青龙折足","破财招灾、足疾折伤、行动受阻。",-1],
+"戊+壬":["青龙入牢","凡事不利，谋为困顿，如入天牢。",-1],
+"戊+癸":["青龙华盖","戊癸相合，逢吉门为吉，可招福临门；逢凶门事多不利。",1],
+"乙+戊":["阴害阳门","利于阴人阴事，不利阳人阳事，门吉尚可谋为。",0],
+"乙+乙":["日奇伏吟","不宜见上层领导贵人，不宜求名求利，只宜安分守己。",0],
+"乙+丙":["奇仪顺遂","吉星迁官晋职，凶星夫妻反目离别。",1],
+"乙+丁":["奇仪相佐","最利文书、考试，百事可为。",1],
+"乙+己":["日奇入墓","被土暗昧，门凶事必凶，得生、开二吉门为地遁。",-1],
+"乙+庚":["日奇被刑","争讼财产，夫妻怀有私意。",-1],
+"乙+辛":["青龙逃走","人亡财破，奴仆拐带，六畜皆伤。测婚为女逃男。",-1],
+"乙+壬":["日奇入地","尊卑悖乱，官讼是非，有人谋害之事。",-1],
+"乙+癸":["华盖逢星","遁迹修道，隐匿藏形，躲灾避难为吉。",0],
+"丙+戊":["飞鸟跌穴","百事吉，事业可为，可谋大事。",1],
+"丙+乙":["日月并行","公谋私为皆为吉。",1],
+"丙+丙":["月奇悖师","文书逼迫，破耗遗失。单据票证不明遗失。",-1],
+"丙+丁":["星奇朱雀","贵人文书吉利，常人平静安乐，得三吉门为天遁。",1],
+"丙+己":["火悖入刑","囚人刑杖，文书不行，吉门得吉，凶门转凶。",-1],
+"丙+庚":["荧入太白","门户破败，盗贼耗失，事业亦凶。",-1],
+"丙+辛":["谋事能成","丙辛相合，谋事能成。疾病人不凶。",1],
+"丙+壬":["火入天罗","为客不利，是非颇多。",-1],
+"丙+癸":["华盖悖师","阴人害事，灾祸频生。",-1],
+"丁+戊":["青龙转光","官人升迁，常人威昌。",1],
+"丁+乙":["人遁吉格","贵人加官晋爵，常人婚姻财帛有喜。",1],
+"丁+丙":["星随月转","贵人越级高升，常人乐极生悲。",0],
+"丁+丁":["星奇入太阴","文书证件即至，喜事从心，万事如意。",1],
+"丁+己":["火入勾陈","奸私仇冤，事因女人。",-1],
+"丁+庚":["文书阻隔","丁为文书，庚为阻隔之神，故文书阻隔，行人必归。",-1],
+"丁+辛":["朱雀入狱","罪人释囚，官人失位。",-1],
+"丁+壬":["贵人恩诏","丁壬相合，讼狱公平。测婚多为苟合。",1],
+"丁+癸":["朱雀投江","文书口舌是非，经官动府，词讼不利。音信沉溺不到。",-1],
+"己+戊":["犬遇青龙","门吉为谋望遂意，上人见喜；若门凶，枉费心机。",0],
+"己+乙":["墓神不明","宜遁迹隐形为利。",-1],
+"己+丙":["火悖地户","男人冤冤相害，女人必致淫污。",-1],
+"己+丁":["朱雀入墓","文书词讼，先曲后直。",0],
+"己+己":["地户逢鬼","病者发凶或必死，百事不遂。",-1],
+"己+庚":["刑格返名","词讼先动者不利，如临阴星则有谋害之情。",-1],
+"己+辛":["游魂入墓","易遭阴邪鬼魅作祟。",-1],
+"己+壬":["地网高张","狡童佚女，奸情伤杀。凶。",-1],
+"己+癸":["地刑玄武","男女疾病垂危，有囚狱词讼之灾。",-1],
+"庚+戊":["天乙伏宫","百事不可谋，大凶。",-1],
+"庚+乙":["太白逢星","退吉进凶，谋为不利。",-1],
+"庚+丙":["太白入荧","贼定要来，为客进利，为主破财。",-1],
+"庚+丁":["亭亭之格","因私匿或男女关系起官司是非，门吉有救。",-1],
+"庚+己":["官符刑格","主有官司口舌，因官讼被判刑。",-1],
+"庚+庚":["太白同宫","官灾横祸，兄弟或同辈朋友相冲撞，不利为事。",-1],
+"庚+辛":["白虎干格","不宜远行，远行车折马伤，求财更为大凶。",-1],
+"庚+壬":["小格","远行道路迷失，男女音信难通。",-1],
+"庚+癸":["大格","多主车祸，行人不至，官事不止，生育母子俱伤，大凶。",-1],
+"辛+戊":["困龙被伤","主官司破财，屈抑守分尚可，妄动则带来祸殃。",-1],
+"辛+乙":["白虎猖狂","家败人亡，远行多灾殃；测婚离散，主因男人。",-1],
+"辛+丙":["干合悖师","门吉则事吉，门凶则事凶。测事易因财物致讼。",0],
+"辛+丁":["狱神得奇","经商求财获利倍增，囚人逢天赦释免。",1],
+"辛+己":["入狱自刑","奴仆背主，有苦诉讼难伸。",-1],
+"辛+庚":["白虎出力","刀刃相交，主客相残，逊让退步稍可。",-1],
+"辛+辛":["伏吟天庭","公废私就，讼狱自罹罪名。",-1],
+"辛+壬":["凶蛇入狱","两男争女，讼狱不息，先动失理。",-1],
+"辛+癸":["天牢华盖","日月失明，误入天网，动止乖张。",-1],
+"壬+戊":["小蛇化龙","男人发达，女人产婴童。",1],
+"壬+乙":["小蛇得势","女人柔顺，男人通达，测孕育生子。禄马光华。",1],
+"壬+丙":["水蛇入火","官灾刑禁，络绎不绝。",-1],
+"壬+丁":["干合蛇刑","文书牵连，贵人匆匆，男吉女凶。",0],
+"壬+己":["反吟蛇刑","官讼败诉，大祸将至，顺守可吉，妄动必凶。",-1],
+"壬+庚":["太白擒蛇","刑狱公平，立剖邪正。",0],
+"壬+辛":["腾蛇相缠","纵得吉门，亦不能安宁，若有谋望，被人欺瞒。",-1],
+"壬+壬":["蛇入地罗","外人缠绕，内事索索。吉门吉星，庶免蹉跎。",-1],
+"壬+癸":["幼女奸淫","主有家丑外扬之事发生，门吉星凶，易反福为祸。",-1],
+"癸+戊":["天乙会合","吉门宜求财、婚姻喜美，吉人赞助成合。",1],
+"癸+乙":["华盖逢星","贵人禄位，常人平安。门吉则吉，门凶则凶。",0],
+"癸+丙":["华盖悖师","贵贱逢之皆不利，惟上人见喜。",-1],
+"癸+丁":["腾蛇夭矫","文书官司，火焚也逃不掉。",-1],
+"癸+己":["华盖地户","男女测之，音信皆阻，此格躲灾避难方为吉。",-1],
+"癸+庚":["太白入网","主以暴力争讼，自罹罪责。",-1],
+"癸+辛":["网盖天牢","主官司败诉，死罪难逃；测病亦大凶。",-1],
+"癸+壬":["复见腾蛇","主嫁娶重婿，后嫁无子，不保年华。",-1],
+"癸+癸":["天网四张","主行人失伴，病讼皆伤。",-1]
+};
+var STB={"冬至":{yy:1,j:[1,7,4]},"小寒":{yy:1,j:[2,8,5]},"大寒":{yy:1,j:[3,9,6]},"立春":{yy:1,j:[8,5,2]},"雨水":{yy:1,j:[9,6,3]},"惊蛰":{yy:1,j:[1,7,4]},"春分":{yy:1,j:[3,9,6]},"清明":{yy:1,j:[4,1,7]},"谷雨":{yy:1,j:[5,2,8]},"立夏":{yy:1,j:[4,1,7]},"小满":{yy:1,j:[5,2,8]},"芒种":{yy:1,j:[6,3,9]},"夏至":{yy:0,j:[9,3,6]},"小暑":{yy:0,j:[8,2,5]},"大暑":{yy:0,j:[7,1,4]},"立秋":{yy:0,j:[2,5,8]},"处暑":{yy:0,j:[1,4,7]},"白露":{yy:0,j:[9,3,6]},"秋分":{yy:0,j:[7,1,4]},"寒露":{yy:0,j:[6,9,3]},"霜降":{yy:0,j:[5,8,2]},"立冬":{yy:0,j:[6,9,3]},"小雪":{yy:0,j:[5,8,2]},"大雪":{yy:0,j:[4,7,1]}};
+
+// ========== 工具函数 ==========
+function doy(y,m,d){var md=[31,28,31,30,31,30,31,31,30,31,30,31];var lp=(y%4===0&&y%100!==0)||y%400===0;if(lp)md[1]=29;var s=d;for(var i=0;i<m-1;i++)s+=md[i];return s;}
+
+function getTerm(date){
+  var ts=["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"];
+  var bs=[5,20,35,50,65,80,95,110,126,141,156,171,186,201,216,231,246,261,276,291,306,321,336,351];
+  var y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();
+  var lp=(y%4===0&&y%100!==0)||y%400===0;
+  var dy=doy(y,m,d);
+  for(var i=0;i<ts.length;i++){
+    var cur=bs[i],nxt=i===ts.length-1?(lp?366:365):bs[i+1];
+    if(lp&&cur>59)cur+=1;if(lp&&nxt>59)nxt+=1;
+    if(dy>=cur&&dy<nxt)return ts[i];
+  }
+  return "冬至";
+}
+
+function dayGz(y,m,d){var bs=new Date(2000,0,1),tg=new Date(y,m-1,d);var df=Math.round((tg-bs)/86400000);var ix=((df+54)%60+60)%60;return TG[ix%10]+DZ[ix%12];}
+
+function hourGz(dgz,h){var dt=TG.indexOf(dgz[0]),hd=Math.floor((h+1)/2)%12;var hb=[0,2,4,6,8,0,2,4,6,8];return TG[(hb[dt]+hd)%10]+DZ[hd];}
+
+function yrGz(y){var t=(y-4)%10,d=(y-4)%12;if(t<0)t+=10;if(d<0)d+=12;return TG[t]+DZ[d];}
+
+function moGz(y,m,d){var yt=(y-4)%10;if(yt<0)yt+=10;var mb=[2,4,6,8,0,2,4,6,8,0];var term=getTerm(new Date(y,m-1,d));var t2dz={大雪:"子",冬至:"子",小寒:"丑",大寒:"丑",立春:"寅",雨水:"寅",惊蛰:"卯",春分:"卯",清明:"辰",谷雨:"辰",立夏:"巳",小满:"巳",芒种:"午",夏至:"午",小暑:"未",大暑:"未",立秋:"申",处暑:"申",白露:"酉",秋分:"酉",寒露:"戌",霜降:"戌",立冬:"亥",小雪:"亥"};var dzm=t2dz[term]||"子";var md=DZ.indexOf(dzm),mi=((md-2)%12+12)%12;return TG[(mb[yt]+mi)%10]+dzm;}
+
+function xunS(gz){var t=TG.indexOf(gz[0]),d=DZ.indexOf(gz[1]);return "甲"+DZ[((d-t)%12+12)%12];}
+
+function fuTou(dgz){var t=TG.indexOf(dgz[0]),d=DZ.indexOf(dgz[1]);for(var o=0;o<10;o++){var ct=((t-o)%10+10)%10;if(TG[ct]==="甲"||TG[ct]==="己")return TG[ct]+DZ[((d-o)%12+12)%12];}return"甲子";}
+
+function buildDP(ju,yd){var dp={};for(var i=0;i<9;i++){var g=yd?((ju-1+i)%9+1):(((ju-1-i)%9+9)%9+1);dp[g]=YIYI[i];}return dp;}
+
+// ========== 排盘函数 ==========
+function run(){
+  try {
+  var ds=document.getElementById("simDate").value,ts=document.getElementById("simTime").value;
+  if(!ds||!ts){document.getElementById("result").innerHTML='<p style="color:var(--rd);">请输入完整的日期和时间。</p>';return;}
+  var date=new Date(ds+"T"+ts+":00");
+  if(isNaN(date.getTime())){document.getElementById("result").innerHTML='<p style="color:var(--rd);">日期格式错误，请重新输入。</p>';return;}
+  var y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate(),h=date.getHours();
+
+  var htm = "";
+
+  // ═══════════════════════════════════
+  // 第一步：确定四柱
+  // ═══════════════════════════════════
+  var ygz=yrGz(y),mgz=moGz(y,m,d),dgz=dayGz(y,m,d),hgz=hourGz(dgz,h);
+  var term=getTerm(date);
+
+  htm += '<h2>第一步：确定四柱（年月日时干支）</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p>所谓"四柱"，就是把公历时间转换成中国古代的干支纪时系统。奇门遁甲的一切排盘操作，都建立在四柱之上。</p>';
+  htm += '<table><tr><th>柱</th><th>干支</th><th>计算方法</th></tr>';
+  htm += '<tr><td><b>年柱</b></td><td style="font-size:1.2rem;font-weight:bold;">'+ygz+'</td><td style="text-align:left;font-size:0.82rem;">公式：(年份−4)%10取天干，(年份−4)%12取地支。以1984甲子年为基准，'+y+'−4='+(y-4)+'，取模得天干<b>'+ygz[0]+'</b>、地支<b>'+ygz[1]+'</b></td></tr>';
+  htm += '<tr><td><b>月柱</b></td><td style="font-size:1.2rem;font-weight:bold;">'+mgz+'</td><td style="text-align:left;font-size:0.82rem;">以节气定月支（当前节气：<b>'+term+'</b>），再依年干用"五虎遁"定月干。口诀：甲己之年丙作首，乙庚之岁戊为头……年干<b>'+ygz[0]+'</b>→取对应月干</td></tr>';
+  htm += '<tr><td><b>日柱</b></td><td style="font-size:1.2rem;font-weight:bold;">'+dgz+'</td><td style="text-align:left;font-size:0.82rem;">以2000年1月1日（戊午日）为基准，计算间隔天数，取模60转干支</td></tr>';
+  htm += '<tr><td><b>时柱</b></td><td style="font-size:1.2rem;font-weight:bold;">'+hgz+'</td><td style="text-align:left;font-size:0.82rem;">以日干用"五鼠遁"定时干。口诀：甲己还加甲，乙庚丙作初……日干<b>'+dgz[0]+'</b>→辰时（'+(h+1)/2+'时辰）→时干为<b>'+hgz[0]+'</b></td></tr>';
+  htm += '</table>';
+  htm += '<p style="margin-top:0.8rem;font-size:0.9rem;">结果：<b style="color:var(--ac);font-size:1.1rem;">'+ygz+'年 '+mgz+'月 '+dgz+'日 '+hgz+'时</b></p>';
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第二步：定节气，定阴阳遁
+  // ═══════════════════════════════════
+  htm += '<h2>第二步：定节气 → 定阴阳遁</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p>当前日期 '+y+'年'+m+'月'+d+'日，处于<b style="color:var(--ac);">'+term+'</b>节气。</p>';
+  var st=STB[term];
+  var yd=st?st.yy:1;
+  htm += '<p>节气口诀：<b style="color:#c94b4b;">冬至一阳生 → 阳遁</b>（冬至到芒种用阳遁）；<b style="color:#4b8bc9;">夏至一阴生 → 阴遁</b>（夏至到大雪用阴遁）。</p>';
+  htm += '<p>'+term+'位于<b>'+(yd?'<span style="color:#c94b4b;">冬至之后、夏至之前 → 阳遁</span>':'<span style="color:#4b8bc9;">夏至之后、冬至之前 → 阴遁</span>')+'</b></p>';
+  htm += '<div class="formula">阴阳遁判定：<b>'+(yd?'<span style="color:#c94b4b;">阳遁</span>（顺排六仪逆排三奇）':'<span style="color:#4b8bc9;">阴遁</span>（逆排六仪顺排三奇）')+'</b></div>';
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第三步：找符头，定三元，定局数
+  // ═══════════════════════════════════
+  var ft=fuTou(dgz),ftd=ft[1];
+  var yuan,sh=["子","午","卯","酉"],zh=["寅","申","巳","亥"];
+  if(sh.indexOf(ftd)>=0)yuan=0;else if(zh.indexOf(ftd)>=0)yuan=1;else yuan=2;
+  var yn=["上元","中元","下元"];
+  var ju=st?st.j[yuan]:1;
+
+  htm += '<h2>第三步：找符头 → 定元 → 定局数</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p><b>3.1 找符头（旬首）</b></p>';
+  htm += '<p>日干支 <b>'+dgz+'</b> 属于六十甲子的哪一旬？向前找最近的"甲"日：</p>';
+  var xs=xunS(hgz);
+  var ft2=fuTou(dgz);
+  htm += '<div class="formula">'+dgz+' → 向前推到甲 → <b>'+ft2+'</b>（符头/旬首）</div>';
+  htm += '<p style="font-size:0.82rem;color:var(--dim);">原理：六十甲子每10天为一旬，由同一个"甲"统领。'+dgz+'往前的甲日是'+ft2+'，它就是值符/值使的"总司令"。</p>';
+
+  htm += '<p style="margin-top:1rem;"><b>3.2 定三元</b></p>';
+  htm += '<p>看符头的地支 <b>'+ftd+'</b>：</p>';
+  htm += '<div class="tbl-wrap"><table><tr><th>符头地支</th><th>元</th></tr>';
+  htm += '<tr'+(yuan===0?' style="background:rgba(201,164,75,0.15);"':'')+'><td>子、午、卯、酉</td><td>上元</td></tr>';
+  htm += '<tr'+(yuan===1?' style="background:rgba(201,164,75,0.15);"':'')+'><td>寅、申、巳、亥</td><td>中元</td></tr>';
+  htm += '<tr'+(yuan===2?' style="background:rgba(201,164,75,0.15);"':'')+'><td>辰、戌、丑、未</td><td>下元</td></tr>';
+  htm += '</table></div>';
+  htm += '<p>符头 <b>'+ft2+'</b>，地支 <b>'+ftd+'</b> → <b style="color:var(--ac);">'+yn[yuan]+'</b></p>';
+
+  htm += '<p style="margin-top:1rem;"><b>3.3 定局数</b></p>';
+  htm += '<p>查阅节气用局表：节气 <b>'+term+'</b> + <b>'+yn[yuan]+'</b> → 局数 <b style="color:var(--ac);font-size:1.1rem;">'+(yd?'阳遁':'阴遁')+ju+'局</b></p>';
+  htm += '<p style="font-size:0.82rem;color:var(--dim);">这个"局"就是甲子戊落在哪一宫：阳遁'+ju+'局 = 戊从'+ju+'宫开始顺排；阴遁'+ju+'局 = 戊从'+ju+'宫开始逆排。</p>';
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第四步：布地盘（三奇六仪）
+  // ═══════════════════════════════════
+  var dp=buildDP(ju,yd);
+
+  htm += '<h2>第四步：布地盘（三奇六仪入九宫）</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p>地盘是奇门盘的"地基"，九宫永远不动，动的只是三奇六仪在这9个宫里的排列方式。</p>';
+  htm += '<div class="formula"><b>三奇六仪固定队形</b>：戊→己→庚→辛→壬→癸→丁→丙→乙（永远不变，首尾相连）</div>';
+  htm += '<p><b>阳遁'+ju+'局</b>：甲子戊从<b>'+ju+'宫</b>开始<b style="color:#c94b4b;">顺排</b>（1→2→3→4→5→6→7→8→9→1循环）</p>';
+  htm += '<p style="font-size:0.83rem;color:var(--dim);">口诀：'+YIYI.join('→')+'</p>';
+  htm += renderGrid(ju,function(g){return dp[g]||"";},"地盘：三奇六仪","");
+  htm += '<p style="margin-top:0.8rem;font-size:0.85rem;">此时九宫已各有一名"天干"驻守，这是后续一切操作的基底。</p>';
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第五步：找旬首 → 定值符星和值使门
+  // ═══════════════════════════════════
+  var xsh=xunS(hgz);
+  var xsy=LJY[xsh],xsg=0;
+  for(var g=1;g<=9;g++){if(dp[g]===xsy){xsg=g;break;}}
+  if(!xsg)xsg=ju;
+  var zfx=GX[xsg],zsm=GM[xsg];
+
+  htm += '<h2>第五步：找旬首 → 定值符星与值使门</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p><b>5.1 找出时柱的旬首</b></p>';
+  htm += '<p>时柱 <b>'+hgz+'</b> → 旬首 <b>'+xsh+'</b>（'+hgz+'属于'+xsh+'这一旬）</p>';
+  htm += '<div class="formula">'+hgz+' → 旬首 = <b>'+xsh+'</b> → 对应的六仪 = <b>'+xsy+'</b>（甲隐于'+xsy+'之下）</div>';
+
+  htm += '<p style="margin-top:1rem;"><b>5.2 找出'+xsy+'所在宫位</b></p>';
+  htm += '<p>看地盘：<b>'+xsy+'</b>在地盘<b>'+xsg+'宫</b>（'+GONG_INFO[xsg].gua+'宫）</p>';
+
+  htm += '<div class="formula">查表：'+xsg+'宫对应的星 = <b style="color:var(--bl);">'+zfx+'</b>（值符星）<br>';
+  htm += xsg+'宫对应的门 = <b style="color:var(--ac);">'+zsm+'</b>（值使门）</div>';
+  htm += '<p style="font-size:0.82rem;color:var(--dim);">值符是"天盘上值班的星"，值使是"人盘上值班的门"。两者都听命于旬首。</p>';
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第六步：转天盘（值符随时干）
+  // ═══════════════════════════════════
+  var sg=hgz[0],sgg=0;
+  for(var g=1;g<=9;g++){if(dp[g]===sg){sgg=g;break;}}
+  if(!sgg)sgg=ju;
+
+  var tp={},zfi=XING.indexOf(zfx);
+  for(var i=0;i<9;i++){var sng=yd?((sgg-1+i)%9+1):(((sgg-1-i)%9+9)%9+1);tp[sng]=XING[(zfi+i)%9];}
+
+  htm += '<h2>第六步：转天盘（值符随时干）</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p><b>规则</b>：天盘的转动由"值符星"带领，跟随<b>时干</b>走。<b>时干在地盘哪一宫，值符星就落到哪一宫。</b></p>';
+  htm += '<div class="formula">时柱 <b>'+hgz+'</b> → 时干 = <b>'+sg+'</b> → 在地盘 '+sgg+' 宫</div>';
+  htm += '<p>值符星 <b style="color:var(--bl);">'+zfx+'</b> 飞到 <b>'+sgg+'宫</b>。</p>';
+  htm += '<p>其余八星按固定顺序跟随排列（阳遁顺排）：</p>';
+  var allStars=[];
+  for(var i=0;i<9;i++){allStars.push(XING[(zfi+i)%9]);}
+  htm += '<p style="font-size:0.82rem;color:var(--dim);">星序：'+allStars.join(' → ')+'（固定在值符星之后依次排列）</p>';
+
+  htm += renderGridStar(tp,"天盘：九星","star");
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第七步：转人盘（值使随时支）
+  // ═══════════════════════════════════
+  var sz=hgz[1],szi=DZ.indexOf(sz),xsd2=xsh[1],xsdi2=DZ.indexOf(xsd2);
+  var ds_=((szi-xsdi2)%12+12)%12;
+  var zsg=yd?((xsg-1+ds_)%9+1):(((xsg-1-ds_)%9+9)%9+1);
+
+  var rp={},zmi=MEN.indexOf(zsm);
+  for(var i=0;i<8;i++){var mg=yd?((zsg-1+i)%9+1):(((zsg-1-i)%9+9)%9+1);if(mg===5)mg=2;if(!rp[mg])rp[mg]=MEN[(zmi+i)%8];}
+
+  htm += '<h2>第七步：转人盘（值使随时支）</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p><b>规则</b>：人盘的转动由"值使门"带领，跟随<b>时支</b>走。从旬首地支开始数，阳遁顺数、阴遁逆数，数到时支为止。</p>';
+  htm += '<div class="formula">旬首地支：<b>'+xsd2+'</b> → 当前时支：<b>'+sz+'</b><br>';
+  htm += '从 <b>'+xsd2+'</b> 数到 <b>'+sz+'</b>（阳遁顺数）：从'+xsg+'宫起1（'+xsd2+'），走<b>'+ds_+'</b>步到达<b>'+zsg+'宫</b></div>';
+  htm += '<p>值使门 <b style="color:var(--ac);">'+zsm+'</b> 落 <b>'+zsg+'宫</b>。</p>';
+  htm += '<p>其余七门按固定顺序跟随排列（阳遁顺排）：</p>';
+  htm += renderGridDoor(rp,"人盘：八门","door");
+  htm += '<p style="margin-top:0.5rem;font-size:0.82rem;color:var(--dim);">注意：中五宫寄坤二宫，值使落五宫时实际落在二宫。</p>';
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第八步：转神盘（小值符随大值符）
+  // ═══════════════════════════════════
+  var sp={};
+  for(var i=0;i<8;i++){var sng2=yd?((sgg-1+i)%9+1):(((sgg-1-i)%9+9)%9+1);sp[sng2]=SHEN[i];}
+
+  htm += '<h2>第八步：转神盘（八神）</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p><b>规则</b>：小值符永远跟随大值符（天盘值符星）。值符星落在哪一宫，神盘的值符就排在那宫。其余七神阳遁顺排、阴遁逆排。</p>';
+  htm += '<div class="formula">值符星 <b style="color:var(--bl);">'+zfx+'</b> 落 <b>'+sgg+'宫</b> → 神盘"值符"也落 <b>'+sgg+'宫</b></div>';
+  htm += '<p>阳遁顺排八神：</p>';
+  htm += renderGridGod(sp,"神盘：八神","god");
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第九步：四盘合一
+  // ═══════════════════════════════════
+  htm += '<h2>第九步：四盘合一（最终排盘）</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p>将地盘、天盘、人盘、神盘叠在一起，就得到了最终的奇门盘。每个宫包含四层信息：</p>';
+
+  // 注意：天盘天干是地盘上时干所在宫的地盘天干
+  // 天盘天干 = 该宫的地盘天干（从值符宫顺/逆推）
+  var so={};for(var g=1;g<=9;g++)so[GX[g]]=g;
+  var tpg={};for(var g=1;g<=9;g++){if(g===5)continue;var sn=tp[g];if(sn){var og=so[sn];tpg[g]=dp[og]||"";}}
+
+  htm += renderFullGrid(dp,tp,rp,sp,tpg);
+
+  htm += '<p style="margin-top:1rem;font-size:0.85rem;color:var(--dim);">每宫解读顺序：<b>神（红色）→ 星（蓝色）→ 门（金色）→ 天盘干/地盘干</b>。不同类符号揭示不同维度的信息：神代表外力辅助，星代表天时，门代表人事，天干组合（十干克应）则构成具体的吉凶格局。</p>';
+  htm += '</div>';
+
+
+  // 构建 pds 数组供后续分析使用
+  var pds=[];
+  for(var gi=0;gi<9;gi++){
+    var g2=GRID[gi];
+    if(g2===5)continue;
+    pds.push({g:g2, tg:tpg[g2]||"", dg:dp[g2]||"", mn:rp[g2]||"", xn:tp[g2]||"", sh:sp[g2]||""});
+  }
+
+  // ═══════════════════════════════════
+  // 第十步：十干克应格局分析
+  // ═══════════════════════════════════
+  htm += '<h2>第十步：十干克应格局分析</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p>十干克应是天盘天干与地盘天干相遇后形成的格局，是奇门判断吉凶的核心依据。每个宫的天盘干+地盘干构成一组克应。</p>';
+
+  var jiCount=0,xiongCount=0,pingCount=0;
+  for(var pi=0;pi<pds.length;pi++){
+    var pd=pds[pi],k=pd.tg+'+'+pd.dg,ke=KY[k];
+    if(!ke)continue;
+    var cls=ke[2]===1?'ji':ke[2]===-1?'xiong':'ping';
+    var tag=ke[2]===1?'<span class="tag t-gn">吉</span>':ke[2]===-1?'<span class="tag t-rd">凶</span>':'<span class="tag t-gy">平</span>';
+    if(ke[2]===1)jiCount++;else if(ke[2]===-1)xiongCount++;else pingCount++;
+    htm += '<div style="margin:0.4rem 0;font-size:0.9rem;"> '+tag+' <b>'+GONG_INFO[pd.g].gua+pd.g+'宫</b>：天盘<b>'+pd.tg+'</b> + 地盘<b>'+pd.dg+'</b> = <b style="color:'+(cls==='ji'?'var(--gn)':cls==='xiong'?'var(--rd)':'var(--dim)')+';">'+ke[0]+'</b> —— '+ke[1]+'</div>';
+  }
+  htm += '<p style="margin-top:0.8rem;font-size:0.85rem;color:var(--dim);">本局：<span class="ji">吉格 '+jiCount+'</span> · <span class="xiong">凶格 '+xiongCount+'</span> · <span class="ping">平格 '+pingCount+'</span></p>';
+  htm += '</div>';
+
+  // ═══════════════════════════════════
+  // 第十一步：八门克应
+  // ═══════════════════════════════════
+  htm += '<h2>第十一步：八门克应</h2>';
+  htm += '<div class="step-card">';
+  htm += '<p>八门克应即门加门、门加三奇六仪的格局。以下为本局各宫门与地盘天干相遇的克应：</p>';
+
+  // 八门克应数据（门+天干）
+  var BMKY={
+  "开门+戊":"财名俱得","开门+乙":"小财可求","开门+丙":"贵人印绶","开门+丁":"远信必至",
+  "开门+己":"事绪不定","开门+庚":"道路词讼，谋为两岐","开门+辛":"阴人道路","开门+壬":"远行有失，注意破财","开门+癸":"阴人失财小凶",
+  "休门+戊":"财物和合","休门+乙":"求谋重不得，求轻可得","休门+丙":"文书和合喜庆","休门+丁":"百讼休歇",
+  "休门+己":"暗昧不宁，后吉","休门+庚":"文书词讼先结后解","休门+辛":"疾病迟愈，失物不得","休门+壬":"阴人词讼牵连","休门+癸":"阴人词讼牵连",
+  "生门+戊":"嫁娶求财谒贵皆吉","生门+乙":"阴人生产，迟吉","生门+丙":"贵人印绶婚姻书信喜事","生门+丁":"词讼婚姻财利大吉",
+  "生门+己":"得贵人维持，吉","生门+庚":"财产争讼破产，不利","生门+辛":"产妇疾病，后吉","生门+壬":"遗失财后得，贼盗易获","生门+癸":"婚姻不成，余事皆吉",
+  "伤门+戊":"失脱难获","伤门+乙":"求谋得，反防盗失财","伤门+丙":"道路损失","伤门+丁":"音信不至",
+  "伤门+己":"财散人病","伤门+庚":"讼狱被刑杖，凶","伤门+辛":"夫妻怀私恣怨","伤门+壬":"因盗牵连","伤门+癸":"讼狱被冤，有理难伸",
+  "杜门+戊":"谋事不成，秘处求财得","杜门+乙":"宜暗求男人财物，后主不明致讼","杜门+丙":"文契遗失","杜门+丁":"男人讼狱",
+  "杜门+己":"私谋害人招非","杜门+庚":"因女人讼狱被刑","杜门+辛":"主打伤人词讼，男人小口凶","杜门+壬":"奸盗事，凶","杜门+癸":"百事皆阻，病者不食",
+  "景门+戊":"因财产词讼，远行吉","景门+乙":"讼事不成","景门+丙":"文书急迫，火速不利","景门+丁":"因文书印状招非",
+  "景门+己":"官司牵连","景门+庚":"讼人自讼","景门+辛":"阴人词讼","景门+壬":"因贼牵连","景门+癸":"因奴婢受刑",
+  "死门+戊":"作伪财","死门+乙":"求事不成","死门+丙":"信息忧疑","死门+丁":"老阳人疾病",
+  "死门+己":"病讼牵连不已，凶","死门+庚":"女人生产母子俱凶","死门+辛":"盗贼失脱难获","死门+壬":"讼人自讼自招","死门+癸":"妇女嫁娶事凶",
+  "惊门+戊":"损财信阻","惊门+乙":"谋财不得","惊门+丙":"文书印信惊恐","惊门+丁":"词讼牵连",
+  "惊门+己":"恶犬伤人成讼","惊门+庚":"道路损折遇贼盗，凶","惊门+辛":"女人成讼，凶","惊门+壬":"官司囚禁，病者大凶","惊门+癸":"被盗失物难获"
+  };
+
+  for(var pi=0;pi<pds.length;pi++){
+    var pd=pds[pi];
+    if(!pd.mn)continue;
+    var bk=pd.mn+'+'+pd.dg,be=BMKY[bk];
+    if(!be)continue;
+    htm += '<div style="margin:0.3rem 0;font-size:0.88rem;"><b>'+GONG_INFO[pd.g].gua+pd.g+'宫</b>：'+pd.mn+' + '+pd.dg+' → '+be+'</div>';
+  }
+  htm += '</div>';
+
+  // 总结
+  htm += '<h2>排盘总览</h2>';
+  htm += '<div class="step-card">';
+  htm += '<table style="font-size:0.85rem;">';
+  htm += '<tr><th>项目</th><th>结果</th></tr>';
+  htm += '<tr><td>公历</td><td>'+y+'年'+m+'月'+d+'日 '+ts+'</td></tr>';
+  htm += '<tr><td>四柱</td><td><b>'+ygz+'年 '+mgz+'月 '+dgz+'日 '+hgz+'时</b></td></tr>';
+  htm += '<tr><td>节气</td><td>'+term+'</td></tr>';
+  htm += '<tr><td>局数</td><td>'+(yd?'阳遁':'阴遁')+ju+'局 · '+yn[yuan]+'</td></tr>';
+  htm += '<tr><td>旬首</td><td>'+xsh+'</td></tr>';
+  htm += '<tr><td>值符星</td><td style="color:var(--bl);font-weight:bold;">'+zfx+'（落'+sgg+'宫）</td></tr>';
+  htm += '<tr><td>值使门</td><td style="color:var(--ac);font-weight:bold;">'+zsm+'（落'+zsg+'宫）</td></tr>';
+  htm += '</table>';
+  htm += '</div>';
+
+  document.getElementById("result").innerHTML = htm;
+
+  // 滚动到结果
+  document.getElementById("result").scrollIntoView({behavior:"smooth",block:"start"});
+  } catch(e) {
+    document.getElementById("result").innerHTML = '<p style="color:#c94b4b;font-weight:bold;">排盘出错：' + e.message + '</p><pre style="color:var(--dim);font-size:0.8rem;">' + (e.stack||'') + '</pre>';
+    console.error(e);
+  }
+}
+
+// ========== 渲染函数 ==========
+function renderGrid(highlightG,getter,title,type){
+  var h='<p style="font-weight:bold;margin-top:0.5rem;">'+title+'</p>';
+  h+='<div class="grid3">';
+  for(var i=0;i<9;i++){
+    var g=GRID[i],info=GONG_INFO[g],v=getter(g);
+    var hl=(g===highlightG)?' style="border:2px solid var(--ac);"':'';
+    h+='<div class="gcell"'+hl+'>';
+    h+='<div class="gn">'+info.gua+g+'·'+info.dir+'</div>';
+    h+='<div class="'+type+'" style="font-size:1rem;">'+v+'</div>';
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function renderGridStar(tp,title,type){
+  var h='<p style="font-weight:bold;margin-top:0.5rem;">'+title+'</p>';
+  h+='<div class="grid3">';
+  for(var i=0;i<9;i++){
+    var g=GRID[i],info=GONG_INFO[g],v=tp[g]||"";
+    h+='<div class="gcell">';
+    h+='<div class="gn">'+info.gua+g+'·'+info.dir+'</div>';
+    h+='<div class="'+type+'" style="font-size:0.9rem;">'+v+'</div>';
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function renderGridDoor(rp,title,type){
+  var h='<p style="font-weight:bold;margin-top:0.5rem;">'+title+'</p>';
+  h+='<div class="grid3">';
+  for(var i=0;i<9;i++){
+    var g=GRID[i],info=GONG_INFO[g],v=rp[g]||"";
+    if(g===5)v='—（寄坤二）';
+    h+='<div class="gcell">';
+    h+='<div class="gn">'+info.gua+g+'·'+info.dir+'</div>';
+    h+='<div class="'+type+'" style="font-size:0.9rem;">'+v+'</div>';
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function renderGridGod(sp,title,type){
+  var h='<p style="font-weight:bold;margin-top:0.5rem;">'+title+'</p>';
+  h+='<div class="grid3">';
+  for(var i=0;i<9;i++){
+    var g=GRID[i],info=GONG_INFO[g],v=sp[g]||"";
+    if(g===5)v='—';
+    h+='<div class="gcell">';
+    h+='<div class="gn">'+info.gua+g+'·'+info.dir+'</div>';
+    h+='<div class="'+type+'" style="font-size:0.85rem;">'+v+'</div>';
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+function renderFullGrid(dp,tp,rp,sp,tpg){
+  var h='<div class="grid3">';
+  for(var i=0;i<9;i++){
+    var g=GRID[i],info=GONG_INFO[g];
+    if(g===5){
+      h+='<div class="gcell" style="opacity:0.5;">';
+      h+='<div class="gn">中5</div>';
+      h+='<div style="font-size:0.68rem;color:var(--dim);">天禽·寄坤二</div>';
+      h+='</div>';
+      continue;
+    }
+    var sh=sp[g]||"",mn=rp[g]||"",xn=tp[g]||"",dg=dp[g]||"",tg=tpg[g]||"";
+    h+='<div class="gcell">';
+    h+='<div class="gn">'+info.gua+g+'·'+info.dir+'</div>';
+    h+='<div class="god" style="font-size:0.7rem;">'+sh+'</div>';
+    h+='<div class="star" style="font-size:0.8rem;">'+xn+'</div>';
+    h+='<div class="door" style="font-size:0.8rem;">'+mn+'</div>';
+    h+='<div style="font-size:0.7rem;color:var(--dim);">天:'+tg+' 地:'+dg+'</div>';
+    h+='</div>';
+  }
+  h+='</div>';
+  return h;
+}
+
+// ========== 页面入口 ==========
+function initPage(){
+  // 确保默认日期
+  var dEl=document.getElementById("simDate");
+  var tEl=document.getElementById("simTime");
+  if(!dEl.value)dEl.value="2022-06-01";
+  if(!tEl.value)tEl.value="08:00";
+  run();
+}
+
+// DOMContentLoaded 可能已触发，用 readyState 兜底
+if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",initPage);
+} else {
+  initPage();
+}
+</script>
+</body>
+</html>
